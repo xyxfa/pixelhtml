@@ -1,0 +1,567 @@
+/*
+ * DESIGN: Pastoral Pixel (Stardew Valley inspired)
+ * PALETTE: Cream, warm brown, soft green, sky blue, coral orange
+ * FONT: Press Start 2P (pixel English), Zpix (pixel Chinese), Noto Sans (fallback)
+ * MOOD: Warm, cozy, handcrafted, inviting
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Import Zpix Pixel Font from CDN */
+@font-face {
+  font-family: "Zpix";
+  src: url("https://cdn.jsdelivr.net/gh/SolidZORO/zpix-pixel-font@v3.1.10/dist/zpix.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+
+@custom-variant dark (&:is(.dark *));
+
+/* Dangoiz Guide: Noise Texture */
+.bg-dangoiz-texture {
+  background-color: #000000;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.02' numOctaves='4' result='noise'/%3E%3CfeDisplacementMap in='SourceGraphic' in2='noise' scale='20'/%3E%3C/filter%3E%3Cpath d='M0,400 Q300,350 600,400 T1200,400 L1200,800 L0,800 Z' fill='none' stroke='%231a1a1a' stroke-width='2' opacity='0.3' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 1200px 800px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Stardew Valley Palette */
+  --color-wood: oklch(0.48 0.1 65);
+  --color-wood-light: oklch(0.62 0.09 68);
+  --color-wood-dark: oklch(0.35 0.08 55);
+  --color-leaf: oklch(0.58 0.14 140);
+  --color-leaf-light: oklch(0.72 0.12 142);
+  --color-leaf-muted: oklch(0.65 0.08 140);
+  --color-sky: oklch(0.72 0.1 230);
+  --color-sky-light: oklch(0.85 0.06 230);
+  --color-coral: oklch(0.68 0.16 35);
+  --color-coral-light: oklch(0.78 0.12 35);
+  --color-lavender: oklch(0.65 0.12 300);
+  --color-cream: oklch(0.97 0.015 85);
+  --color-cream-dark: oklch(0.93 0.02 85);
+  --color-parchment: oklch(0.95 0.02 80);
+  --color-gold: oklch(0.78 0.15 85);
+  --color-gold-dark: oklch(0.65 0.14 80);
+
+  /* 
+   * Updated Font Stack:
+   * Pixel: Press Start 2P (EN) -> Zpix (CN/Global Pixel) -> Monospace
+   * Body: Zpix (Primary Pixel) -> Noto Sans SC (Fallback readable)
+   */
+  --font-pixel: 'Press Start 2P', 'Zpix', monospace;
+  --font-body: 'Zpix', 'Noto Sans SC', 'Noto Sans TC', sans-serif;
+  --font-display: 'Playfair Display', serif;
+  --font-dangoiz: 'Noto Serif SC', 'Noto Serif', serif;
+}
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.97 0.015 85);
+  --foreground: oklch(0.35 0.04 40);
+  /* Slightly darker/warmer for text */
+  --card: oklch(0.99 0.008 85);
+  --card-foreground: oklch(0.25 0.05 55);
+  --popover: oklch(0.99 0.008 85);
+  --popover-foreground: oklch(0.25 0.05 55);
+  --primary: oklch(0.48 0.1 65);
+  --primary-foreground: oklch(0.97 0.015 85);
+  --secondary: oklch(0.93 0.02 85);
+  --secondary-foreground: oklch(0.35 0.08 55);
+  --muted: oklch(0.93 0.02 85);
+  --muted-foreground: oklch(0.5 0.04 55);
+  --accent: oklch(0.72 0.12 142);
+  --accent-foreground: oklch(0.2 0.05 140);
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.97 0.015 85);
+  --border: oklch(0.85 0.04 75);
+  --input: oklch(0.88 0.03 80);
+  --ring: oklch(0.58 0.14 140);
+  --chart-1: oklch(0.58 0.14 140);
+  --chart-2: oklch(0.72 0.1 230);
+  --chart-3: oklch(0.68 0.16 35);
+  --chart-4: oklch(0.65 0.12 300);
+  --chart-5: oklch(0.78 0.15 85);
+  --sidebar: oklch(0.95 0.02 80);
+  --sidebar-foreground: oklch(0.25 0.05 55);
+  --sidebar-primary: oklch(0.48 0.1 65);
+  --sidebar-primary-foreground: oklch(0.97 0.015 85);
+  --sidebar-accent: oklch(0.93 0.02 85);
+  --sidebar-accent-foreground: oklch(0.25 0.05 55);
+  --sidebar-border: oklch(0.85 0.04 75);
+  --sidebar-ring: oklch(0.58 0.14 140);
+}
+
+@layer base {
+  html {
+    font-size: 18px;
+    /* Increased base size for better pixel readability */
+  }
+
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+    image-rendering: pixelated;
+    -webkit-font-smoothing: none;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1200px;
+    }
+  }
+
+  /* Stardew-style wood panel border */
+  .wood-panel {
+    background-color: #d2a679;
+    /* Light wood base */
+    background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.2'/%3E%3C/svg%3E");
+    border: 4px solid #8b5a2b;
+    /* Dark wood border */
+    box-shadow:
+      inset 0 0 0 2px #e6c29a,
+      /* Highlight */
+      inset 0 0 20px rgba(0, 0, 0, 0.3),
+      /* Inner shadow */
+      5px 5px 10px rgba(0, 0, 0, 0.5);
+    /* Drop shadow */
+    position: relative;
+    border-radius: 4px;
+  }
+
+  /* Nails in corners */
+  .wood-panel::after {
+    content: '';
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 6px;
+    height: 6px;
+    background: #5c4033;
+    box-shadow:
+      calc(100% - 12px) 0 0 #5c4033,
+      0 calc(100% - 12px) 0 #5c4033,
+      calc(100% - 12px) calc(100% - 12px) 0 #5c4033;
+    border-radius: 50%;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Parchment background for text areas */
+  .parchment-panel {
+    background-color: #fdf6e3;
+    background-image: url("data:image/svg+xml,%3Csvg width='200' height='200' viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
+    border: 2px solid #d2b48c;
+    box-shadow: inset 0 0 10px rgba(139, 69, 19, 0.1);
+    color: #4a3c31;
+  }
+
+  /* Pixel-perfect button style */
+  .pixel-btn {
+    font-family: var(--font-pixel);
+    font-size: 12px;
+    /* Increased from 10px */
+    padding: 12px 24px;
+    border: 3px solid oklch(0.48 0.1 65);
+    background: oklch(0.58 0.14 140);
+    color: oklch(0.97 0.015 85);
+    box-shadow:
+      3px 3px 0 0 oklch(0.35 0.08 55),
+      inset -2px -2px 0 0 oklch(0.45 0.12 140);
+    transition: all 0.1s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .pixel-btn:hover {
+    transform: translate(1px, 1px);
+    box-shadow:
+      2px 2px 0 0 oklch(0.35 0.08 55),
+      inset -2px -2px 0 0 oklch(0.45 0.12 140);
+  }
+
+  .pixel-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow:
+      0 0 0 0 oklch(0.35 0.08 55),
+      inset -2px -2px 0 0 oklch(0.45 0.12 140);
+  }
+
+  .pixel-btn-coral {
+    background: oklch(0.68 0.16 35);
+    box-shadow:
+      3px 3px 0 0 oklch(0.35 0.08 55),
+      inset -2px -2px 0 0 oklch(0.55 0.14 35);
+  }
+
+  .pixel-btn-coral:hover {
+    box-shadow:
+      2px 2px 0 0 oklch(0.35 0.08 55),
+      inset -2px -2px 0 0 oklch(0.55 0.14 35);
+  }
+
+  /* Stardew-style tag/badge */
+  .pixel-tag {
+    font-family: var(--font-pixel);
+    font-size: 10px;
+    /* Increased from 7px */
+    padding: 4px 8px;
+    border: 2px solid oklch(0.42 0.1 60);
+    background: oklch(0.92 0.025 78);
+    color: oklch(0.3 0.08 50);
+    box-shadow: 2px 2px 0 0 oklch(0.3 0.08 50 / 0.3);
+  }
+
+  /* Skill bar Stardew style */
+  .skill-bar-bg {
+    height: 18px;
+    background: oklch(0.85 0.03 75);
+    border: 3px solid oklch(0.42 0.1 60);
+    box-shadow: inset 2px 2px 0 0 oklch(0.3 0.08 50 / 0.3);
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(180deg,
+        oklch(0.72 0.12 142) 0%,
+        oklch(0.58 0.14 140) 100%);
+    transition: width 1.5s ease-out;
+  }
+
+  /* Section title with leaf decorations */
+  .section-title {
+    font-family: var(--font-pixel);
+    color: oklch(0.48 0.1 65);
+    position: relative;
+    display: inline-block;
+  }
+
+  /* Floating animation */
+  @keyframes float-gentle {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translateY(0) translateX(0);
+      opacity: 0.6;
+    }
+
+    25% {
+      transform: translateY(-10px) translateX(5px);
+      opacity: 0.8;
+    }
+
+    50% {
+      transform: translateY(-5px) translateX(-3px);
+      opacity: 0.4;
+    }
+
+    75% {
+      transform: translateY(-15px) translateX(8px);
+      opacity: 0.7;
+    }
+  }
+
+  .animate-float-gentle {
+    animation: float-gentle 3s ease-in-out infinite;
+  }
+
+  .animate-float {
+    animation: float 12s ease-in-out infinite;
+  }
+
+  /* Sparkle animation */
+  @keyframes sparkle {
+
+    0%,
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  /* Grass divider */
+  .grass-divider {
+    height: 24px;
+    background-repeat: repeat-x;
+    background-size: 48px 24px;
+    image-rendering: pixelated;
+  }
+
+  /* --- 78 Project Adaptations --- */
+
+  /* Game section with background */
+  .game-section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .game-section-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  .game-section-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+        rgba(0, 0, 0, 0.55) 0%,
+        rgba(0, 0, 0, 0.35) 30%,
+        rgba(0, 0, 0, 0.35) 70%,
+        rgba(0, 0, 0, 0.7) 100%);
+  }
+
+  .game-section-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  @keyframes breathe {
+
+    0%,
+    100% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.02);
+    }
+  }
+
+  .animate-breathe {
+    animation: breathe 8s ease-in-out infinite;
+  }
+
+  /* Noise texture overlay */
+  .noise-overlay {
+    position: absolute;
+    inset: 0;
+    opacity: 0.05;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
+
+  /* ============================= */
+  /* Global Typography Utilities   */
+  /* Inspired by dangoiz layout    */
+  /* ============================= */
+
+  /* Hero main title - dangoiz-style story headline */
+  .typo-hero-title {
+    font-family: var(--font-dangoiz);
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black;
+    line-height: 1.25;
+    letter-spacing: 0.08em;
+  }
+
+  /* Hero subtitle - long-form intro, same serif system */
+  .typo-hero-subtitle {
+    font-family: var(--font-dangoiz);
+    @apply text-base sm:text-lg md:text-xl;
+    line-height: 1.9;
+    letter-spacing: 0.06em;
+  }
+
+  /* Generic section label (small all-caps) */
+  .typo-section-label {
+    font-family: var(--font-pixel);
+    @apply text-xs sm:text-sm;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
+  /* Long-form chapter style, good for story text */
+  .typo-long {
+    font-family: var(--font-dangoiz);
+    @apply text-base md:text-lg;
+    line-height: 1.9;
+    letter-spacing: 0.06em;
+  }
+
+  /* Optional two-column layout for long chapters */
+  .typo-long-columns {
+    column-count: 1;
+    column-gap: 3rem;
+  }
+
+  @media (min-width: 1024px) {
+    .typo-long-columns {
+      column-count: 2;
+    }
+  }
+
+  .typo-long-columns p {
+    margin-bottom: 0.9rem;
+    text-indent: 2em;
+  }
+
+  /* Game / project title similar to dangoiz game cards */
+  .typo-game-title {
+    font-family: var(--font-pixel);
+    @apply text-xl md:text-3xl lg:text-4xl font-black;
+    line-height: 1.4;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+  }
+
+  /* Flagship VR title - extra large, ceremonial feeling for 璇玑蜀律等 */
+  .typo-flagship-title {
+    font-family: var(--font-pixel);
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black;
+    line-height: 1.15;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+  }
+
+  /* VR project title (non-flagship), slightly bigger than normal game titles */
+  .typo-vr-title {
+    font-family: var(--font-pixel);
+    @apply text-2xl sm:text-3xl md:text-4xl font-extrabold;
+    line-height: 1.25;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .typo-game-meta {
+    @apply text-xs md:text-sm uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  .typo-game-desc {
+    font-family: var(--font-body);
+    @apply text-sm md:text-base;
+    line-height: 1.9;
+    letter-spacing: 0.045em;
+  }
+
+  /* Slight emphasis on first line of long story text for rhythm */
+  .typo-game-desc::first-line {
+    font-size: 1.06em;
+  }
+}

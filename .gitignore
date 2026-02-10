@@ -1,0 +1,10 @@
+﻿node_modules/
+dist/
+.next/
+out/
+*.mp4
+*.mov
+*.zip
+*.rar
+视频/
+client/public/videos/
