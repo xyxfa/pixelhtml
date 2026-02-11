@@ -26,27 +26,38 @@ interface GameSectionProps {
 export default function GameSection({ project, config, index }: GameSectionProps) {
     const isVideoProject = !!config.videoUrl;
     const videoRef = useRef<HTMLVideoElement>(null);
+    const bgRef = useRef<HTMLDivElement>(null);
     const [isPlaying, setIsPlaying] = useState(true); // Auto-play by default
     const [progress, setProgress] = useState(0);
     const [isMuted, setIsMuted] = useState(true);
     const [volume, setVolume] = useState(1);
-    const [scrollY, setScrollY] = useState(0);
 
-    // 滚动背景效果：对于有 bgImage 的非视频项目，实现与 VR 游戏一致的滚动视差
+    // 优化后的滚动背景效果：使用直接 DOM 操作 + requestAnimationFrame 提升性能
     useEffect(() => {
-        if (isVideoProject || !config.bgImage) return; // 只对非视频项目且有 bgImage 的生效
+        if (isVideoProject || !config.bgImage) return;
 
+        let ticking = false;
         const handleScroll = () => {
-            const y = window.scrollY || window.pageYOffset || 0;
-            setScrollY(y);
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const bg = bgRef.current;
+                    if (bg) {
+                        const y = window.scrollY || window.pageYOffset || 0;
+                        // 极大降低移动系数 (0.55 -> 0.1)，让背景移动更优雅、更顺滑
+                        const bgOffset = y * 0.1;
+                        bg.style.backgroundPosition = `center ${-bgOffset - 80}px`;
+                    }
+                    ticking = false;
+                });
+                ticking = true;
+            }
         };
 
-        handleScroll();
         window.addEventListener("scroll", handleScroll, { passive: true });
+        handleScroll(); // 初始位置修正
+
         return () => window.removeEventListener("scroll", handleScroll);
     }, [isVideoProject, config.bgImage]);
-
-    const bgOffset = scrollY * 0.55;
 
     // Render description with:
     // - emphasized words (in quotes) larger
@@ -284,6 +295,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
             {/* 滚动背景层：对于有 bgImage 的非视频项目，实现与 VR 游戏一致的滚动视差效果 */}
             {!isVideoProject && (config.bgImage || project.image) && (
                 <div
+                    ref={bgRef}
                     className="pointer-events-none absolute inset-0"
                     style={{
                         backgroundImage: `url(${config.bgImage || project.image})`,
@@ -293,8 +305,9 @@ export default function GameSection({ project, config, index }: GameSectionProps
                         backgroundSize: "auto",
                         // 确保像素边缘清晰，不模糊
                         imageRendering: "pixelated",
-                        // 整体再往上多抬一点，把和上一个版块之间的接缝藏住
-                        backgroundPosition: `center ${-bgOffset - 80}px`,
+                        // 开启核心 GPU 加速，让位置变换更平滑
+                        willChange: "background-position",
+                        backgroundPosition: `center -80px`,
                     }}
                 />
             )}
