@@ -180,7 +180,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
         const badgeText = project.badge || project.category;
 
         return (
-            <div className={`max-w-3xl ${align === "center" ? "mx-auto text-center" : "text-left"} mb-8 relative z-20`}>
+            <div className={`w-full max-w-3xl ${align === "center" ? "mx-auto text-center" : "text-left"} mb-8 relative z-20`}>
                 <div className={`inline-flex items-center gap-3 mb-4 px-4 py-1.5 bg-black/40 border border-white/10 rounded-full backdrop-blur-md ${align === "center" ? "" : "mr-auto"}`}>
                     <span
                         className="w-2.5 h-2.5 rounded-full"
@@ -202,8 +202,8 @@ export default function GameSection({ project, config, index }: GameSectionProps
                 <div className="w-full flex justify-center mb-10">
                     <h2>
                         <div className="relative inline-block group cursor-default">
-                            {/* Whimsical Pixel Decorations - Left Side */}
-                            <div className="absolute -left-12 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300">
+                            {/* Whimsical Pixel Decorations - Left Side - Hidden on mobile */}
+                            <div className="hidden md:flex absolute -left-12 top-1/2 -translate-y-1/2 flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300">
                                 <div className="w-4 h-4 bg-white animate-bounce shadow-[2px_2px_0_rgba(0,0,0,0.5)]" style={{ animationDelay: '0ms' }} />
                                 <div className="w-3 h-3 ml-2" style={{ backgroundColor: config.accentColor }} />
                             </div>
@@ -235,8 +235,8 @@ export default function GameSection({ project, config, index }: GameSectionProps
                                 <div className="absolute bottom-2 right-6 w-1.5 h-1.5 opacity-30" style={{ backgroundColor: config.accentColor }} />
                             </div>
 
-                            {/* Whimsical Pixel Decorations - Right Side */}
-                            <div className="absolute -right-12 top-1/2 -translate-y-1/2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+                            {/* Whimsical Pixel Decorations - Right Side - Hidden on mobile */}
+                            <div className="hidden md:flex absolute -right-12 top-1/2 -translate-y-1/2 flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
                                 <div className="w-4 h-4 bg-white animate-bounce shadow-[2px_2px_0_rgba(0,0,0,0.5)]" style={{ animationDelay: '150ms' }} />
                                 <div className="w-3 h-3 mr-2 self-end" style={{ backgroundColor: config.accentColor }} />
                             </div>
@@ -244,7 +244,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
                     </h2>
                 </div>
 
-                <div className={`relative p-6 bg-black/40 border border-white/10 backdrop-blur-sm rounded-sm ${align === "center" ? "" : "text-left"}`}>
+                <div className={`relative p-5 md:p-8 bg-black/40 border border-white/10 backdrop-blur-sm rounded-sm ${align === "center" ? "mx-auto w-full" : "text-left"}`}>
                     {renderRichDescription(project.description)}
                     <div className={`flex flex-wrap ${align === "center" ? "justify-center" : "justify-start"} gap-2 mt-4`}>
                         {project.tags.map(tag => (
