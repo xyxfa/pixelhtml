@@ -185,15 +185,13 @@ export default function XuanjiSection() {
                   boxShadow: "6px 6px 0 rgba(0,0,0,0.4)",
                 }}
               >
-                {/* CRT / pixel scanline effect, same spirit as VR block */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,255,255,0.08),rgba(0,0,0,0.08),rgba(255,255,255,0.08))] bg-[length:100%_2px,3px_100%] opacity-25 mix-blend-screen pointer-events-none" />
-
-                <video
+                {/* Video Screen Area - Bilibili Iframe */}
+                <iframe
                   src={config.videoUrl}
-                  className="w-full h-full object-cover"
-                  controls
-                  loop
-                  playsInline
+                  className="w-full h-full border-0 absolute inset-0"
+                  allowFullScreen
+                  allow="autoplay; fullscreen"
+                  sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
                 />
               </div>
             </div>
