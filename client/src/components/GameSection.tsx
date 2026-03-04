@@ -25,12 +25,7 @@ interface GameSectionProps {
 
 export default function GameSection({ project, config, index }: GameSectionProps) {
     const isVideoProject = !!config.videoUrl;
-    const videoRef = useRef<HTMLVideoElement>(null);
     const bgRef = useRef<HTMLDivElement>(null);
-    const [isPlaying, setIsPlaying] = useState(true); // Auto-play by default
-    const [progress, setProgress] = useState(0);
-    const [isMuted, setIsMuted] = useState(true);
-    const [volume, setVolume] = useState(1);
 
     // 优化后的滚动背景效果：使用直接 DOM 操作 + requestAnimationFrame 提升性能
     useEffect(() => {
@@ -147,43 +142,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
     ];
     const bgPattern = bgPatterns[index % bgPatterns.length];
 
-    // Video Control Logic
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video || !isVideoProject) return; // Only run if video project
-
-        const updateProgress = () => {
-            if (video.duration) {
-                setProgress((video.currentTime / video.duration) * 100);
-            }
-        };
-
-        video.addEventListener('timeupdate', updateProgress);
-        return () => video.removeEventListener('timeupdate', updateProgress);
-    }, [isVideoProject]); // Only run if video project
-
-    const togglePlay = () => {
-        if (videoRef.current) {
-            if (isPlaying) videoRef.current.pause();
-            else videoRef.current.play();
-            setIsPlaying(!isPlaying);
-        }
-    };
-
-    const toggleMute = () => {
-        if (videoRef.current) {
-            videoRef.current.muted = !isMuted;
-            setIsMuted(!isMuted);
-        }
-    }
-
-    const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = parseFloat(e.target.value);
-        if (videoRef.current && videoRef.current.duration) {
-            videoRef.current.currentTime = (val / 100) * videoRef.current.duration;
-            setProgress(val);
-        }
-    };
+    // Video Control Logic removed since we are using Bilibili iframe
 
     // Reusable Header Component - 移除 FadeInView，确保内容始终可见（与 VR 区一致）
     const HeaderSection = ({ align = "center" }: { align?: "left" | "center" }) => {
@@ -423,70 +382,15 @@ export default function GameSection({ project, config, index }: GameSectionProps
                                     borderColor: config.accentBorder
                                 }}
                             >
-                                {/* Video Screen Area */}
+                                {/* Video Screen Area - Bilibili Iframe */}
                                 <div className="relative aspect-video w-full overflow-hidden bg-black">
-                                    {/* CRT Effect */}
-                                    <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-[2] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20" />
-
-                                    <video
-                                        ref={videoRef}
+                                    <iframe
                                         src={config.videoUrl}
-                                        className="w-full h-full object-cover"
-                                        autoPlay
-                                        loop
-                                        muted={isMuted}
-                                        playsInline
+                                        className="w-full h-full border-0 absolute inset-0"
+                                        allowFullScreen
+                                        allow="autoplay; fullscreen"
+                                        sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
                                     />
-                                </div>
-
-                                {/* Custom Control Bar - Console Style (Below Screen) */}
-                                <div className="h-14 bg-[#0a0a0a] border-t border-white/10 z-20 flex items-center px-4 gap-4">
-                                    <button onClick={togglePlay} className="p-2 hover:bg-white/10 rounded-full text-white/80 hover:text-white transition-colors">
-                                        {isPlaying ? <Pause size={18} /> : <Play size={18} />}
-                                    </button>
-
-                                    {/* Progress Slider */}
-                                    <div className="flex-1 relative h-6 flex items-center group/slider">
-                                        <input
-                                            type="range"
-                                            min="0"
-                                            max="100"
-                                            value={progress}
-                                            onChange={handleSeek}
-                                            className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-none [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black hover:[&::-webkit-slider-thumb]:scale-110 transition-all"
-                                            style={{
-                                                background: `linear-gradient(to right, ${config.accentColor} ${progress}%, rgba(255,255,255,0.1) ${progress}%)`
-                                            }}
-                                        />
-                                    </div>
-
-                                    {/* Volume Controls */}
-                                    <div className="flex items-center gap-2 group/volume">
-                                        <button onClick={toggleMute} className="p-2 hover:bg-white/10 rounded-full text-white/80 hover:text-white transition-colors">
-                                            {isMuted || volume === 0 ? <VolumeX size={18} /> : <Volume2 size={18} />}
-                                        </button>
-                                        <div className="w-0 overflow-hidden group-hover/volume:w-24 transition-all duration-300 ease-out flex items-center">
-                                            <input
-                                                type="range"
-                                                min="0"
-                                                max="1"
-                                                step="0.05"
-                                                value={isMuted ? 0 : volume}
-                                                onChange={(e) => {
-                                                    const newVol = parseFloat(e.target.value);
-                                                    setVolume(newVol);
-                                                    if (videoRef.current) {
-                                                        videoRef.current.volume = newVol;
-                                                    }
-                                                    setIsMuted(newVol === 0);
-                                                }}
-                                                className="w-20 h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:rounded-none [&::-webkit-slider-thumb]:border-2 [&::-webkit-slider-thumb]:border-black hover:[&::-webkit-slider-thumb]:scale-110 transition-all"
-                                                style={{
-                                                    background: `linear-gradient(to right, ${config.accentColor} ${(isMuted ? 0 : volume) * 100}%, rgba(255,255,255,0.1) ${(isMuted ? 0 : volume) * 100}%)`
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </FadeInView>

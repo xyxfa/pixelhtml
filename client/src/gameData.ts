@@ -22,7 +22,7 @@ export const vrGameConfigs: GameConfig[] = [
         accentColor: "#4ade80", // Leaf Green
         accentBg: "rgba(74, 222, 128, 0.15)",
         accentBorder: "rgba(74, 222, 128, 0.4)",
-        videoUrl: "/videos/xuanji.mp4",
+        videoUrl: "https://player.bilibili.com/player.html?bvid=BV1RPPTzqErj&autoplay=1&muted=1&high_quality=1",
     },
     {
         // 逆序圣典 (Reverse Order Scripture)
@@ -31,7 +31,7 @@ export const vrGameConfigs: GameConfig[] = [
         accentColor: "#4ade80", // Leaf Green
         accentBg: "rgba(74, 222, 128, 0.15)",
         accentBorder: "rgba(74, 222, 128, 0.4)",
-        videoUrl: "/videos/reverse.mp4",
+        videoUrl: "https://player.bilibili.com/player.html?bvid=BV1FRPKzyEVB&autoplay=1&muted=1&high_quality=1",
     },
 ];
 
