@@ -9,6 +9,7 @@ import HeroSection from "@/components/HeroSection";
 import XuanjiSection from "@/components/XuanjiSection";
 import ReverseSection from "@/components/ReverseSection";
 import ContactSection from "@/components/ContactSection";
+import GuestbookSection from "@/components/GuestbookSection";
 import Footer from "@/components/Footer";
 import SectionDivider from "@/components/SectionDivider";
 import GameSection from "@/components/GameSection";
@@ -101,6 +102,7 @@ export default function Home() {
         />
       ))}
 
+      <GuestbookSection />
       <ContactSection />
       <Footer />
       <ScrollToTop />
