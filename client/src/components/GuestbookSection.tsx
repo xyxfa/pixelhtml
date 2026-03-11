@@ -15,6 +15,8 @@ export default function GuestbookSection() {
     const [name, setName] = useState("");
     const [content, setContent] = useState("");
     const [messages, setMessages] = useState<Message[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     useEffect(() => {
         // Load busuanzi script for real passenger counting
@@ -23,17 +25,24 @@ export default function GuestbookSection() {
         script.src = "//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js";
         document.body.appendChild(script);
 
-        // Load messages from local storage
-        const savedMessages = localStorage.getItem("pixel_guestbook");
-        if (savedMessages) {
-            setMessages(JSON.parse(savedMessages));
-        } else {
-            // Mock initial messages
-            setMessages([
-                { id: "1", name: "神秘人", content: "你的像素画太棒了！继续加油！", date: new Date().toLocaleDateString() },
-                { id: "2", name: "像素爱好者", content: "超级喜欢这里星露谷的感觉 🌾", date: new Date().toLocaleDateString() }
-            ]);
-        }
+        // Load messages from backend API
+        const fetchMessages = async () => {
+            try {
+                const response = await fetch("/api/guestbook");
+                if (response.ok) {
+                    const data = await response.json();
+                    setMessages(data);
+                } else {
+                    console.error("Failed to load messages from DB");
+                }
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchMessages();
 
         return () => {
             if (document.body.contains(script)) {
@@ -43,22 +52,35 @@ export default function GuestbookSection() {
         };
     }, []);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim() || !content.trim()) return;
+        if (!name.trim() || !content.trim() || isSubmitting) return;
 
-        const newMessage: Message = {
-            id: Date.now().toString(),
-            name: name.trim(),
-            content: content.trim(),
-            date: new Date().toLocaleDateString()
-        };
+        setIsSubmitting(true);
+        try {
+            const response = await fetch("/api/guestbook", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name.trim(),
+                    content: content.trim()
+                })
+            });
 
-        const newMessages = [newMessage, ...messages];
-        setMessages(newMessages);
-        localStorage.setItem("pixel_guestbook", JSON.stringify(newMessages));
-        setName("");
-        setContent("");
+            if (response.ok) {
+                const newMsg = await response.json();
+                setMessages([newMsg, ...messages]);
+                setName("");
+                setContent("");
+            }
+        } catch (error) {
+            console.error("Error posting message:", error);
+            alert("留言失败，请检查网络或联系网站管理员");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -107,6 +129,7 @@ export default function GuestbookSection() {
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
                                         placeholder="神秘人"
+                                        disabled={isSubmitting}
                                         className="w-full bg-cream border-4 border-wood-dark text-wood-dark px-4 py-3 font-body text-sm focus:outline-none focus:border-coral transition-colors"
                                         required
                                     />
@@ -119,16 +142,18 @@ export default function GuestbookSection() {
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
                                         placeholder="说点什么吧..."
+                                        disabled={isSubmitting}
                                         className="w-full bg-cream border-4 border-wood-dark text-wood-dark px-4 py-3 font-body text-sm focus:outline-none focus:border-coral transition-colors resize-none"
                                         required
                                     />
                                 </div>
                                 <button
                                     type="submit"
-                                    className="pixel-btn bg-coral border-wood-dark mt-2 self-start flex items-center gap-2 text-xs"
+                                    disabled={isSubmitting}
+                                    className={`pixel-btn bg-coral border-wood-dark mt-2 self-start flex items-center gap-2 text-xs ${isSubmitting ? 'opacity-50 cursor-not-allowed transform-none shadow-none text-cream/70' : ''}`}
                                 >
                                     <Send size={14} />
-                                    <span>发送留言</span>
+                                    <span>{isSubmitting ? "发送中..." : "发送留言"}</span>
                                 </button>
                             </form>
                         </div>
@@ -156,7 +181,14 @@ export default function GuestbookSection() {
                                     </div>
                                 </div>
                             ))}
-                            {messages.length === 0 && (
+
+                            {isLoading && (
+                                <div className="text-center py-10 font-pixel text-xs text-wood-dark/50 animate-pulse">
+                                    读取信件中...
+                                </div>
+                            )}
+
+                            {!isLoading && messages.length === 0 && (
                                 <div className="text-center py-10 font-pixel text-xs text-wood-dark/50">
                                     暂无留言...
                                 </div>
