@@ -30,8 +30,8 @@ export default function GuestbookSection() {
         } else {
             // Mock initial messages
             setMessages([
-                { id: "1", name: "Stranger", content: "Your pixel art is amazing! Keep it up!", date: new Date().toLocaleDateString() },
-                { id: "2", name: "PixelLover", content: "Love the Stardew Valley vibes here 🌾", date: new Date().toLocaleDateString() }
+                { id: "1", name: "神秘人", content: "你的像素画太棒了！继续加油！", date: new Date().toLocaleDateString() },
+                { id: "2", name: "像素爱好者", content: "超级喜欢这里星露谷的感觉 🌾", date: new Date().toLocaleDateString() }
             ]);
         }
 
@@ -68,7 +68,7 @@ export default function GuestbookSection() {
                     <div className="flex flex-col items-center mb-16 text-center">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-wood-dark text-cream border-2 border-wood-dark shadow-[4px_4px_0_rgba(0,0,0,0.2)] mb-6 rounded-sm">
                             <Users size={16} />
-                            <span className="font-pixel text-[10px] tracking-widest uppercase">GUESTBOOK</span>
+                            <span className="font-pixel text-[10px] tracking-widest uppercase">留言板</span>
                         </div>
                         <h2 className="typo-game-title text-wood-dark mb-6">留言板</h2>
 
@@ -96,29 +96,29 @@ export default function GuestbookSection() {
                         <div className="wood-panel p-6 bg-wood relative">
                             {/* Tape decoration */}
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-6 bg-cream/30 rotate-2 border border-cream/50" />
-                            
-                            <h3 className="font-pixel text-cream mb-6 text-sm tracking-widest">Leave a message</h3>
+
+                            <h3 className="font-pixel text-cream mb-6 text-sm tracking-widest">写下你的留言</h3>
                             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
                                 <div>
-                                    <label className="block font-pixel text-[10px] text-cream/80 mb-2 uppercase">昵称 / Name</label>
+                                    <label className="block font-pixel text-[10px] text-cream/80 mb-2 uppercase">您的昵称</label>
                                     <input
                                         type="text"
                                         maxLength={20}
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        placeholder="Stranger"
+                                        placeholder="神秘人"
                                         className="w-full bg-cream border-4 border-wood-dark text-wood-dark px-4 py-3 font-body text-sm focus:outline-none focus:border-coral transition-colors"
                                         required
                                     />
                                 </div>
                                 <div>
-                                    <label className="block font-pixel text-[10px] text-cream/80 mb-2 uppercase">内容 / Message</label>
+                                    <label className="block font-pixel text-[10px] text-cream/80 mb-2 uppercase">留言内容</label>
                                     <textarea
                                         rows={4}
                                         maxLength={200}
                                         value={content}
                                         onChange={(e) => setContent(e.target.value)}
-                                        placeholder="Say hello, leave some feedback..."
+                                        placeholder="说点什么吧..."
                                         className="w-full bg-cream border-4 border-wood-dark text-wood-dark px-4 py-3 font-body text-sm focus:outline-none focus:border-coral transition-colors resize-none"
                                         required
                                     />
@@ -128,7 +128,7 @@ export default function GuestbookSection() {
                                     className="pixel-btn bg-coral border-wood-dark mt-2 self-start flex items-center gap-2 text-xs"
                                 >
                                     <Send size={14} />
-                                    <span>POST MESSAGE</span>
+                                    <span>发送留言</span>
                                 </button>
                             </form>
                         </div>
@@ -142,7 +142,7 @@ export default function GuestbookSection() {
                                     {/* Push pin */}
                                     <div className="absolute top-2 left-1/2 -ml-1.5 w-3 h-3 bg-red-500 rounded-full shadow-sm border border-red-800" />
                                     <div className="absolute top-3 left-1/2 -ml-0.5 w-1 h-1 bg-white/50 rounded-full" />
-                                    
+
                                     <div className="mt-2 text-wood-dark font-body text-sm leading-relaxed mb-4">
                                         "{msg.content}"
                                     </div>
@@ -158,7 +158,7 @@ export default function GuestbookSection() {
                             ))}
                             {messages.length === 0 && (
                                 <div className="text-center py-10 font-pixel text-xs text-wood-dark/50">
-                                    No messages yet...
+                                    暂无留言...
                                 </div>
                             )}
                         </div>
