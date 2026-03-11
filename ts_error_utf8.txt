@@ -1,0 +1,56 @@
+﻿client/src/components/Map.tsx(77,23): error TS2688: Cannot find type definition file for '@types/google.maps'.
+client/src/components/Map.tsx(85,21): error TS2304: Cannot find name 'google'.
+client/src/components/Map.tsx(114,19): error TS2503: Cannot find namespace 'google'.
+client/src/components/Map.tsx(116,22): error TS2503: Cannot find namespace 'google'.
+client/src/components/Map.tsx(126,22): error TS2503: Cannot find namespace 'google'.
+client/src/components/ui/accordion.tsx(2,37): error TS2307: Cannot find module '@radix-ui/react-accordion' or its corresponding type declarations.
+client/src/components/ui/alert-dialog.tsx(2,39): error TS2307: Cannot find module '@radix-ui/react-alert-dialog' or its corresponding type declarations.
+client/src/components/ui/aspect-ratio.tsx(1,39): error TS2307: Cannot find module '@radix-ui/react-aspect-ratio' or its corresponding type declarations.
+client/src/components/ui/avatar.tsx(2,34): error TS2307: Cannot find module '@radix-ui/react-avatar' or its corresponding type declarations.
+client/src/components/ui/badge.tsx(2,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/breadcrumb.tsx(2,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/button-group.tsx(1,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/button.tsx(2,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/calendar.tsx(7,60): error TS2307: Cannot find module 'react-day-picker' or its corresponding type declarations.
+client/src/components/ui/calendar.tsx(37,30): error TS7006: Parameter 'date' implicitly has an 'any' type.
+client/src/components/ui/calendar.tsx(126,18): error TS7031: Binding element 'className' implicitly has an 'any' type.
+client/src/components/ui/calendar.tsx(126,29): error TS7031: Binding element 'rootRef' implicitly has an 'any' type.
+client/src/components/ui/calendar.tsx(136,21): error TS7031: Binding element 'className' implicitly has an 'any' type.
+client/src/components/ui/calendar.tsx(136,32): error TS7031: Binding element 'orientation' implicitly has an 'any' type.
+client/src/components/ui/calendar.tsx(157,24): error TS7031: Binding element 'children' implicitly has an 'any' type.
+client/src/components/ui/chart.tsx(2,36): error TS2307: Cannot find module 'recharts' or its corresponding type declarations.
+client/src/components/ui/chart.tsx(181,19): error TS7006: Parameter 'item' implicitly has an 'any' type.
+client/src/components/ui/chart.tsx(182,17): error TS7006: Parameter 'item' implicitly has an 'any' type.
+client/src/components/ui/chart.tsx(182,23): error TS7006: Parameter 'index' implicitly has an 'any' type.
+client/src/components/ui/chart.tsx(279,17): error TS7006: Parameter 'item' implicitly has an 'any' type.
+client/src/components/ui/chart.tsx(280,14): error TS7006: Parameter 'item' implicitly has an 'any' type.
+client/src/components/ui/checkbox.tsx(2,36): error TS2307: Cannot find module '@radix-ui/react-checkbox' or its corresponding type declarations.
+client/src/components/ui/collapsible.tsx(1,39): error TS2307: Cannot find module '@radix-ui/react-collapsible' or its corresponding type declarations.
+client/src/components/ui/command.tsx(4,45): error TS2307: Cannot find module 'cmdk' or its corresponding type declarations.
+client/src/components/ui/context-menu.tsx(2,39): error TS2307: Cannot find module '@radix-ui/react-context-menu' or its corresponding type declarations.
+client/src/components/ui/drawer.tsx(2,43): error TS2307: Cannot find module 'vaul' or its corresponding type declarations.
+client/src/components/ui/dropdown-menu.tsx(2,40): error TS2307: Cannot find module '@radix-ui/react-dropdown-menu' or its corresponding type declarations.
+client/src/components/ui/form.tsx(4,33): error TS2307: Cannot find module '@radix-ui/react-label' or its corresponding type declarations.
+client/src/components/ui/form.tsx(5,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/form.tsx(14,8): error TS2307: Cannot find module 'react-hook-form' or its corresponding type declarations.
+client/src/components/ui/hover-card.tsx(2,37): error TS2307: Cannot find module '@radix-ui/react-hover-card' or its corresponding type declarations.
+client/src/components/ui/input-otp.tsx(2,43): error TS2307: Cannot find module 'input-otp' or its corresponding type declarations.
+client/src/components/ui/input-otp.tsx(45,61): error TS2339: Property 'slots' does not exist on type '{}'.
+client/src/components/ui/item.tsx(2,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/label.tsx(2,33): error TS2307: Cannot find module '@radix-ui/react-label' or its corresponding type declarations.
+client/src/components/ui/menubar.tsx(2,35): error TS2307: Cannot find module '@radix-ui/react-menubar' or its corresponding type declarations.
+client/src/components/ui/navigation-menu.tsx(2,42): error TS2307: Cannot find module '@radix-ui/react-navigation-menu' or its corresponding type declarations.
+client/src/components/ui/progress.tsx(2,36): error TS2307: Cannot find module '@radix-ui/react-progress' or its corresponding type declarations.
+client/src/components/ui/radio-group.tsx(2,38): error TS2307: Cannot find module '@radix-ui/react-radio-group' or its corresponding type declarations.
+client/src/components/ui/resizable.tsx(3,37): error TS2307: Cannot find module 'react-resizable-panels' or its corresponding type declarations.
+client/src/components/ui/scroll-area.tsx(2,38): error TS2307: Cannot find module '@radix-ui/react-scroll-area' or its corresponding type declarations.
+client/src/components/ui/select.tsx(2,34): error TS2307: Cannot find module '@radix-ui/react-select' or its corresponding type declarations.
+client/src/components/ui/separator.tsx(2,37): error TS2307: Cannot find module '@radix-ui/react-separator' or its corresponding type declarations.
+client/src/components/ui/sidebar.tsx(22,22): error TS2307: Cannot find module '@radix-ui/react-slot' or its corresponding type declarations.
+client/src/components/ui/slider.tsx(2,34): error TS2307: Cannot find module '@radix-ui/react-slider' or its corresponding type declarations.
+client/src/components/ui/sonner.tsx(2,54): error TS2307: Cannot find module 'sonner' or its corresponding type declarations.
+client/src/components/ui/switch.tsx(2,34): error TS2307: Cannot find module '@radix-ui/react-switch' or its corresponding type declarations.
+client/src/components/ui/tabs.tsx(2,32): error TS2307: Cannot find module '@radix-ui/react-tabs' or its corresponding type declarations.
+client/src/components/ui/toggle-group.tsx(4,39): error TS2307: Cannot find module '@radix-ui/react-toggle-group' or its corresponding type declarations.
+client/src/components/ui/toggle.tsx(2,34): error TS2307: Cannot find module '@radix-ui/react-toggle' or its corresponding type declarations.
+client/src/i18n.ts(3,30): error TS2307: Cannot find module 'i18next-browser-languagedetector' or its corresponding type declarations.

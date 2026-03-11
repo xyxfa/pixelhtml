@@ -1,0 +1,50 @@
+﻿
+> pixel-portfolio@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+[36mvite v7.3.1 [32mbuilding client environment for production...[36m[39m
+node.exe : [33m[1m(!) %VITE_ANALYTICS_ENDPOINT% is not defined in env v
+ariables found in /index.html. Is the variable mistyped?[22m[39m
+所在位置 行:1 字符: 1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program Files\nodejs/node_mo .
+..
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([33m[1m(!) %V...yped?[22 
+   m[39m:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+[33m[1m(!) %VITE_ANALYTICS_WEBSITE_ID% is not defined in env variables 
+found in /index.html. Is the variable mistyped?[22m[39m
+transforming...
+[32m鉁?[39m 3 modules transformed.
+[31m鉁?[39m Build failed in 58ms
+[31merror during build:
+[31m[@tailwindcss/vite:generate:build] Can't resolve 'tw-animate-css' in
+ 'C:\Users\asus\Desktop\pixel-portfolio\client\src'[31m
+file: [36mC:/Users/asus/Desktop/pixel-portfolio/client/src/index.css[31
+m
+    at finishWithoutResolve (C:\Users\asus\Desktop\pixel-portfolio\node_m
+odules\.pnpm\enhanced-resolve@5.20.0\node_modules\enhanced-resolve\lib\Re
+solver.js:586:18)
+    at C:\Users\asus\Desktop\pixel-portfolio\node_modules\.pnpm\enhanced-
+resolve@5.20.0\node_modules\enhanced-resolve\lib\Resolver.js:678:14
+    at C:\Users\asus\Desktop\pixel-portfolio\node_modules\.pnpm\enhanced-
+resolve@5.20.0\node_modules\enhanced-resolve\lib\Resolver.js:739:5
+    at eval (eval at create (C:\Users\asus\Desktop\pixel-portfolio\node_m
+odules\.pnpm\tapable@2.3.0\node_modules\tapable\lib\HookCodeFactory.js:31
+:10), <anonymous>:15:1)
+    at C:\Users\asus\Desktop\pixel-portfolio\node_modules\.pnpm\enhanced-
+resolve@5.20.0\node_modules\enhanced-resolve\lib\Resolver.js:739:5
+    at eval (eval at create (C:\Users\asus\Desktop\pixel-portfolio\node_m
+odules\.pnpm\tapable@2.3.0\node_modules\tapable\lib\HookCodeFactory.js:31
+:10), <anonymous>:27:1)
+    at C:\Users\asus\Desktop\pixel-portfolio\node_modules\.pnpm\enhanced-
+resolve@5.20.0\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js
+:89:43
+    at C:\Users\asus\Desktop\pixel-portfolio\node_modules\.pnpm\enhanced-
+resolve@5.20.0\node_modules\enhanced-resolve\lib\Resolver.js:739:5
+    at eval (eval at create (C:\Users\asus\Desktop\pixel-portfolio\node_m
+odules\.pnpm\tapable@2.3.0\node_modules\tapable\lib\HookCodeFactory.js:31
+:10), <anonymous>:15:1)
+    at C:\Users\asus\Desktop\pixel-portfolio\node_modules\.pnpm\enhanced-
+resolve@5.20.0\node_modules\enhanced-resolve\lib\Resolver.js:739:5[39m

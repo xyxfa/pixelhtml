@@ -6,7 +6,7 @@
  */
 
 @import "tailwindcss";
-@import "tw-animate-css";
+@plugin "tailwindcss-animate";
 
 /* Import Zpix Pixel Font from CDN */
 @font-face {
