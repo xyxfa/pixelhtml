@@ -1,15 +1,21 @@
 {
+    "site": {
+        "brand": "XYXYA 的开发农场"
+    },
     "nav": {
-        "home": "首 页",
+        "home": "农 场",
         "about": "关 于",
-        "vr": "VR 作品",
+        "notes": "日 志",
+        "vr": "VR 工坊",
         "gamejam": "GameJam",
-        "contact": "联 络"
+        "contact": "信 箱"
     },
     "hero": {
-        "badge": "VR & GameJam 作品集",
-        "title": "欢迎来到我的像素小屋",
-        "subtitle": "这里收录了我在 VR 开发和 GameJam 中的创作历程。每一个作品都凝结了独特的创意与心血。",
+        "badge": "独立游戏开发者 / CREATIVE DEVELOPER",
+        "title": "把想法，做成可玩的世界。",
+        "subtitle": "探索游戏与交互的可能，也记录从灵感到实现的过程。",
+        "cta_notes": "开发手记",
+        "cta_games": "探索作品",
         "cta_vr": "VR 作品",
         "cta_gamejam": "GameJam"
     },

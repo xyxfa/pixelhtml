@@ -1,15 +1,21 @@
 {
+    "site": {
+        "brand": "INDEPENDENT GAME / CREATIVE DEVELOPER"
+    },
     "nav": {
-        "home": "Home",
+        "home": "Farm",
         "about": "About",
-        "vr": "VR Works",
+        "notes": "Journal",
+        "vr": "VR Workshop",
         "gamejam": "GameJam",
-        "contact": "Contact"
+        "contact": "Mailbox"
     },
     "hero": {
-        "badge": "VR & GameJam Portfolio",
-        "title": "Welcome to my Pixel Cabin",
-        "subtitle": "A collection of my VR development and GameJam adventures. Each project is a small journey.",
+        "badge": "XYXYA'S DEV FARM",
+        "title": "Ideas made playable.",
+        "subtitle": "Exploring games and interactions. Notes on the journey from an idea to something you can play.",
+        "cta_notes": "Dev notes",
+        "cta_games": "Selected work",
         "cta_vr": "VR Works",
         "cta_gamejam": "GameJam"
     },

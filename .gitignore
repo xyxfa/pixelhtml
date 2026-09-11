@@ -8,3 +8,7 @@ out/
 *.rar
 视频/
 client/public/videos/
+.node_modules-locked-backup/
+.manus-logs/
+.node_modules-broken-*/
+tmp/

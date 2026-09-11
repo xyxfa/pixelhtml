@@ -4,6 +4,8 @@
  * Aesthetic: Cyberpunk/Retro Pixel Art
  */
 import { useTranslation } from "react-i18next";
+import RoutePreview from "@/components/RoutePreview";
+import "@/components/RoutePreview.css";
 import PixelNav from "@/components/PixelNav";
 import HeroSection from "@/components/HeroSection";
 import XuanjiSection from "@/components/XuanjiSection";
@@ -20,6 +22,7 @@ import { vrGameConfigs, gamejamGameConfigs } from "@/gameData";
 
 export default function Home() {
   const { t } = useTranslation();
+  const routePreview = true;
 
   // Get project data from translations
   const vrProjects = t("vr.projects", { returnObjects: true }) as Array<{
@@ -46,8 +49,21 @@ export default function Home() {
     badge?: string;
   }>;
 
+  const gamejamContent = <div id="gamejam">
+    {gamejamProjects.map((project, i) => <GameSection key={`gj-${i}`} project={project} config={gamejamGameConfigs[i] || gamejamGameConfigs[0]} index={i + vrProjects.length} />)}
+  </div>;
+  const vrContent = <div id="vr">
+    <SectionDivider id="vr" title={t("vr.title")} subtitle={t("vr.subtitle")} accentColor="#a78bfa" />
+    <XuanjiSection />
+    <ReverseSection />
+    {vrProjects.slice(2).map((project, i) => {
+      const realIndex = i + 2;
+      return <GameSection key={`vr-${realIndex}`} project={project} config={vrGameConfigs[realIndex] || vrGameConfigs[vrGameConfigs.length - 1]} index={realIndex} />;
+    })}
+  </div>;
+
   return (
-    <div className="min-h-screen bg-cream text-wood-dark overflow-x-hidden relative">
+    <div className={`min-h-screen bg-cream text-wood-dark overflow-x-hidden relative ${routePreview ? "route-preview-enabled" : ""}`}>
       {/* Warm ink-style multi-layer parallax background */}
       <ParallaxBackground />
 
@@ -55,52 +71,16 @@ export default function Home() {
       <PixelParticles />
 
       <PixelNav />
+      <div className={routePreview ? "connected-world" : undefined}>
+      {routePreview && <img className="connected-world-art" src="/tech-journal/connected-world.png" alt="怪物岛的木桥与蜿蜒道路相连，跨过溪流抵达作品空地" width="1024" height="1536" />}
       <HeroSection />
 
       {/* VR Projects Section Divider */}
-      <SectionDivider
-        id="vr"
-        title={t("vr.title")}
-        subtitle={t("vr.subtitle")}
-        accentColor="#a78bfa"
-      />
+      {routePreview ? <RoutePreview title={t("gamejam.title")} /> : <SectionDivider id="gamejam" title={t("gamejam.title")} subtitle={t("gamejam.subtitle")} accentColor="#fb923c" />}
+      </div>
 
-      {/* Flagship VR Project - Xuanji, now placed under the VR section */}
-      <XuanjiSection />
-
-      {/* Second VR Project - Reverse Scripture, using the same layout as Xuanji */}
-      <ReverseSection />
-
-      {/* Immersive VR Game Sections (skip the first two, used in XuanjiSection & ReverseSection above) */}
-      {vrProjects.slice(2).map((project, i) => {
-        const realIndex = i + 2;
-        return (
-          <GameSection
-            key={`vr-${realIndex}`}
-            project={project}
-            config={vrGameConfigs[realIndex] || vrGameConfigs[vrGameConfigs.length - 1]}
-            index={realIndex}
-          />
-        );
-      })}
-
-      {/* GameJam Projects Section Divider */}
-      <SectionDivider
-        id="gamejam"
-        title={t("gamejam.title")}
-        subtitle={t("gamejam.subtitle")}
-        accentColor="#fb923c"
-      />
-
-      {/* Immersive GameJam Game Sections (still using pixel-card style sections) */}
-      {gamejamProjects.map((project, i) => (
-        <GameSection
-          key={`gj-${i}`}
-          project={project}
-          config={gamejamGameConfigs[i] || gamejamGameConfigs[0]}
-          index={i + vrProjects.length}
-        />
-      ))}
+      {gamejamContent}
+      {vrContent}
 
       <GuestbookSection />
       <ContactSection />

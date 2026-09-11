@@ -1,0 +1,42 @@
+.route-preview-toggle { position: fixed; z-index: 90; bottom: 8.6rem; right: 1.2rem; padding: 10px 14px; border: 1px solid #34433b55; background: #fff9eeef; color: #34433b; font-size: 12px; cursor: pointer; box-shadow: 0 4px 18px #1b1c2814; }
+.route-preview-toggle:focus-visible, .route-map-node a:focus-visible { outline: 3px solid #8462bd; outline-offset: 4px; }
+.route-preview-enabled .crafted-hero::after { height: 220px; background: linear-gradient(transparent 0%, #cbbcf180 55%, #cbbcf1 100%); }
+.route-map { position: relative; background: #cbbcf1; padding: 0 0 60px; }
+.route-map-island { transform: translateY(-64px); margin-bottom: -64px !important; }
+.route-map-island { position: relative; width: min(100%, 860px); margin: 0 auto; }
+.route-map-island > img { display: block; width: 100%; height: auto; image-rendering: pixelated; mask-image: linear-gradient(to bottom, transparent 0%, #00000018 3%, #00000080 8%, black 14%, black 93%, transparent), linear-gradient(to right, transparent, black 9%, black 91%, transparent); mask-composite: intersect; }
+.route-map::after { content: ""; position: absolute; inset: auto 0 0; height: 140px; background: linear-gradient(transparent, #f9f3e5); pointer-events: none; }
+.route-map-node { position: absolute; top: 76%; left: 50%; width: 48%; height: 12%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; text-align: center; color: #3f3655; scroll-margin-top: 160px; }
+.route-node-mark { display: none; }
+.route-map-node > span { font: 9px var(--font-pixel); letter-spacing: .32em; color: #82766f; text-transform: uppercase; }
+.route-map-node h2 { position: relative; font-family: var(--font-pixel), monospace; font-size: clamp(26px, 4.4vw, 52px); font-weight: 400; letter-spacing: .12em; margin: 0; line-height: 1.2; color: #39304d; text-shadow: 1px 1px 0 #fff8e8; }
+.route-map-node a { display: inline-flex; gap: 14px; align-items: center; color: #61554f; border-bottom: 1px solid #8b776888; padding: 4px 0 7px; font: 10px var(--font-pixel), monospace; letter-spacing: .16em; transition: color .2s, gap .2s; }
+.route-node-arrow { font-size: 15px; transition: transform .2s; }
+.route-map-node a:hover { color: #90603c; background: #fff8e8; }
+.route-map-node a:hover { gap: 12px; }
+@media(max-width:600px) { .route-preview-toggle { right: .5rem; bottom: 8rem; font-size: 11px; } .route-map-node { gap: 4px; } .route-map-node > span { font-size: 6px; } .route-map-node a { font-size: 10px; } }
+
+/* A single continuous painting carries both the hero and the VR landing. */
+.connected-world { position: relative; width: 100%; aspect-ratio: 2 / 3; background: #aaa4e5; isolation: isolate; }
+.connected-world-art { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; image-rendering: pixelated; }
+.connected-world::after { content: ""; position: absolute; z-index: 4; left: 0; right: 0; bottom: 0; height: 24%; background: linear-gradient(to bottom, transparent 0%, rgba(249,243,229,.16) 28%, rgba(249,243,229,.82) 74%, #f9f3e5 100%); pointer-events: none; }
+.route-preview-enabled .connected-world .crafted-hero { position: absolute; inset: 0 0 auto; min-height: 0; height: 37%; background: transparent; overflow: visible; }
+.route-preview-enabled .connected-world .crafted-hero::after,
+.connected-world .editorial-hero-bg, .connected-world .editorial-hero-overlay,
+.connected-world .background-preview-switcher { display: none; }
+.connected-world .crafted-hero .editorial-hero-inner { min-height: 0; height: 100%; padding: 90px 20px 20px; }
+.connected-world .crafted-hero .editorial-hero-copy { width: min(760px, 75%); }
+.connected-world .crafted-hero h1 { font-size: clamp(40px, 7vw, 100px); }
+.connected-world .crafted-hero h1 > span { font-size: clamp(18px, 2.2vw, 30px); }
+.connected-world .route-map { position: absolute; top: 72%; left: 0; width: 100%; height: 11%; padding: 0; background: transparent; }
+.connected-world .route-map::after { display: none; }
+.connected-world .route-map-island { width: 100%; height: 100%; transform: none; margin: 0 !important; }
+.connected-world .route-map-node { top: 0; height: 100%; width: 50%; }
+.connected-world .route-map-node { z-index: 5; }
+@media(max-width:600px) {
+ .connected-world { aspect-ratio: auto; height: 1440px; }
+ .connected-world-art { width: 960px; max-width: none; left: 50%; transform: translateX(-50%); }
+ .connected-world .crafted-hero .editorial-hero-copy { width: 100%; }
+ .connected-world .crafted-hero .editorial-hero-inner { padding: 85px 15px 35px; }
+ .connected-world .route-map-node { width: 85%; }
+}

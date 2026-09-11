@@ -2,7 +2,7 @@
  * Footer - Stardew Valley style footer
  * Design: Simple warm footer with pixel font
  */
-import { Gamepad2, Heart } from "lucide-react";
+import { Heart, Sprout } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 export default function Footer() {
@@ -14,9 +14,9 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Logo */}
           <div className="flex items-center gap-2">
-            <Gamepad2 className="w-4 h-4 text-leaf" />
+            <Sprout className="w-4 h-4 text-leaf" />
             <span className="font-pixel text-[8px] text-wood-light">
-              PIXEL PORTFOLIO
+              XYXYA'S DEV FARM
             </span>
           </div>
 
