@@ -13,12 +13,26 @@ export interface GameConfig {
     mainImage?: string; // 主展示图片，如果未设置则使用 bgImage 或 project.image
 }
 
+const autumnMustConfig: GameConfig = {
+    bgImage: "/games/autumn-must/autumn-must-seamless.webp",
+    mainImage: "/games/autumn-must/hero.webp",
+    accentColor: "#fb923c",
+    accentBg: "rgba(251, 146, 60, 0.15)",
+    accentBorder: "rgba(251, 146, 60, 0.5)",
+    galleryImages: [
+        "/games/autumn-must/gallery-1.webp",
+        "/games/autumn-must/gallery-2.webp",
+        "/games/autumn-must/gallery-3.webp",
+        "/games/autumn-must/gallery-4.webp",
+    ],
+};
+
 // VR Projects backgrounds (Video Based)
 export const vrGameConfigs: GameConfig[] = [
     {
         // 璇玑蜀律 (Xuanji Shulü)
         // 使用像素农场平铺背景
-        bgImage: "/bg/xuanjishuyu-pixel-pattern.webp",
+        bgImage: "/bg/xuanji-background-optimized.webp",
         accentColor: "#4ade80", // Leaf Green
         accentBg: "rgba(74, 222, 128, 0.15)",
         accentBorder: "rgba(74, 222, 128, 0.4)",
@@ -27,7 +41,7 @@ export const vrGameConfigs: GameConfig[] = [
     {
         // 逆序圣典 (Reverse Order Scripture)
         // 使用逆序盛典像素图案背景，配色保持与「璇玑蜀律」一致，仅视频资源保持 reverse 视频
-        bgImage: "/bg/nixueshengdian-pixel-bg.webp",
+        bgImage: "/bg/reverse-background-optimized.webp",
         accentColor: "#4ade80", // Leaf Green
         accentBg: "rgba(74, 222, 128, 0.15)",
         accentBorder: "rgba(74, 222, 128, 0.4)",
@@ -37,10 +51,11 @@ export const vrGameConfigs: GameConfig[] = [
 
 // GameJam Projects backgrounds
 export const gamejamGameConfigs: GameConfig[] = [
+    autumnMustConfig,
     {
         // 冒牌上班族 (Fake Office Worker) - 2026 GameJam 作品
-        // 职场主题游戏，使用 office-empire-seamless.png 作为背景
-        bgImage: "/GameJam/Office-Worker/office-empire-seamless.webp",
+        // 职场主题像素图案，与其他 GameJam 背景统一疏密和间距
+        bgImage: "/GameJam/Office-Worker/background-optimized.webp",
         mainImage: "/GameJam/Office-Worker/hero.webp", // 主展示图片
         accentColor: "#fb923c", // 临时配色，待根据实际图片调整
         accentBg: "rgba(251, 146, 60, 0.2)",
@@ -55,8 +70,8 @@ export const gamejamGameConfigs: GameConfig[] = [
     {
         // 未定义行为 (The Undefined) - GameJam 作品
         // 双人PVP像素风格游戏，使用橙色主题（橙色猫角色为主）
-        // 使用横向无缝平铺图作为主要区域背景
-        bgImage: "/GameJam/Undefined-Behavior/undefined-behavior-horizontal-seamless.webp",
+        // 使用统一排版的无缝像素背景
+        bgImage: "/GameJam/Undefined-Behavior/background-optimized.webp",
         mainImage: "/GameJam/Undefined-Behavior/hero.webp", // 主展示图片仍然使用标题图
         accentColor: "#fb923c", // 橙色 (orange-400)，与游戏主角色颜色一致
         accentBg: "rgba(251, 146, 60, 0.2)",
@@ -71,7 +86,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     {
         // Eat is Rule - GameJam 作品
         // 使用主页面大图作为主展示，同时给出四张小图（最后一张是 UI 图）
-        bgImage: "/GameJam/Eat-is-Rule/eat-is-rule-seamless.webp",
+        bgImage: "/GameJam/Eat-is-Rule/background-optimized.webp",
         mainImage: "/GameJam/Eat-is-Rule/hero.webp",
         accentColor: "#fbbf24", // Amber / Gold（与画面偏暖的主色一致）
         accentBg: "rgba(251, 191, 36, 0.15)",
@@ -86,7 +101,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     {
         // Glitch - TapTap 聚光灯 21 天作品
         // 数字世界 & 漏洞主题
-        bgImage: "/GameJam/Glitch/bug-world-seamless.webp",
+        bgImage: "/GameJam/Glitch/background-optimized.webp",
         mainImage: "/GameJam/Glitch/613fd85cf523e71ed931a0c0e565a19a.webp",
         accentColor: "#a855f7", // Purple (Glitch/Digital vibe)
         accentBg: "rgba(168, 85, 247, 0.15)",
@@ -100,7 +115,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     },
     {
         // Synesthesia - 感官交织
-        bgImage: "/GameJam/Synesthesia/synesthesia-green-seamless.webp",
+        bgImage: "/GameJam/Synesthesia/background-optimized.webp",
         mainImage: "/GameJam/Synesthesia/hero.webp",
         accentColor: "#38bdf8", // Sky blue / Cyan
         accentBg: "rgba(56, 189, 248, 0.15)",

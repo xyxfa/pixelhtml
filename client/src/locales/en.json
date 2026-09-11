@@ -19,6 +19,10 @@
         "cta_vr": "VR Works",
         "cta_gamejam": "GameJam"
     },
+    "autumnMust": {
+        "galleryTitle": "Gameplay",
+        "gallery": ["Vehicle assembly", "Mechanical wiring", "Thruster-powered flight", "Robot combat"]
+    },
     "about": {
         "title": "About Me",
         "description": "Hi! I'm a developer passionate about creating immersive experiences. Whether it's the boundless possibilities of VR or the creative constraints of GameJams, I love turning ideas into playable reality.",
@@ -60,11 +64,28 @@
         "banner_text": "Magic Workshop"
     },
     "gamejam": {
+        "videoButton": "Watch full video on Bilibili",
+        "galleryTitle": "Gameplay",
         "title": "GameJam Entries",
         "subtitle": "Games created under 48 hours.",
         "projects": [
             {
+                "id": "autumn-must",
+                "title": "Autumn Must",
+                "description": "Build your own adventure companion on a sunlit island.\nAssemble wooden platforms, wheels, seats and engines into working vehicles, then connect mechanical parts to bring your ideas to life.\nExperiment with thruster-powered flight or take on robots with a hammer as you build, tune and explore.",
+                "tags": [
+                    "3D",
+                    "Sandbox Building",
+                    "Vehicle Assembly",
+                    "Mechanical Wiring",
+                    "Exploration & Combat"
+                ],
+                "year": "2026",
+                "category": "GameJam · Sandbox Builder"
+            },
+            {
                 "title": "Fake Office Worker",
+                "galleryLabels": ["Joining the Company", "Survival Guide", "Keeping Your Balance", "Facing the Boss"],
                 "description": "You play as a small panda who infiltrates a human company to earn money. Wearing an oversized suit and standing on the shoulders of two other small animals, you disguise yourself as an ordinary office worker. Within a workday, you need to control the character by clicking or using the keyboard to maintain \"physical balance\" while working. The longer you work, the greater the challenge—the boss's suspicion will gradually accumulate. Pay attention to the shaking warning icon; it indicates when the boss will appear. Respond to randomly appearing pop-up events and boss questions; your choices will affect the suspicion value. The character's expressions will also reflect their status in real-time, making each response more vivid. Balance operations, seize opportunities, respond cleverly—let's see how long you can last!",
                 "tags": [
                     "Unity",
@@ -79,6 +100,7 @@
             },
             {
                 "title": "Undefined Behavior",
+                "galleryLabels": ["Finding an Opponent", "Head-to-Head Battle", "Platform Combat", "Victory"],
                 "description": "A chaotic, random multiplayer platform fighter.\nEnter a digital colosseum where reality collapses and rules keep rewriting.\nSurvival isn’t just about execution — it’s about adapting to sudden \"glitches\".\nIn crumbling stages, use limited weapons and outplay your opponents.\n\"Be the last one standing.\"",
                 "tags": [
                     "Unity",
@@ -93,6 +115,7 @@
             },
             {
                 "title": "Eat is Rule",
+                "galleryLabels": ["Rule Puzzles", "Level Challenges", "Maze Exploration", "Pause Menu"],
                 "description": "The Creator once defined everything with golden ink — and then left.\nThe ink dried, rules fractured, and the world collapsed into scattered word-shards.\nYou are Xiao Bai, a blank born at a break in logic: no name, no form, no attributes — a loophole.\nBecause you are nothing, you can devour the fallen attribute words and gain their powers.\nPush and recombine the world's logic. Rewrite reality's source code.\nWhen you gather enough truths and reach the Creator's desk, you pick up the pen — now you will write the new rules.",
                 "tags": [
                     "Unity",
@@ -104,6 +127,7 @@
             },
             {
                 "title": "Glitch",
+                "galleryLabels": ["Story Dialogue", "Movement Guide", "World Interaction", "Rhythm Challenge"],
                 "description": "In a digital world dominated by code and logic, you are a tiny bug—an existence forgotten by the system.\nThis world was meant to run perfectly, but every corner hides vulnerabilities.\nThose flaws ignored by programmers, those cracks that shouldn't exist, become your only way to survive.",
                 "tags": [
                     "Unity",
@@ -118,6 +142,7 @@
             },
             {
                 "title": "Synesthesia",
+                "galleryLabels": ["Story Menu", "Character Dialogue", "A Shared Journey", "Cooperative Challenges"],
                 "description": "When the boundaries between hearing and vision are broken, when darkness and silence become each other's guides...\nHow will the hearing-impaired and the visually-impaired use the magic of Synesthesia to complete this impossible collaboration?\nSynesthesia, a wondrous psychological phenomenon where one sensory stimulus spontaneously triggers another—like seeing colors when hearing sounds. In 'Synesthesia', the two protagonists will use their missing senses to pave a wide path for each other.",
                 "tags": [
                     "Unity",

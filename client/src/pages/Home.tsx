@@ -39,6 +39,8 @@ export default function Home() {
   const gamejamProjects = t("gamejam.projects", {
     returnObjects: true,
   }) as Array<{
+    id?: string;
+    galleryLabels?: string[];
     title: string;
     description: string;
     tags: string[];
@@ -49,8 +51,20 @@ export default function Home() {
     badge?: string;
   }>;
 
-  const gamejamContent = <div id="gamejam">
-    {gamejamProjects.map((project, i) => <GameSection key={`gj-${i}`} project={project} config={gamejamGameConfigs[i] || gamejamGameConfigs[0]} index={i + vrProjects.length} />)}
+  const gamejamContent = <div id="gamejam" className="scroll-mt-20">
+    {gamejamProjects.map((project, i) => {
+      const isAutumnMust = project.id === "autumn-must";
+      return <div key={project.id || `gj-${i}`} id={project.id} className="scroll-mt-20">
+        <GameSection
+          project={project}
+          config={gamejamGameConfigs[i] || gamejamGameConfigs[0]}
+          index={i + vrProjects.length - 1}
+          compact={isAutumnMust}
+          galleryTitle={t("gamejam.galleryTitle")}
+          galleryLabels={isAutumnMust ? t("autumnMust.gallery", { returnObjects: true }) as string[] : project.galleryLabels}
+        />
+      </div>;
+    })}
   </div>;
   const vrContent = <div id="vr">
     <SectionDivider id="vr" title={t("vr.title")} subtitle={t("vr.subtitle")} accentColor="#a78bfa" />
@@ -75,8 +89,8 @@ export default function Home() {
       {routePreview && <img className="connected-world-art" src="/tech-journal/connected-world.png" alt="怪物岛的木桥与蜿蜒道路相连，跨过溪流抵达作品空地" width="1024" height="1536" />}
       <HeroSection />
 
-      {/* VR Projects Section Divider */}
-      {routePreview ? <RoutePreview title={t("gamejam.title")} /> : <SectionDivider id="gamejam" title={t("gamejam.title")} subtitle={t("gamejam.subtitle")} accentColor="#fb923c" />}
+      {/* GameJam entrance; Autumn Must is the first entry. */}
+      {routePreview ? <RoutePreview title={t("gamejam.title")} /> : <SectionDivider id="gamejam-heading" title={t("gamejam.title")} subtitle={t("gamejam.subtitle")} accentColor="#fb923c" />}
       </div>
 
       {gamejamContent}

@@ -1,11 +1,13 @@
 import { Calendar, Image as ImageIcon, Play, Pause, Volume2, VolumeX } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import FadeInView from "./FadeInView";
 import StoreBadge from "./StoreBadge";
 import AwardBadge from "./AwardBadge";
 import type { GameConfig } from "../gameData";
 
 interface GameProject {
+    id?: string;
     title: string;
     description: string;
     tags: string[];
@@ -21,9 +23,13 @@ interface GameSectionProps {
     project: GameProject;
     config: GameConfig;
     index: number;
+    compact?: boolean;
+    galleryLabels?: string[];
+    galleryTitle?: string;
 }
 
-export default function GameSection({ project, config, index }: GameSectionProps) {
+export default function GameSection({ project, config, index, compact = false, galleryLabels, galleryTitle = "Gallery" }: GameSectionProps) {
+    const { t } = useTranslation();
     const isVideoProject = !!config.videoUrl;
     const bgRef = useRef<HTMLDivElement>(null);
 
@@ -180,7 +186,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
 
                             {/* Main Title Container - "Cream Sticker" style */}
                             <div
-                                className="bg-cream border-[6px] px-10 py-5 shadow-[10px_10px_0_rgba(0,0,0,0.15)] relative overflow-hidden transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-[1.02]"
+                                className={`bg-cream border-[6px] ${compact ? "px-4 sm:px-10 py-4" : "px-10 py-5"} shadow-[10px_10px_0_rgba(0,0,0,0.15)] relative overflow-hidden transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-[1.02]`}
                                 style={{
                                     borderColor: config.accentColor,
                                 }}
@@ -192,7 +198,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
                                 />
 
                                 <span
-                                    className="typo-game-title text-wood-dark tracking-[0.2em] relative z-10 block"
+                                    className={`${compact ? "font-pixel text-lg sm:text-2xl md:text-3xl font-black leading-relaxed" : "typo-game-title"} text-wood-dark tracking-[0.2em] relative z-10 block`}
                                     style={{
                                         textShadow: `2px 2px 0px rgba(255,255,255,0.8)`,
                                     }}
@@ -249,7 +255,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
 
     return (
         <section
-            className={`relative overflow-hidden border-b-4 border-wood-dark ${isVideoProject ? 'min-h-screen flex items-center py-16' : 'py-24 md:py-32'}`}
+            className={`relative overflow-hidden border-b-4 border-wood-dark ${compact ? 'bg-[#233d34] py-16 md:py-20' : isVideoProject ? 'min-h-screen flex items-center py-16' : 'py-24 md:py-32'}`}
         >
             {/* 滚动背景层：对于有 bgImage 的非视频项目，实现与 VR 游戏一致的滚动视差效果 */}
             {!isVideoProject && (config.bgImage || project.image) && (
@@ -284,7 +290,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
                 For VR/video sections use a clean, flat background to avoid any perceived "loading / flicker" while scrolling. */}
             {!isVideoProject && !config.bgImage && (
                 <>
-                    <div className="absolute inset-0 opacity-80 pointer-events-none" style={{ backgroundImage: bgPattern }} />
+                    <div className={`absolute inset-0 ${compact ? "opacity-[0.08]" : "opacity-80"} pointer-events-none`} style={{ backgroundImage: bgPattern }} />
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent_0%,rgba(0,0,0,0.22)_100%)] pointer-events-none" />
                 </>
             )}
@@ -398,7 +404,7 @@ export default function GameSection({ project, config, index }: GameSectionProps
                 ) : (
                     /* --- STANDARD IMAGE LAYOUT (Image -> Title -> Gallery) --- */
                     <div className="flex flex-col items-center">
-                        <FadeInView className="w-full max-w-4xl mb-12 relative group">
+                        <FadeInView className={`w-full ${compact ? "max-w-3xl mb-8" : "max-w-4xl mb-12"} relative group`}>
                             <div
                                 className="relative aspect-video w-full overflow-hidden border-4 border-white/20 bg-black/50 shadow-2xl"
                                 style={{
@@ -410,20 +416,26 @@ export default function GameSection({ project, config, index }: GameSectionProps
                                 <img
                                     src={config.mainImage || config.bgImage || project.image}
                                     alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                    loading={compact ? "lazy" : undefined}
+                                    decoding={compact ? "async" : undefined}
+                                    width={compact ? 1600 : undefined}
+                                    height={compact ? 900 : undefined}
+                                    className={`w-full h-full object-cover ${compact ? "" : "transition-transform duration-700 group-hover:scale-105"}`}
                                 />
-                                <div className="absolute top-4 left-4 w-16 h-16 border-t-4 border-l-4 border-white/80 z-20" />
-                                <div className="absolute bottom-4 right-4 w-16 h-16 border-b-4 border-r-4 border-white/80 z-20" />
+                                {!compact && <>
+                                    <div className="absolute top-4 left-4 w-16 h-16 border-t-4 border-l-4 border-white/80 z-20" />
+                                    <div className="absolute bottom-4 right-4 w-16 h-16 border-b-4 border-r-4 border-white/80 z-20" />
+                                </>}
                             </div>
                         </FadeInView>
 
                         <HeaderSection />
 
                         {/* Gallery (Only for Non-Video) */}
-                        <FadeInView delay={500} className="w-full max-w-5xl mt-12">
+                        <FadeInView delay={500} className="w-full max-w-4xl mt-4">
                             <div className="flex items-center gap-4 mb-6">
                                 <ImageIcon className="w-5 h-5 text-white/50" />
-                                <span className="text-sm uppercase tracking-widest text-white/50 font-bold">Gallery</span>
+                                <span className="text-sm uppercase tracking-widest text-white/50 font-bold">{galleryTitle}</span>
                                 <div className="h-px flex-1 bg-white/10" />
                             </div>
 
@@ -431,17 +443,44 @@ export default function GameSection({ project, config, index }: GameSectionProps
                                 {(config.galleryImages || Array(4).fill(config.bgImage || project.image)).map((imgSrc, i) => (
                                     <div
                                         key={i}
-                                        className="aspect-video bg-black/50 border border-white/10 overflow-hidden relative group cursor-pointer hover:border-white/50 transition-colors"
+                                        className="aspect-video bg-black/50 border border-white/10 overflow-hidden relative hover:border-white/50 transition-colors"
                                     >
                                         <img
                                             src={imgSrc}
-                                            className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity duration-300 grayscale group-hover:grayscale-0"
-                                            alt={`Gallery visual ${i + 1}`}
+                                            className="w-full h-full object-cover"
+                                            alt={galleryLabels?.[i] || `Gallery visual ${i + 1}`}
+                                            loading="lazy"
+                                            decoding="async"
+                                            width={960}
+                                            height={540}
                                         />
+                                        {galleryLabels?.[i] && <span className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2 pt-6 text-xs text-white">{galleryLabels[i]}</span>}
                                     </div>
                                 ))}
                             </div>
                         </FadeInView>
+
+                        {project.id === "autumn-must" && (
+                            <FadeInView delay={550} className="flex justify-center mt-6">
+                                <a
+                                    href="https://www.bilibili.com/video/BV1QtY76XEZJ/?spm_id_from=333.1387.homepage.video_card.click&vd_source=a6793399ab1f708224386a1ea26cd748"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="group inline-flex items-center gap-3 justify-center px-5 py-2.5 rounded-lg border border-pink-200/45 bg-black/35 text-white/90 font-pixel text-[11px] tracking-[0.12em] shadow-lg backdrop-blur-[2px] hover:bg-pink-400/15 hover:border-pink-200/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-200 transition-colors"
+                                >
+                                    <svg aria-hidden="true" viewBox="0 0 40 40" fill="none" className="h-9 w-9 shrink-0 motion-safe:transition-transform motion-safe:group-hover:-rotate-6 motion-safe:group-hover:-translate-y-0.5">
+                                        <path d="m12 5 6 6m10-6-6 6" stroke="#a5e7f5" strokeWidth="2.5" strokeLinecap="round" />
+                                        <rect x="5" y="11" width="30" height="23" rx="6" fill="#f6a9c5" />
+                                        <rect x="8" y="14" width="24" height="16" rx="3" fill="#263640" />
+                                        <path d="m12 20 4-2m8 0 4 2" stroke="#b9eff8" strokeWidth="2.5" strokeLinecap="round" />
+                                        <path d="m17 24 3 2 3-2" stroke="#fff1f6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                                        <path d="M11 25h2m14 0h2" stroke="#f6a9c5" strokeWidth="2" strokeLinecap="round" />
+                                        <path d="M12 34v2m16-2v2" stroke="#f6a9c5" strokeWidth="3" strokeLinecap="round" />
+                                    </svg>
+                                    {t("gamejam.videoButton")}
+                                </a>
+                            </FadeInView>
+                        )}
 
                         {/* Common: Action Widgets (For non-video, keep centered) */}
                         <FadeInView delay={400} className="flex gap-4 mt-8 flex-wrap justify-center items-stretch">
