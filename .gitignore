@@ -3,8 +3,10 @@ dist/
 .next/
 out/
 *.mp4
+!client/public/ideas/level-select/demo.mp4
 *.mov
 *.zip
+!client/public/downloads/goodhr-share.zip
 *.rar
 视频/
 client/public/videos/

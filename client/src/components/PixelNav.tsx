@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Gamepad2, Globe, Home, Mail, Menu, Sprout, X } from "lucide-react";
+import { BookOpen, Gamepad2, Globe, Home, Lightbulb, Mail, Menu, Sprout, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
 
@@ -13,6 +13,7 @@ export default function PixelNav() {
     { label: t("nav.notes"), href: "/notes", icon: BookOpen },
     { label: t("nav.vr"), href: "#vr", icon: Gamepad2 },
     { label: t("nav.gamejam"), href: "#gamejam", icon: Gamepad2 },
+    { label: t("nav.ideas"), href: "/ideas", icon: Lightbulb },
     { label: t("nav.contact"), href: "#contact", icon: Mail },
   ];
 
@@ -48,7 +49,7 @@ export default function PixelNav() {
               key={href}
               type="button"
               onClick={() => handleClick(href)}
-              aria-current={(href === "/notes" && location.startsWith("/notes")) || (href === "#hero" && location === "/") ? "page" : undefined}
+              aria-current={(href.startsWith("/") && (location === href || location.startsWith(`${href}/`))) || (href === "#hero" && location === "/") ? "page" : undefined}
             ><Icon aria-hidden="true" /><span>{label}</span></button>
           ))}
           <button type="button" onClick={toggleLanguage} className="farm-language"><Globe aria-hidden="true" /> {i18n.language === "en" ? "中" : "EN"}</button>

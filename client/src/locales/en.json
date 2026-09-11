@@ -6,9 +6,14 @@
         "home": "Farm",
         "about": "About",
         "notes": "Journal",
+        "ideas": "Ideas",
         "vr": "VR Workshop",
         "gamejam": "GameJam",
         "contact": "Mailbox"
+    },
+    "ideas": {
+        "description": "Spontaneous ideas and little experiments in progress.",
+        "empty": "Collecting ideas. More to come."
     },
     "hero": {
         "badge": "XYXYA'S DEV FARM",
@@ -72,7 +77,7 @@
             {
                 "id": "autumn-must",
                 "title": "Autumn Must",
-                "description": "Build your own adventure companion on a sunlit island.\nAssemble wooden platforms, wheels, seats and engines into working vehicles, then connect mechanical parts to bring your ideas to life.\nExperiment with thruster-powered flight or take on robots with a hammer as you build, tune and explore.",
+                "description": "A sandbox game built around the freedom to build, create machines and fight.\nCombine blocks, parts and mechanical devices into ground vehicles, flying machines and inventions of your own. Bring them to life with wiring and control systems that turn your ideas into working creations.\nExplore the world in vehicles you built yourself, take up arms against robots, and find your own way to play through experimentation, modifications and adventure.",
                 "tags": [
                     "3D",
                     "Sandbox Building",
