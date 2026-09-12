@@ -3,6 +3,7 @@
  * Design: Warm golden and green sparkles floating gently
  */
 import { useEffect, useState } from "react";
+import { useMotionPreference } from "@/contexts/MotionContext";
 
 interface Particle {
   id: number;
@@ -22,6 +23,7 @@ const COLORS = [
 ];
 
 export default function PixelParticles() {
+  const { running, reduced } = useMotionPreference();
   const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
@@ -37,6 +39,7 @@ export default function PixelParticles() {
     setParticles(generated);
   }, []);
 
+  if (reduced) return null;
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
       {particles.map((p) => (
@@ -51,6 +54,7 @@ export default function PixelParticles() {
             backgroundColor: p.color,
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
+            animationPlayState: running ? "running" : "paused",
           }}
         />
       ))}

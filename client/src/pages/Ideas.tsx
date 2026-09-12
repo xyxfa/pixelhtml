@@ -6,6 +6,7 @@ import PixelNav from "@/components/PixelNav";
 import { ideaProjects, type IdeaLocale, type IdeaProject } from "@/ideaData";
 import "./Ideas.css";
 import RecruitingShowcase, { RecruitingCover } from "./RecruitingShowcase";
+import ThemedMotion, { type MotionTheme } from "@/components/ThemedMotion";
 
 function IdeaVideo({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }) {
   const [playing, setPlaying] = useState(false);
@@ -42,6 +43,8 @@ export default function Ideas() {
   const selected = isDetail ? ideaProjects.find((idea) => idea.slug === params?.slug) : undefined;
   const zh = locale === "zh";
 
+  const theme: MotionTheme = selected?.slug === "level-select" ? "map" : selected?.slug === "ase-shader" ? "shader" : selected?.slug === "ai-recruiting" ? "recruiting" : "ideas";
+
   useEffect(() => {
     const previousTitle = document.title;
     document.title = `${selected ? `${selected.subtitle[locale]} · ` : ""}${t("nav.ideas")} | XYXYA`;
@@ -51,6 +54,7 @@ export default function Ideas() {
 
   return (
     <div className="ideas-page" style={{ backgroundImage: `url(${(selected || ideaProjects[0])?.background})` }}>
+      <ThemedMotion key={theme} theme={theme} />
       <PixelNav />
       <main className="ideas-shell">
         {isDetail && !selected ? (

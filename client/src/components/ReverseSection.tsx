@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import ThemedMotion from "./ThemedMotion";
 import FadeInView from "./FadeInView";
 import { vrGameConfigs } from "../gameData";
 
@@ -75,6 +76,7 @@ export default function ReverseSection() {
       id="reverse"
       className="relative min-h-screen flex items-center border-b-4 border-wood-dark overflow-hidden bg-cream"
     >
+      <ThemedMotion theme="arcane" />
       {/* 背景层：与「璇玑蜀律」保持一致的动态滚动视差效果 */}
       <div
         className="pointer-events-none absolute inset-0"
@@ -92,7 +94,7 @@ export default function ReverseSection() {
       />
 
       {/* Cream + pixel overlay for Stardew-style pixel mood - Reduced opacity for clarity */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-cream/35 to-cream/50" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-cream/35 to-cream/50 pointer-events-none z-[2]" />
 
       <div className="relative z-10 container px-6 py-16 md:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-center">
@@ -201,5 +203,3 @@ export default function ReverseSection() {
     </section>
   );
 }
-
-

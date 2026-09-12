@@ -8,6 +8,7 @@ import RoutePreview from "@/components/RoutePreview";
 import "@/components/RoutePreview.css";
 import PixelNav from "@/components/PixelNav";
 import HeroSection from "@/components/HeroSection";
+import HeroAtmosphere from "@/components/HeroAtmosphere";
 import XuanjiSection from "@/components/XuanjiSection";
 import ReverseSection from "@/components/ReverseSection";
 import ContactSection from "@/components/ContactSection";
@@ -87,6 +88,7 @@ export default function Home() {
       <PixelNav />
       <div className={routePreview ? "connected-world" : undefined}>
       {routePreview && <img className="connected-world-art" src="/tech-journal/connected-world.png" alt="怪物岛的木桥与蜿蜒道路相连，跨过溪流抵达作品空地" width="1024" height="1536" />}
+      {routePreview && <HeroAtmosphere />}
       <HeroSection />
 
       {/* GameJam entrance; Autumn Must is the first entry. */}

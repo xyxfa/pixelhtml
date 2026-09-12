@@ -1,6 +1,7 @@
 import { Mail, Github, MessageSquare, X, Smartphone } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import ThemedMotion from "./ThemedMotion";
 
 const contactLinks = [
   { id: 'email', icon: Mail, label: "Email", value: "2996477751@qq.com", href: "mailto:2996477751@qq.com", color: "coral" },
@@ -37,7 +38,8 @@ export default function ContactSection() {
 
   return (
     <section id="contact" className="py-20 bg-parchment relative">
-      <div className="container">
+      <ThemedMotion theme="contact" />
+      <div className="container relative z-10">
         {/* Section Title */}
         <div className="text-center mb-14">
           <h2 className="font-pixel text-base sm:text-lg text-wood inline-block">

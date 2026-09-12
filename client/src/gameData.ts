@@ -3,7 +3,10 @@
  * Adapted from 78 Project for Pixel Portfolio
  */
 
+import type { MotionTheme } from "./components/ThemedMotion";
+
 export interface GameConfig {
+    motionTheme?: MotionTheme;
     bgImage: string;
     accentColor: string;
     accentBg: string;
@@ -14,6 +17,7 @@ export interface GameConfig {
 }
 
 const autumnMustConfig: GameConfig = {
+    motionTheme: "forge",
     bgImage: "/games/autumn-must/autumn-must-seamless.webp",
     mainImage: "/games/autumn-must/hero.webp",
     accentColor: "#fb923c",
@@ -55,6 +59,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     {
         // 冒牌上班族 (Fake Office Worker) - 2026 GameJam 作品
         // 职场主题像素图案，与其他 GameJam 背景统一疏密和间距
+        motionTheme: "office",
         bgImage: "/GameJam/Office-Worker/background-optimized.webp",
         mainImage: "/GameJam/Office-Worker/hero.webp", // 主展示图片
         accentColor: "#fb923c", // 临时配色，待根据实际图片调整
@@ -71,6 +76,7 @@ export const gamejamGameConfigs: GameConfig[] = [
         // 未定义行为 (The Undefined) - GameJam 作品
         // 双人PVP像素风格游戏，使用橙色主题（橙色猫角色为主）
         // 使用统一排版的无缝像素背景
+        motionTheme: "duel",
         bgImage: "/GameJam/Undefined-Behavior/background-optimized.webp",
         mainImage: "/GameJam/Undefined-Behavior/hero.webp", // 主展示图片仍然使用标题图
         accentColor: "#fb923c", // 橙色 (orange-400)，与游戏主角色颜色一致
@@ -86,6 +92,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     {
         // Eat is Rule - GameJam 作品
         // 使用主页面大图作为主展示，同时给出四张小图（最后一张是 UI 图）
+        motionTheme: "food",
         bgImage: "/GameJam/Eat-is-Rule/background-optimized.webp",
         mainImage: "/GameJam/Eat-is-Rule/hero.webp",
         accentColor: "#fbbf24", // Amber / Gold（与画面偏暖的主色一致）
@@ -101,6 +108,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     {
         // Glitch - TapTap 聚光灯 21 天作品
         // 数字世界 & 漏洞主题
+        motionTheme: "glitch",
         bgImage: "/GameJam/Glitch/background-optimized.webp",
         mainImage: "/GameJam/Glitch/613fd85cf523e71ed931a0c0e565a19a.webp",
         accentColor: "#a855f7", // Purple (Glitch/Digital vibe)
@@ -115,6 +123,7 @@ export const gamejamGameConfigs: GameConfig[] = [
     },
     {
         // Synesthesia - 感官交织
+        motionTheme: "music",
         bgImage: "/GameJam/Synesthesia/background-optimized.webp",
         mainImage: "/GameJam/Synesthesia/hero.webp",
         accentColor: "#38bdf8", // Sky blue / Cyan

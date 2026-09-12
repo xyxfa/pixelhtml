@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import FadeInView from "./FadeInView";
 import StoreBadge from "./StoreBadge";
 import AwardBadge from "./AwardBadge";
+import ThemedMotion from "./ThemedMotion";
+import { GameGalleryMotion } from "./GameMotionScene";
 import type { GameConfig } from "../gameData";
 
 interface GameProject {
@@ -257,6 +259,7 @@ export default function GameSection({ project, config, index, compact = false, g
         <section
             className={`relative overflow-hidden border-b-4 border-wood-dark ${compact ? 'bg-[#233d34] py-16 md:py-20' : isVideoProject ? 'min-h-screen flex items-center py-16' : 'py-24 md:py-32'}`}
         >
+            {config.motionTheme && <ThemedMotion theme={config.motionTheme} />}
             {/* 滚动背景层：对于有 bgImage 的非视频项目，实现与 VR 游戏一致的滚动视差效果 */}
             {!isVideoProject && (config.bgImage || project.image) && (
                 <div
@@ -296,7 +299,7 @@ export default function GameSection({ project, config, index, compact = false, g
             )}
             {/* Cream + pixel overlay for Stardew-style pixel mood - 用于有滚动背景的项目 */}
             {!isVideoProject && config.bgImage && (
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-cream/50 to-cream/60 pointer-events-none z-[1]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-cream/50 to-cream/60 pointer-events-none z-[2]" />
             )}
             {/* VR / Video projects: apply a soft cream + accent overlay over the background image for readability */}
             {isVideoProject && (
@@ -432,11 +435,12 @@ export default function GameSection({ project, config, index, compact = false, g
                         <HeaderSection />
 
                         {/* Gallery (Only for Non-Video) */}
-                        <FadeInView delay={500} className="w-full max-w-4xl mt-4">
+                        <FadeInView delay={500} className="game-gallery w-full max-w-4xl mt-4">
                             <div className="flex items-center gap-4 mb-6">
                                 <ImageIcon className="w-5 h-5 text-white/50" />
                                 <span className="text-sm uppercase tracking-widest text-white/50 font-bold">{galleryTitle}</span>
                                 <div className="h-px flex-1 bg-white/10" />
+                                {config.motionTheme && <GameGalleryMotion theme={config.motionTheme} />}
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

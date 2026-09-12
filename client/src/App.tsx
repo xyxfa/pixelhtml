@@ -7,6 +7,8 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import TechNotes from "./pages/TechNotes";
 import Ideas from "./pages/Ideas";
+import { MotionProvider } from "./contexts/MotionContext";
+import PixelCompanions from "./components/PixelCompanions";
 
 function Router() {
   return (
@@ -27,8 +29,11 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="light">
         <TooltipProvider>
-          <Toaster />
-          <Router />
+          <MotionProvider>
+            <Toaster />
+            <Router />
+            <PixelCompanions />
+          </MotionProvider>
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

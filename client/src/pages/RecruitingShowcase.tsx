@@ -126,7 +126,7 @@ export default function RecruitingShowcase({ locale }: { locale: IdeaLocale }) {
       <div className="recruiting-workbench">
         <header><div><span className="recruiting-micro">{zh ? "流程示意" : "WORKFLOW MAP"} / 0{toolIndex + 1}</span><h3>{tool.summary[locale]}</h3></div><div className="recruiting-stack">{tool.stack.map(tag => <span key={tag}>{tag}</span>)}</div></header>
         <ol className="recruiting-steps">{tool.steps.map((item, index) => <li key={item.title.en}><button aria-current={index === stepIndex ? "step" : undefined} onClick={() => setStepIndex(index)} aria-controls="recruiting-step-detail"><span>0{index + 1}</span><strong>{item.title[locale]}</strong><small>{item.subtitle[locale]}</small></button></li>)}</ol>
-        <div id="recruiting-step-detail" className="recruiting-step-detail" aria-live="polite">
+        <div key={`${toolIndex}-${stepIndex}`} id="recruiting-step-detail" className="recruiting-step-detail" aria-live="polite">
           <div className="recruiting-step-copy"><span className="recruiting-micro">STEP 0{stepIndex + 1}</span><h4>{step.title[locale]}</h4><p>{step.detail[locale]}</p><div className="recruiting-stack">{step.technical.map(tag => <span key={tag}>{tag}</span>)}</div></div>
           <div className="recruiting-io"><div><FileText aria-hidden="true" /><span>{zh ? "输入" : "INPUT"}</span><p>{step.input[locale]}</p></div><ArrowRight className="recruiting-io-arrow" aria-hidden="true" /><div><FolderOpen aria-hidden="true" /><span>{zh ? "输出" : "OUTPUT"}</span><p>{step.output[locale]}</p></div></div>
         </div>

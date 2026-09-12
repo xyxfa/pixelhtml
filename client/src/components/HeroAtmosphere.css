@@ -1,0 +1,36 @@
+.hero-atmosphere { position: absolute; inset: 0 0 auto; height: 70%; z-index: 1; overflow: hidden; pointer-events: none; }
+.hero-atmosphere-canvas { position: absolute; top: 0; left: 0; width: 100%; aspect-ratio: 2 / 3; }
+.hero-mote { position: absolute; display: block; pointer-events: none; }
+.hero-mote > img { width: 100%; height: auto; display: block; image-rendering: pixelated; }
+.hero-mote-cloud { opacity: .78; animation: island-cloud-drift calc(var(--mote-duration) * .7) ease-in-out var(--mote-delay) infinite alternate; }
+.hero-mote-leaf { opacity: 0; animation: island-leaf-drift var(--mote-duration) linear var(--mote-delay) infinite; }
+.hero-mote-portal { opacity: .65; mix-blend-mode: screen; animation: island-portal-glow var(--mote-duration) ease-in-out var(--mote-delay) infinite; }
+.hero-mote-spark { opacity: .5; animation: island-spark-glow var(--mote-duration) ease-in-out var(--mote-delay) infinite; }
+.hero-mote-firefly { opacity: .6; animation: island-firefly-float var(--mote-duration) ease-in-out var(--mote-delay) infinite; }
+.hero-mote-water { mix-blend-mode: screen; animation: island-water-shimmer var(--mote-duration) ease-in-out var(--mote-delay) infinite; }
+.hero-portal-aura { position: absolute; left: 4.2%; top: 24.2%; width: 8%; height: 6%; background: radial-gradient(ellipse, #6befff80, #60caff24 45%, transparent 72%); mix-blend-mode: screen; animation: island-portal-glow 3.6s ease-in-out -1s infinite; }
+.hero-butterfly { will-change: transform; }
+.hero-butterfly > span { position: relative; display: block; aspect-ratio: 1; }
+.hero-butterfly img { position: absolute; width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; animation: island-wing var(--wing-speed, .5s) steps(1, end) var(--wing-phase, 0s) infinite; }
+.hero-butterfly img + img { animation-name: island-wing-folded; }
+.hero-atmosphere[data-running="false"] *, .hero-atmosphere[data-running="false"] { animation-play-state: paused !important; }
+.hero-motion-toggle { position: absolute; z-index: 6; top: 34%; right: 24px; display: inline-flex; align-items: center; gap: 7px; padding: 9px 11px; border: 1px solid #4f587632; border-radius: 3px; background: #e8dff07a; color: #3d5061; font: 10px/1.4 var(--font-body); cursor: pointer; }
+.hero-motion-toggle svg { width: 12px; height: 12px; }
+.hero-motion-toggle:hover { background: #f2e9f6c7; }
+.hero-motion-toggle:focus-visible { outline: 2px solid #405849; outline-offset: 4px; }
+@keyframes island-cloud-drift { from { transform: translate(-38%, 0); } to { transform: translate(38%, -10px); } }
+@keyframes island-leaf-drift { 0% { transform: translate(0, -16px) rotate(-25deg); opacity: 0; } 12%, 75% { opacity: .85; } 35% { transform: translate(35px, 42px) rotate(35deg); } 65% { transform: translate(12px, 94px) rotate(-15deg); } 100% { transform: translate(70px, 155px) rotate(110deg); opacity: 0; } }
+@keyframes island-portal-glow { 0%, 100% { opacity: .3; transform: translateY(3px) scale(.88); } 50% { opacity: .9; transform: translateY(-4px) scale(1.12); } }
+@keyframes island-spark-glow { 0%, 100% { opacity: .15; transform: translateY(8px) scale(.7); } 50% { opacity: .95; transform: translateY(-12px) scale(1.15); } }
+@keyframes island-firefly-float { 0%, 100% { opacity: .15; transform: translate(0, 0); } 35% { opacity: .9; transform: translate(16px, -22px); } 70% { opacity: .55; transform: translate(-12px, -10px); } }
+@keyframes island-water-shimmer { 0%, 100% { opacity: 0; transform: translate(10px, -5px) scale(.5, .35); } 35% { opacity: .85; } 65% { opacity: .55; transform: translate(-8px, 5px) scale(1.5, .55); } }
+@keyframes island-wing { 0%, 49.99% { opacity: 1; } 50%, 100% { opacity: 0; } }
+@keyframes island-wing-folded { 0%, 49.99% { opacity: 0; } 50%, 100% { opacity: 1; } }
+@media (max-width: 600px) {
+  .hero-atmosphere-canvas { width: 960px; left: 50%; transform: translateX(-50%); }
+  .hero-motion-toggle { right: 16px; top: 33.5%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-atmosphere * { animation: none !important; }
+  .hero-mote-leaf, .hero-mote-firefly, .hero-mote-water, .hero-butterfly img + img { display: none; }
+}

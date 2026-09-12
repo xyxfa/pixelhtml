@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Send, Users, Eye } from "lucide-react";
 import FadeInView from "./FadeInView";
+import ThemedMotion from "./ThemedMotion";
 
 interface Message {
     id: string;
@@ -85,6 +86,7 @@ export default function GuestbookSection() {
 
     return (
         <section id="guestbook" className="py-24 md:py-32 bg-cream relative border-t-4 border-wood-dark overflow-hidden">
+            <ThemedMotion theme="guestbook" />
             <div className="container mx-auto px-6 relative z-10">
                 <FadeInView>
                     <div className="flex flex-col items-center mb-16 text-center">
