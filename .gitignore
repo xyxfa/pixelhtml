@@ -5,6 +5,7 @@ out/
 *.mp4
 !client/public/ideas/level-select/demo.mp4
 !client/public/ideas/echo/demo.mp4
+!client/public/ideas/sprout/demo.mp4
 *.mov
 *.zip
 !client/public/downloads/goodhr-share.zip

@@ -77,7 +77,7 @@ function ArticleBody({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }
   const sections = ideaArticles[idea.slug] ?? [];
   const zh = locale === "zh";
   const toc = [
-    { id: "overview", title: zh ? "项目与问题" : "Project & problem" },
+    { id: "overview", title: zh ? "关于这个项目" : "About the project" },
     ...(idea.video ? [{ id: "demo", title: zh ? "运行演示" : "Runtime demo" }] : []),
     ...sections.map(section => ({ id: section.id, title: section.title[locale] })),
     ...(idea.slug === "ai-recruiting" ? [{ id: "implementation", title: zh ? "实现流程" : "Implementation" }] : []),
@@ -90,7 +90,7 @@ function ArticleBody({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }
       <a className="idea-top" href="#article-title"><ArrowUp aria-hidden="true" />{zh ? "回到顶部" : "Back to top"}</a>
     </nav></aside>
     <article className="idea-reading" aria-labelledby="article-title">
-      <section id="overview" className="idea-prose-section"><h2>{zh ? "项目与问题" : "Project & problem"}</h2><p>{idea.description[locale]}</p><ul className="idea-points">{idea.technicalPoints.map((point, index) => <li key={index}>{point[locale]}</li>)}</ul>{idea.repositoryUrl && <a className="idea-repository" href={idea.repositoryUrl} target="_blank" rel="noopener noreferrer"><Github aria-hidden="true" />{zh ? "查看项目源码" : "Project source"}<ArrowUpRight aria-hidden="true" /></a>}</section>
+      <section id="overview" className="idea-prose-section"><h2>{zh ? "关于这个项目" : "About the project"}</h2><p>{idea.description[locale]}</p><ul className="idea-points">{idea.technicalPoints.map((point, index) => <li key={index}>{point[locale]}</li>)}</ul>{idea.repositoryUrl && <a className="idea-repository" href={idea.repositoryUrl} target="_blank" rel="noopener noreferrer"><Github aria-hidden="true" />{zh ? "查看项目源码" : "Project source"}<ArrowUpRight aria-hidden="true" /></a>}</section>
       {idea.video ? <IdeaVideo key={idea.slug} idea={idea} locale={locale} /> : idea.slug === "ai-recruiting" ? <RecruitingCover locale={locale} /> : null}
       {sections.map((section, index) => <section id={section.id} className="idea-prose-section" key={section.id}>
         <div className="idea-section-number">{String(index + 1).padStart(2, "0")}</div><h2>{section.title[locale]}</h2>
@@ -146,7 +146,7 @@ export default function Ideas() {
         <header className="idea-detail-heading" id="article-title"><ArticleMeta idea={selected} locale={locale} /><h1>{selected.title[locale]}</h1><p className="idea-detail-subtitle">{selected.subtitle[locale]}</p><div className="idea-tags">{selected.tags[locale].map(tag => <span key={tag}>{tag}</span>)}</div></header>
         <ArticleBody idea={selected} locale={locale} />
       </> : <>
-        <header className="ideas-heading"><div><p className="ideas-eyebrow"><BookOpen aria-hidden="true" />{zh ? "技术博客" : "ENGINEERING JOURNAL"}</p><h1>{t("nav.ideas")}<span aria-hidden="true"> /</span></h1><p className="ideas-intro">{zh ? "关于游戏、AI，以及把想法做出来的过程。" : "On games, AI, and the work of making ideas real."}</p></div><div className="ideas-count"><strong>{String(ideaProjects.length).padStart(2, "0")}</strong><span>{zh ? "篇实践记录" : "field notes"}</span></div></header>
+        <header className="ideas-heading"><div><p className="ideas-eyebrow"><BookOpen aria-hidden="true" />{zh ? "开发笔记" : "DEV NOTES"}</p><h1>{t("nav.ideas")}<span aria-hidden="true"> /</span></h1><p className="ideas-intro">{zh ? "这里放一些做过的项目和小实验。有运行效果，也有代码、实现思路，以及还想继续改的地方。" : "Projects and small experiments, with demos, code, implementation notes and things I still want to improve."}</p></div><div className="ideas-count"><strong>{String(ideaProjects.length).padStart(2, "0")}</strong><span>{zh ? "篇开发记录" : "project notes"}</span></div></header>
         <div className="ideas-toolbar">
           <div className="ideas-filters" role="group" aria-label={zh ? "文章分类" : "Article categories"}>{categories.map(item => <button key={item.id} aria-pressed={category === item.id} onClick={() => setCategory(item.id)}>{item[locale]}<span>{item.id === "all" ? ideaProjects.length : ideaProjects.filter(idea => idea.category === item.id).length}</span></button>)}</div>
           <div className="ideas-search"><Search aria-hidden="true" /><input type="search" value={query} onChange={event => setQuery(event.target.value)} placeholder={zh ? "搜索文章、技术栈…" : "Search articles, technologies…"} aria-label={zh ? "搜索文章" : "Search articles"} />{query && <button type="button" title={zh ? "清空搜索" : "Clear search"} aria-label={zh ? "清空搜索" : "Clear search"} onClick={() => setQuery("")}><X aria-hidden="true" /></button>}</div>
@@ -157,7 +157,7 @@ export default function Ideas() {
           <div className="idea-card-copy"><ArticleMeta idea={idea} locale={locale} /><h2><Link href={`/ideas/${idea.slug}`}>{idea.title[locale]}</Link></h2><p className="idea-card-summary">{(idea.summary ?? idea.description)[locale]}</p><ul className="idea-technical-points">{idea.technicalPoints.map((point, i) => <li key={i}>{point[locale]}</li>)}</ul><div className="idea-card-bottom"><div className="idea-tags">{idea.tags[locale].map(tag => <span key={tag}>{tag}</span>)}</div><Link href={`/ideas/${idea.slug}`} className="idea-open">{zh ? "阅读全文" : "Read article"}<ArrowUpRight aria-hidden="true" /></Link></div></div>
         </article>)}</div>
         {filtered.length === 0 && <div className="ideas-empty"><Search aria-hidden="true" /><h2>{zh ? "没有找到匹配的文章" : "No matching articles"}</h2><button onClick={() => { setQuery(""); setCategory("all"); }}>{zh ? "查看全部文章" : "Show all articles"}</button></div>}
-        <footer className="ideas-growing"><span>UNITY / AI / INTERACTION</span><p>{zh ? "把实践留下来，把问题写清楚。" : "Document the work. Make the problems clear."}</p></footer>
+        <footer className="ideas-growing"><span>UNITY / AI / INTERACTION</span><p>{zh ? "新的尝试会继续放在这里。" : "More experiments to come."}</p></footer>
       </>}
     </main>
   </div>;

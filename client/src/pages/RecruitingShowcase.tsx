@@ -16,7 +16,7 @@ const workflows = [
       {
         title: copy("岗位与资料", "Requirements & profiles"),
         subtitle: copy("浏览器页面采集", "Browser data collection"),
-        detail: copy("通过站点适配脚本读取候选人卡片和详情，结合所选岗位说明与筛选条件，组织成后续判断的输入。把不同招聘页面的差异收敛到各自的解析逻辑里。", "Site-specific scripts read candidate cards and details. The selected job description and screening criteria are combined with profile information, while each site's layout is handled by its own parser."),
+        detail: copy("通过站点适配脚本读取候选人卡片和详情，结合所选岗位说明与筛选条件，组织成后续判断的输入。每个站点单独处理 DOM 差异，页面改版时也能单独修改。", "Site-specific scripts read candidate cards and details. The selected job description and screening criteria are combined with profile information, while each site's layout is handled by its own parser."),
         input: copy("岗位说明 + 候选人页面", "Job description + candidate page"),
         output: copy("可供判断的候选人资料", "Candidate information ready for screening"),
         technical: ["Content Scripts", "Site Parsers", "DOM Extraction"],
@@ -24,7 +24,7 @@ const workflows = [
       {
         title: copy("AI 初筛", "Initial AI screening"),
         subtitle: copy("先看是否值得深入", "A first pass over the profile"),
-        detail: copy("把岗位要求和候选人概要交给模型，结合规则条件完成初筛。输出通过状态、判断说明和匹配线索，让一次模型调用变成页面可以处理的结果。", "The model compares job requirements with the candidate summary, alongside configured rules. It returns a decision, explanation and matching points that the extension can use."),
+        detail: copy("把岗位要求和候选人概要交给模型，结合规则条件完成初筛。输出通过状态、判断说明和匹配线索，卡片据此显示通过原因和需要继续确认的地方。", "The model compares job requirements with the candidate summary, alongside configured rules. It returns a decision, explanation and matching points that the extension can use."),
         input: copy("岗位要求 + 候选人概要", "Requirements + profile summary"),
         output: copy("初筛状态 + 匹配理由", "Initial decision + matching reasons"),
         technical: ["LLM API", "Job Context", "Structured Output"],
@@ -64,7 +64,7 @@ const workflows = [
       },
       {
         title: copy("附件解析", "Extract attachment text"),
-        subtitle: copy("把文件变成可分类的内容", "Make documents classifiable"),
+        subtitle: copy("提取正文，保留主题和文件名", "Make documents classifiable"),
         detail: copy("提取 PDF、DOCX 等附件的文本，结合邮件主题与文件名作为分类依据。无法提取正文时保留回退路径，继续使用主题和文件名，同时在日志里标明这一情况。", "Text from attachments such as PDF and DOCX is combined with the email subject and filename. If text extraction fails, classification falls back to the subject and filename and records that condition."),
         input: copy("附件 + 邮件主题 + 文件名", "Attachment + subject + filename"),
         output: copy("正文文本与分类上下文", "Document text and classification context"),
@@ -133,11 +133,11 @@ export default function RecruitingShowcase({ locale }: { locale: IdeaLocale }) {
       </div>
     </section>
     <section className="recruiting-engineering" aria-labelledby="recruiting-engineering-title">
-      <div className="ideas-section-label"><h2 id="recruiting-engineering-title">{zh ? "从能运行，到能日常使用" : "Built for everyday use"}</h2><span>{zh ? "实现中关心的三个问题" : "Three engineering priorities"}</span></div>
+      <div className="ideas-section-label"><h2 id="recruiting-engineering-title">{zh ? "日常使用时要处理的几个细节" : "Built for everyday use"}</h2><span>{zh ? "结果展示、解析失败和重复扫描" : "Three engineering priorities"}</span></div>
       <div className="recruiting-engineering-grid">
-        <article><Bot aria-hidden="true" /><h3>{zh ? "AI 结果能接进业务" : "Make model output usable"}</h3><p>{zh ? "将模型判断整理成状态、理由、匹配点与风险，再映射到页面卡片和后续操作。" : "Normalize model decisions into status, reasons, matching points and risks, then map them to cards and follow-up actions."}</p></article>
-        <article><GitBranch aria-hidden="true" /><h3>{zh ? "复杂输入有回退路径" : "Handle imperfect inputs"}</h3><p>{zh ? "站点差异交给适配层；附件正文提取失败时使用主题与文件名，分类再结合明确求职意向校正。" : "Use site adapters for layout differences, subject and filename fallback for unreadable attachments, and explicit application intent for filing corrections."}</p></article>
-        <article><ShieldCheck aria-hidden="true" /><h3>{zh ? "重复执行有状态可查" : "Track repeated runs"}</h3><p>{zh ? "用邮件 UID 与附件哈希记录处理状态，保留校正备份和运行摘要，让补收、重扫、排查都有依据。" : "Track message UIDs and attachment hashes, retain correction backups and produce run summaries to support catch-up and troubleshooting."}</p></article>
+        <article><Bot aria-hidden="true" /><h3>{zh ? "理由直接放回候选人卡片" : "Make model output usable"}</h3><p>{zh ? "卡片显示通过状态、理由、匹配点和风险，使用者不用再翻接口返回。筛选和沟通分别控制。" : "Normalize model decisions into status, reasons, matching points and risks, then map them to cards and follow-up actions."}</p></article>
+        <article><GitBranch aria-hidden="true" /><h3>{zh ? "正文提取失败时怎么办" : "Handle imperfect inputs"}</h3><p>{zh ? "附件读不出正文时，先用主题和文件名继续分类，并把失败记进日志。明确的求职意向再用于校正。" : "Use site adapters for layout differences, subject and filename fallback for unreadable attachments, and explicit application intent for filing corrections."}</p></article>
+        <article><ShieldCheck aria-hidden="true" /><h3>{zh ? "重新扫描也能跳过已收附件" : "Track repeated runs"}</h3><p>{zh ? "邮件 UID 记录处理进度，附件哈希识别重复文件。分类校正前保留备份，结束后输出收集和失败摘要。" : "Track message UIDs and attachment hashes, retain correction backups and produce run summaries to support catch-up and troubleshooting."}</p></article>
       </div>
     </section>
   </div>;

@@ -31,28 +31,121 @@ const media = "/ideas/level-select";
 
 export const ideaProjects: IdeaProject[] = [
   {
+    slug: "sprout-squad",
+    number: "05",
+    kind: "technical",
+    category: "ai",
+    readingMinutes: 14,
+    publishedAt: "2026-09-17",
+    title: {
+      zh: "萌芽小队：几万只小兔，怎么一起移动和战斗",
+      en: "Sprout Squad: moving and fighting with thousands of rabbits",
+    },
+    subtitle: {
+      zh: "记录 SoA、Jobs / Burst、实例渲染和房主同步在项目里的用法",
+      en: "How I use SoA, Jobs / Burst, instancing and host replication",
+    },
+    summary: {
+      zh: "单位多了以后，寻路、避让、绘制和同步都要重新考虑。这篇从数组里的一个下标讲起，记录共享流场、GPU 顶点动画和 22 字节快照怎样配合。",
+      en: "Crowds put pressure on movement, rendering and networking. Starting with an array slot, I look at shared flow fields, GPU vertex motion and 22-byte snapshots.",
+    },
+    description: {
+      zh: "这是一个可以批量生成小兔和小芽的 RTS 演示，支持框选、移动、炮塔战斗和双端联机。我把两段实机录屏剪成了下面的视频，也整理了实现里值得展开的部分：几万个单位如何共享寻路结果，删除单位后怎样维护状态，以及网络慢下来时怎么同步。",
+      en: "This RTS demo supports mass spawning, selection, movement, turret combat and multiplayer. The video combines two recordings. The notes below cover shared pathfinding, identity after deletion and replication under slower transfers.",
+    },
+    technicalPoints: [
+      {
+        zh: "用稳定 ID 处理数组搬迁，按 Job 依赖更新状态",
+        en: "Stable IDs across array moves and explicit job dependencies",
+      },
+      {
+        zh: "共享流场找方向，空间网格查邻居，GPU 批量绘制",
+        en: "Shared flow fields, local grid queries and instance batches",
+      },
+      {
+        zh: "22 字节状态打包，回执控制发送，客户端插值",
+        en: "22-byte unit records, acknowledged sends and client interpolation",
+      },
+    ],
+    tags: {
+      zh: [
+        "Unity / C#",
+        "Jobs / Burst",
+        "Flow Field",
+        "GPU Instancing",
+        "Unity Transport",
+      ],
+      en: [
+        "Unity / C#",
+        "Jobs / Burst",
+        "Flow Field",
+        "GPU Instancing",
+        "Unity Transport",
+      ],
+    },
+    poster: "/ideas/sprout/poster.webp",
+    video: "/ideas/sprout/demo.mp4",
+    duration: "03:20",
+    background: "/ideas/level-select/background.webp",
+    chapters: [
+      { time: 0, title: { zh: "项目与规模", en: "Overview & scale" } },
+      { time: 28, title: { zh: "SoA / Jobs", en: "SoA / Jobs" } },
+      { time: 51, title: { zh: "流场与避让", en: "Flow & avoidance" } },
+      { time: 83, title: { zh: "实例绘制", en: "Instancing" } },
+      { time: 105, title: { zh: "GPU 动画", en: "GPU animation" } },
+      { time: 125, title: { zh: "房主权威", en: "Host authority" } },
+      {
+        time: 146,
+        title: { zh: "快照与插值", en: "Snapshots & interpolation" },
+      },
+      {
+        time: 170,
+        title: { zh: "背压与校验", en: "Backpressure & verification" },
+      },
+    ],
+    gallery: [],
+  },
+  {
     slug: "echo-unity-ai",
     number: "04",
     kind: "technical",
     category: "ai",
-    readingMinutes: 16,
+    readingMinutes: 14,
     publishedAt: "2026-09-17",
     technicalPoints: [
-      { zh: "异步作业幂等 / 取消栅栏，双层行为树协作", en: "Idempotent async jobs, cancellation fences and two behavior-tree layers" },
-      { zh: "DAG 校验 + Utility AI 调度 + 幂等资源预约", en: "DAG validation, utility-based scheduling and idempotent reservations" },
-      { zh: "来源可追溯 RAG、上下文选择与 GF(2) 解谜工具", en: "Source-traceable RAG, context selection and a GF(2) puzzle tool" },
+      {
+        zh: "异步作业处理重试与取消，旧回包按版本拦截",
+        en: "Retryable async jobs, cancellation and stale-response checks",
+      },
+      {
+        zh: "Utility 评分选人，资源预约和行为树负责执行",
+        en: "Utility scoring, resource reservations and behavior-tree execution",
+      },
+      {
+        zh: "记忆保留来源，熄灯游戏用 GF(2) 消元求解",
+        en: "Source-backed memories and a GF(2) Lights Out solver",
+      },
     ],
-    title: { zh: "ECHO：让多 Agent 在 Unity 中协作", en: "ECHO: multi-agent cooperation in Unity" },
-    subtitle: { zh: "从 LLM 异步编排，到 Utility AI、行为树与可追溯记忆", en: "From asynchronous LLM orchestration to utility AI, behavior trees and traceable memory" },
+    title: {
+      zh: "ECHO：让 AI 角色商量，也让它们动起来",
+      en: "ECHO: agents that discuss plans and act on them",
+    },
+    subtitle: {
+      zh: "角色聊天、协作解谜，以及异步模型和实时游戏之间的配合",
+      en: "Conversations, puzzles and coordination between model calls and real-time play",
+    },
     summary: {
-      zh: "模型还在思考，战斗却不能停。从异步协商到任务承诺与资源预约，记录如何把 AI 的建议接入可执行、可中断的游戏系统。",
-      en: "Combat cannot wait for models to think. From asynchronous negotiation to task commitments and resource reservations, connecting AI suggestions to interruptible game execution.",
+      zh: "几个角色讨论完分工，接下来谁执行、谁等资源、谁处理突发情况？我用任务调度和行为树接住模型的建议，也给迟到的回答、取消的任务和角色记忆留了检查入口。",
+      en: "After agents agree on a plan, who acts, who waits for resources and who reacts to danger? Scheduling, behavior trees and state checks turn their proposals into game actions.",
     },
     description: {
-      zh: "将角色对话、来源记忆与多 Agent 协作接入 Unity。模型提出规划与分工，本地调度和行为树负责规则校验、资源约束与现场执行。本文结合运行录屏，拆解从建议到实际行动的工程链路。",
-      en: "Character dialogue, source-backed memory and multi-agent cooperation in Unity. Models propose plans and assignments; local scheduling and behavior trees enforce rules, resources and execution. This article follows the engineering path from suggestions to actions using runtime footage.",
+      zh: "ECHO 做了角色单聊、群聊、记忆检索和多 Agent 协作。我想让这些角色既能交流，也能在 Unity 场景里一起做事。难点在于模型返回得慢，游戏却一直在变：任务可能已经做完，角色可能倒地，玩家也可能重开。因此我把协商、分配和执行分开，下面结合录屏和代码说说具体处理。",
+      en: "ECHO combines character chat, memory retrieval and multi-agent cooperation. I want the characters to talk and work together in Unity. Model responses take time while tasks, actors and levels keep changing, so negotiation, assignment and execution are handled separately.",
     },
-    tags: { zh: ["Unity / C#", "多 Agent", "行为树", "Python", "RAG"], en: ["Unity / C#", "Multi-agent", "Behavior trees", "Python", "RAG"] },
+    tags: {
+      zh: ["Unity / C#", "多 Agent", "行为树", "Python", "RAG"],
+      en: ["Unity / C#", "Multi-agent", "Behavior trees", "Python", "RAG"],
+    },
     poster: "/ideas/echo/poster.webp",
     video: "/ideas/echo/demo.mp4",
     duration: "04:35",
@@ -71,103 +164,259 @@ export const ideaProjects: IdeaProject[] = [
   {
     slug: "level-select",
     category: "interaction",
-    readingMinutes: 7,
+    readingMinutes: 5,
     repositoryUrl: "https://github.com/xyxfa/Kingdom_Select",
     technicalPoints: [
-      { zh: "经纬角配置 → 双层 Transform 解耦相机旋转", en: "Angle configuration and two-level camera rotation" },
-      { zh: "二次贝塞尔曲线 → 50 点 LineRenderer 路径", en: "Quadratic Bezier paths sampled into a 50-point LineRenderer" },
-      { zh: "EventSystem 选择回调与 DOTween 图片过渡", en: "EventSystem selection callbacks and DOTween image transitions" },
+      {
+        zh: "两个方向角配置关卡，两层 Transform 控制相机",
+        en: "Two configured angles and a two-transform camera rig",
+      },
+      {
+        zh: "二次贝塞尔采样后交给 LineRenderer",
+        en: "Quadratic Bezier samples drawn with LineRenderer",
+      },
+      {
+        zh: "EventSystem 处理选择态，DOTween 完成过渡",
+        en: "EventSystem selection and DOTween transitions",
+      },
     ],
     number: "01",
-    title: { zh: "Unity 3D 选关：球面坐标、相机与路径", en: "Unity 3D level selection: coordinates, camera & paths" },
-    subtitle: { zh: "双轴旋转 · 二次贝塞尔 · UI 状态同步", en: "Two-axis rotation · Quadratic Bezier · UI state" },
+    title: {
+      zh: "做一个可以转动的 3D 选关界面",
+      en: "Building a rotating 3D level selector",
+    },
+    subtitle: {
+      zh: "球面上的小浮岛、相机转动和贝塞尔路线",
+      en: "Floating islands, camera rotation and Bezier paths",
+    },
     summary: {
-      zh: "把关卡经纬角映射到双层相机支架，用 DOTween 驱动旋转、用二次贝塞尔生成路径，再通过 EventSystem 联动选中反馈与预览图。拆解空间布局到 UI 呈现的调用链。",
-      en: "Map level angles to a two-level camera rig, animate rotation with DOTween, sample Bezier paths and connect EventSystem selection to previews. Follow the chain from spatial layout to UI feedback.",
+      zh: "把关卡摆成一圈小浮岛，选中时转动镜头、切换图片。界面看起来简单，实际需要让角度配置、相机的两个旋转轴和按钮状态一直对得上。",
+      en: "Levels sit on miniature islands around a sphere. Selection rotates the camera and changes the preview; angle configuration, both camera axes and button state need to stay aligned.",
     },
     description: {
-      zh: "让选关也成为探索的一部分。把不同主题的关卡做成微缩浮岛，围绕球面展开；旋转切换时，场景预览、氛围与选中状态一起变化。再加上昼夜切换和地图入口，让进入关卡前的这一步也有点意思。",
-      en: "Make choosing a level part of the exploration. Miniature biome islands surround a sphere, with scene previews, atmosphere and selection states changing as you rotate between them. A day/night switch and a map view give this small step its own sense of discovery.",
+      zh: "我想把选关做成一个能转着看的小场景：每座岛代表一个关卡，路线把它们连起来，点击后镜头转过去，右侧预览也跟着切换。这个原型还加了昼夜和地图视角。下面主要讲关卡布局、相机旋转和 UI 联动这几部分。",
+      en: "I wanted level selection to feel like a small scene to explore: one island per level, paths between them, and a camera that turns toward the selection as its preview changes. The prototype also includes day/night and map views.",
     },
-    tags: { zh: ["C#", "DOTween", "Bezier", "EventSystem"], en: ["C#", "DOTween", "Bezier", "EventSystem"] },
+    tags: {
+      zh: ["C#", "DOTween", "Bezier", "EventSystem"],
+      en: ["C#", "DOTween", "Bezier", "EventSystem"],
+    },
     poster: `${media}/poster.webp`,
     video: `${media}/demo.mp4`,
     duration: "01:19",
     background: `${media}/background.webp`,
     gallery: [
-      { image: `${media}/sakura.webp`, title: { zh: "樱花浮岛", en: "Sakura island" }, caption: { zh: "用微缩场景呈现关卡的主题。", en: "A miniature scene introduces the level's theme." } },
-      { image: `${media}/snow.webp`, title: { zh: "雪地关卡", en: "Snowy world" }, caption: { zh: "雪景与飘雪粒子呼应选中的世界。", en: "A snowy preview and particles echo the selected world." } },
-      { image: `${media}/ruins.webp`, title: { zh: "遗迹关卡", en: "Rocky ruins" }, caption: { zh: "旋转切换，查看不同关卡的样貌。", en: "Rotate between islands to preview each destination." } },
-      { image: `${media}/desert.webp`, title: { zh: "沙漠关卡", en: "Desert world" }, caption: { zh: "沙丘、仙人掌与暖色地形。", en: "Dunes, cacti and warm terrain colors." } },
-      { image: `${media}/night.webp`, title: { zh: "昼夜切换", en: "Day into night" }, caption: { zh: "切换日月，让同一界面换一种氛围。", en: "Switch the time of day for a different atmosphere." } },
-      { image: `${media}/map.webp`, title: { zh: "地图入口", en: "Map view" }, caption: { zh: "从地图视角查看各个世界的位置。", en: "See the worlds and their locations on a map." } },
+      {
+        image: `${media}/sakura.webp`,
+        title: { zh: "樱花浮岛", en: "Sakura island" },
+        caption: {
+          zh: "用微缩场景呈现关卡的主题。",
+          en: "A miniature scene introduces the level's theme.",
+        },
+      },
+      {
+        image: `${media}/snow.webp`,
+        title: { zh: "雪地关卡", en: "Snowy world" },
+        caption: {
+          zh: "雪景与飘雪粒子呼应选中的世界。",
+          en: "A snowy preview and particles echo the selected world.",
+        },
+      },
+      {
+        image: `${media}/ruins.webp`,
+        title: { zh: "遗迹关卡", en: "Rocky ruins" },
+        caption: {
+          zh: "旋转切换，查看不同关卡的样貌。",
+          en: "Rotate between islands to preview each destination.",
+        },
+      },
+      {
+        image: `${media}/desert.webp`,
+        title: { zh: "沙漠关卡", en: "Desert world" },
+        caption: {
+          zh: "沙丘、仙人掌与暖色地形。",
+          en: "Dunes, cacti and warm terrain colors.",
+        },
+      },
+      {
+        image: `${media}/night.webp`,
+        title: { zh: "昼夜切换", en: "Day into night" },
+        caption: {
+          zh: "切换日月，让同一界面换一种氛围。",
+          en: "Switch the time of day for a different atmosphere.",
+        },
+      },
+      {
+        image: `${media}/map.webp`,
+        title: { zh: "地图入口", en: "Map view" },
+        caption: {
+          zh: "从地图视角查看各个世界的位置。",
+          en: "See the worlds and their locations on a map.",
+        },
+      },
     ],
   },
   {
     slug: "ase-shader",
     category: "graphics",
-    readingMinutes: 9,
+    readingMinutes: 7,
     repositoryUrl: "https://github.com/xyxfa/shader_ASE_test_and_Cool_UI",
     technicalPoints: [
-      { zh: "噪声采样 + smoothstep 溶解与 Emission 边缘", en: "Noise sampling, smoothstep dissolve and emissive edges" },
-      { zh: "双路 UV Panner、纹理扰动与 Stencil 测试", en: "Two UV panners, texture distortion and stencil tests" },
-      { zh: "MaterialPropertyBlock 隔离参数；暂停 UI 独立计时", en: "Per-renderer property blocks and independent UI timing" },
+      {
+        zh: "smoothstep 控制溶解过渡，Emission 单独计算亮边",
+        en: "smoothstep masks and a separate emissive edge",
+      },
+      {
+        zh: "两路 UV 驱动纹理流动，Stencil 控制像素通过",
+        en: "Two moving UV streams and stencil tests",
+      },
+      {
+        zh: "对象级材质参数，暂停时仍可运行的 UI 动画",
+        en: "Per-object material properties and unscaled UI animation",
+      },
     ],
     number: "02",
-    title: { zh: "Unity Shader：溶解、UV 扰动与渲染隔离", en: "Unity shaders: dissolve, UV distortion & render isolation" },
-    subtitle: { zh: "从 ASE 生成代码，到材质参数与 UI 时间域", en: "From ASE-generated code to material properties and UI clocks" },
+    title: {
+      zh: "Unity Shader 练习：从溶解边缘到流动纹理",
+      en: "Unity shader studies: dissolve edges and flowing textures",
+    },
+    subtitle: {
+      zh: "几组 ASE / HLSL 效果，以及配套的材质和 UI 处理",
+      en: "ASE / HLSL effects, material parameters and UI behavior",
+    },
     summary: {
-      zh: "沿源码拆解 smoothstep 溶解、发光边缘、双路 UV 扰动与模板测试，再分析 MaterialPropertyBlock 的参数隔离，以及 timeScale 为零时 UI 如何继续动画。",
-      en: "Trace smoothstep dissolve, emissive edges, dual UV panners and stencil tests in source, then inspect per-renderer parameters and UI animation while timeScale is zero.",
+      zh: "手电筒扫过车身时显形、角色逐渐溶解、纹理沿刀光流动。这组练习里，我把效果拆到遮罩、UV 和渲染状态上，也整理了暂停菜单与材质参数的处理。",
+      en: "A flashlight reveals a car, a character dissolves and textures flow along a slash. These studies cover masks, UVs, render state, material parameters and pause-menu animation.",
     },
     description: {
-      zh: "大三上期末做的一组 Unity / ASE 练习。其中一个重点是用手电筒控制车辆显隐：光束扫过，车身随着照射范围显现；移开光束，车辆逐渐消失，交界处带有青色发光边缘。除此之外，还尝试了卡通材质、角色溶解、地面水渍、双摄像机渲染、后处理和风格化刀光，以及裙摆布料、头发飘动与变色流光。下方收录了完整演示和效果截图。",
-      en: "A collection of Unity / ASE exercises from my third-year first-semester final project. A key experiment uses a flashlight to reveal a vehicle: its body appears within the beam and disappears as the light moves away, with a glowing cyan edge marking the transition. Other studies include toon materials, character dissolve, wet ground, dual-camera rendering, post-processing, stylized slashes, cloth motion and flowing, color-shifting hair. The full demo and selected stills are collected below.",
+      zh: "这是大三上期末做的一组 Unity / ASE 练习。手电筒扫过时，车身会在光束里显现，边缘留下一圈青色发光；其他尝试包括溶解、水渍、刀光和头发布料。做完效果后，我沿生成代码回看计算过程，挑了下面几处展开。",
+      en: "These Unity / ASE studies were made at the end of my third-year first semester. A flashlight reveals a car with a cyan edge; other experiments include dissolves, wet surfaces, slashes, hair and cloth. Here I revisit selected calculations in the generated code.",
     },
-    tags: { zh: ["HLSL", "ASE", "UV / Stencil", "MaterialPropertyBlock"], en: ["HLSL", "ASE", "UV / Stencil", "MaterialPropertyBlock"] },
+    tags: {
+      zh: ["HLSL", "ASE", "UV / Stencil", "MaterialPropertyBlock"],
+      en: ["HLSL", "ASE", "UV / Stencil", "MaterialPropertyBlock"],
+    },
     poster: "/ideas/ase-shader/slash.webp",
     video: "https://www.bilibili.com/video/BV1UfNwzEEtm/",
     bilibiliId: "BV1UfNwzEEtm",
-    externalUrl: "https://www.bilibili.com/video/BV1UfNwzEEtm/?spm_id_from=333.1387.homepage.video_card.click",
+    externalUrl:
+      "https://www.bilibili.com/video/BV1UfNwzEEtm/?spm_id_from=333.1387.homepage.video_card.click",
     duration: "06:56",
     background: "/ideas/ase-shader/background.webp",
     galleryTitle: { zh: "效果切片", en: "Effects up close" },
     gallery: [
-      { image: "/ideas/ase-shader/flashlight-reveal.webp", title: { zh: "手电筒显隐 · 照射显现", en: "Flashlight reveal · In the beam" }, caption: { zh: "01:21 · 光束照到车辆，车身在照射范围内显现。", en: "01:21 · The vehicle becomes visible within the flashlight beam." } },
-      { image: "/ideas/ase-shader/flashlight-hide.webp", title: { zh: "手电筒显隐 · 移开消失", en: "Flashlight reveal · Moving away" }, caption: { zh: "01:23 · 光束移开，车身逐渐隐去，交界处留下青色发光边缘。", en: "01:23 · As the beam moves away, the vehicle disappears along a glowing cyan edge." } },
-      { image: "/ideas/ase-shader/toon.webp", title: { zh: "卡通材质", en: "Toon materials" }, caption: { zh: "把卡通角色放进夜晚街景，观察材质与光照的表现。", en: "Exploring a toon character's materials under nighttime street lighting." } },
-      { image: "/ideas/ase-shader/dissolve.webp", title: { zh: "角色溶解", en: "Character dissolve" }, caption: { zh: "截取角色逐渐消散时，黑白纹理交错的一刻。", en: "A moment of contrasting fragments as the character dissolves." } },
-      { image: "/ideas/ase-shader/wet-ground.webp", title: { zh: "地面水渍", en: "Wet ground" }, caption: { zh: "在路面材质上尝试水渍的范围、边缘和湿润感。", en: "Trying puddle coverage, edges and a wet look on the road material." } },
-      { image: "/ideas/ase-shader/dual-camera.webp", title: { zh: "双摄像机渲染", en: "Dual-camera rendering" }, caption: { zh: "用双摄像机与 Render Texture 尝试角色的青色发光效果。", en: "Using two cameras and a Render Texture to explore a cyan character effect." } },
-      { image: "/ideas/ase-shader/slash.webp", title: { zh: "风格化刀光", en: "Stylized slash" }, caption: { zh: "用红黑色块和破碎边缘勾出挥斩的弧线。", en: "Red-and-black shapes and broken edges trace the arc of a slash." } },
-      { image: "/ideas/ase-shader/hair-cloth.webp", title: { zh: "布料与头发", en: "Cloth & hair" }, caption: { zh: "在动态演示中查看裙摆、头发飘动与变色流光。", en: "Cloth and hair motion, with shifting colors and flowing highlights in the demo." } },
+      {
+        image: "/ideas/ase-shader/flashlight-reveal.webp",
+        title: {
+          zh: "手电筒显隐 · 照射显现",
+          en: "Flashlight reveal · In the beam",
+        },
+        caption: {
+          zh: "01:21 · 光束照到车辆，车身在照射范围内显现。",
+          en: "01:21 · The vehicle becomes visible within the flashlight beam.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/flashlight-hide.webp",
+        title: {
+          zh: "手电筒显隐 · 移开消失",
+          en: "Flashlight reveal · Moving away",
+        },
+        caption: {
+          zh: "01:23 · 光束移开，车身逐渐隐去，交界处留下青色发光边缘。",
+          en: "01:23 · As the beam moves away, the vehicle disappears along a glowing cyan edge.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/toon.webp",
+        title: { zh: "卡通材质", en: "Toon materials" },
+        caption: {
+          zh: "把卡通角色放进夜晚街景，观察材质与光照的表现。",
+          en: "Exploring a toon character's materials under nighttime street lighting.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/dissolve.webp",
+        title: { zh: "角色溶解", en: "Character dissolve" },
+        caption: {
+          zh: "截取角色逐渐消散时，黑白纹理交错的一刻。",
+          en: "A moment of contrasting fragments as the character dissolves.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/wet-ground.webp",
+        title: { zh: "地面水渍", en: "Wet ground" },
+        caption: {
+          zh: "在路面材质上尝试水渍的范围、边缘和湿润感。",
+          en: "Trying puddle coverage, edges and a wet look on the road material.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/dual-camera.webp",
+        title: { zh: "双摄像机渲染", en: "Dual-camera rendering" },
+        caption: {
+          zh: "用双摄像机与 Render Texture 尝试角色的青色发光效果。",
+          en: "Using two cameras and a Render Texture to explore a cyan character effect.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/slash.webp",
+        title: { zh: "风格化刀光", en: "Stylized slash" },
+        caption: {
+          zh: "用红黑色块和破碎边缘勾出挥斩的弧线。",
+          en: "Red-and-black shapes and broken edges trace the arc of a slash.",
+        },
+      },
+      {
+        image: "/ideas/ase-shader/hair-cloth.webp",
+        title: { zh: "布料与头发", en: "Cloth & hair" },
+        caption: {
+          zh: "在动态演示中查看裙摆、头发飘动与变色流光。",
+          en: "Cloth and hair motion, with shifting colors and flowing highlights in the demo.",
+        },
+      },
     ],
   },
   {
     slug: "ai-recruiting",
     category: "automation",
-    readingMinutes: 8,
+    readingMinutes: 6,
     technicalPoints: [
-      { zh: "MV3 Service Worker 与站点解析器分工", en: "MV3 service worker and site-specific parsers" },
-      { zh: "初筛 → 详情二筛 → 结构化结果回写", en: "Initial screening, detail review and structured UI results" },
-      { zh: "岗位级去重键、30 天 TTL 与附件 SHA256 去重", en: "Role-scoped dedupe keys, 30-day TTL and attachment SHA256" },
+      {
+        zh: "站点解析器取资料，MV3 后台代理模型请求",
+        en: "Site parsers extract profiles; an MV3 worker proxies model requests",
+      },
+      {
+        zh: "概要初筛、详情二筛，结果统一成卡片字段",
+        en: "Summary screening, detail review and a consistent card format",
+      },
+      {
+        zh: "按岗位记录候选人，按 UID / SHA256 去重邮件与附件",
+        en: "Role-scoped candidate records and UID / SHA256 mail deduplication",
+      },
     ],
     number: "03",
     kind: "technical",
-    title: { zh: "AI 招聘自动化：两阶段筛选与简历归档", en: "Recruiting automation: two-stage screening & resume filing" },
+    title: {
+      zh: "招聘工具开发记录：筛选候选人与整理简历",
+      en: "Building tools for candidate screening and resume filing",
+    },
     subtitle: {
-      zh: "Chrome MV3 · 结构化模型输出 · 去重与归档",
-      en: "Chrome MV3 · Structured model output · Deduplication & filing",
+      zh: "在公司招聘流程中使用的浏览器扩展和邮件工具",
+      en: "A browser extension and mail tool used in my employer’s workflow",
     },
     summary: {
-      zh: "把岗位与候选人资料组织为两阶段模型输入，将判断归一化后回写页面；通过岗位级处理记录、邮件 UID 和附件哈希减少重复操作。已在任职公司实际使用。",
-      en: "Organize requirements and profiles into two-stage model inputs, normalize decisions for the UI, and use role-scoped records, mail UIDs and attachment hashes to reduce duplicate work. Used at my employer.",
+      zh: "反复打开资料、对照岗位、下载附件，这些步骤适合交给程序。我在 GoodHR 上适配了两阶段筛选，另用 Python 整理邮件简历；重点处理页面差异、结果展示和重复执行。",
+      en: "I adapted GoodHR for two-stage screening and used Python to file emailed resumes, focusing on site differences, readable results and safe repeated runs.",
     },
     description: {
-      zh: "围绕任职公司的实际招聘流程，制作并投入使用了两套工具：浏览器扩展把岗位要求、候选人资料与 AI 判断连接起来，完成初筛、详情二筛和结果回写；邮件工具负责按日期收取简历附件，解析内容、识别求职岗位、去重并归档。把反复点开、判断、下载和整理的步骤交给程序，让招聘同事集中处理需要进一步确认的人选。",
-      en: "I built and put two tools into use around my employer's recruiting workflow. A browser extension connects job requirements and candidate profiles to AI for initial screening, detail screening and results on the page. A mail tool collects resume attachments by date, extracts text, identifies job categories, removes duplicates and files the results. This automates repeated browsing and document handling so recruiters can focus on candidates who need a closer look.",
+      zh: "这两套工具是围绕任职公司的招聘流程做的。浏览器扩展基于 GoodHR 适配，读取岗位和候选人资料，先看概要、再看详情，把判断理由放回页面。邮件工具负责收附件、提取正文、识别岗位并归档。下面记录的是资料怎样进入程序、模型结果怎样显示，以及重复扫描时怎样少做重复工作。",
+      en: "I adapted GoodHR to my employer’s recruiting workflow and built a separate mail-filing tool. The extension reviews summaries and full profiles and displays reasons on the page; the mail tool extracts attachments, identifies roles and files them. These notes cover extraction, result handling and repeated runs.",
     },
-    tags: { zh: ["LLM 应用", "浏览器扩展", "Python", "实际业务落地"], en: ["LLM integration", "Browser extension", "Python", "In real use"] },
+    tags: {
+      zh: ["LLM 应用", "浏览器扩展", "Python", "实际业务落地"],
+      en: ["LLM integration", "Browser extension", "Python", "In real use"],
+    },
     poster: "/ideas/ai-recruiting/cover.webp",
     background: "/ideas/ai-recruiting/background.webp",
     gallery: [],
