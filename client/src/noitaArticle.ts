@@ -173,6 +173,10 @@ export const noitaArticle: IdeaArticleSection[] = [
       {
         "zh": "这个选择带来一个依赖：出口可能离当前格子很远。因此发生变化时，代码会保守地唤醒相邻区块行的所有列，而不是只唤醒周围九块。扫描范围更大，但远处开口能及时影响已经静止的水。地图继续变宽时，行搜索和整行唤醒会成为需要重新评估的成本。",
         "en": "An outlet may be far away, so changes conservatively wake every column in neighboring chunk rows, rather than only nine chunks. This does more scanning but lets distant openings affect settled water. Wider maps would require revisiting both row searches and wake coverage."
+      },
+      {
+        "zh": "也可以用有向图理解这个取舍：定义 A → B 表示 A 的移动判断会读取 B 附近的状态。B 改变后，需要重新检查的是依赖它的 A，相当于沿反向依赖传播失效。当前实现没有真的维护这张图，而是用“三行区块全部唤醒”覆盖可能受影响的范围，省去精确追踪的维护成本。",
+        "en": "A directed dependency graph explains the tradeoff: define A → B when A reads state near B to decide a move. When B changes, its dependents A need reevaluation. The implementation does not store this graph; waking all columns in three chunk rows conservatively covers dependencies without tracking them explicitly."
       }
     ],
     "code": {
@@ -195,7 +199,16 @@ export const noitaArticle: IdeaArticleSection[] = [
         "file": "Assets/SandLab/SandSimulation.cs",
         "line": 72
       }
-    ]
+    ],
+    "image": {
+      "src": "/ideas/noita/graph-wake.png",
+      "width": 1000,
+      "height": 1040,
+      "caption": {
+        "zh": "蓝色箭头表示读取依赖，红色箭头表示变化后的唤醒方向；底部展示代码实际使用的保守范围。",
+        "en": "Blue shows a read dependency; red shows invalidation flowing back to the reader. The bottom grid shows the conservative wake range used in code."
+      }
+    }
   },
   {
     "id": "jobs-rendering",
@@ -265,6 +278,87 @@ export const noitaArticle: IdeaArticleSection[] = [
         "line": 107
       }
     ]
+  },
+  {
+    "id": "wood-graph",
+    "title": {
+      "zh": "把木桥画成图，断裂就容易理解了",
+      "en": "A broken bridge as a graph"
+    },
+    "paragraphs": [
+      {
+        "zh": "把每个木格当作顶点 V，上下左右相邻的木格之间连一条无向边 E，就得到 G = (V, E)。沿着边能互相走到的一组顶点，就是一个连通分量。斜角接触没有边，所以两块只碰到角的木头不会被当作同一结构。",
+        "en": "Treat each wood cell as a vertex V and connect orthogonally adjacent wood cells with undirected edges E. Mutually reachable vertices form a connected component of G = (V, E). Diagonal contact does not connect two pieces."
+      },
+      {
+        "zh": "下图里 A 接触石头，整个分量都能通过木格连到这个支撑。烧掉 X，相当于删除一个顶点和它相连的边，结构分成两组。X 在这个例子中是割点，因为删除它增加了连通分量数；项目没有专门求割点，而是在拓扑改变后重新遍历。",
+        "en": "A touches stone, so its whole component is anchored. Removing X deletes a vertex and its incident edges, splitting the structure. X is an articulation point in this example. The project does not run an articulation-point algorithm; it traverses components again after topology changes."
+      },
+      {
+        "zh": "固定支撑可以看作顶点上的标记：只要分量里有一个木格接触石头、地面或外边界，anchored 就会成立。失去这种连接只表示需要进入下落判断；如果下方被沙堆或其他木结构挡住，这一组仍会停留。这一步把“连通性”和“能否移动”分开了。",
+        "en": "Anchoring is a property accumulated across a component: any wood cell touching stone, the floor or a boundary anchors the group. Losing that connection leads to a separate downward obstruction check. Sand or other wood can still block motion."
+      }
+    ],
+    "image": {
+      "src": "/ideas/noita/graph-components.png",
+      "width": 1000,
+      "height": 1080,
+      "caption": {
+        "zh": "删除 X 后，{A, B, C} 保持固定；{D, E, F} 需要检查下方空间。示意图中的节点位置经过简化。",
+        "en": "After deleting X, {A, B, C} stays anchored; {D, E, F} needs a downward obstruction check. Node spacing is schematic."
+      }
+    },
+    "references": [
+      {
+        "file": "Assets/SandLab/WoodStructureJob.cs",
+        "line": 20
+      }
+    ]
+  },
+  {
+    "id": "wood-bfs",
+    "title": {
+      "zh": "用 BFS 找分量，队列里到底放了什么",
+      "en": "Finding components with a BFS queue"
+    },
+    "paragraphs": [
+      {
+        "zh": "外层扫描找到一个还没有标签的木格，就为它分配新的分量编号，放入 Queue。head 指向下一个待处理元素，count 指向队尾。取出一个木格后检查四个方向，遇到未标记的木格就先写 Labels，再追加到队尾。先标记再入队，能避免有环的结构把同一格反复加入。",
+        "en": "The outer scan starts a new component at an unlabeled wood cell. Queue stores pending cells, head reads the next item and count marks the end. Each of four neighbors is labeled before enqueueing, so cycles cannot repeatedly enqueue the same vertex."
+      },
+      {
+        "zh": "沿用上图，第一轮从 A 出发，依次发现 B、C；队列为空时，这个分量已经找全。随后外层扫描遇到 F，再找出 E、D。源码没有另外保存一份图：数组下标就是顶点编号，四邻接由坐标直接算出来，这是网格上的隐式图。",
+        "en": "In the diagram, the first traversal finds A, B and C. The outer scan then reaches F and finds E and D. No separate graph object is stored: array indices identify vertices and coordinates generate the four neighbors, forming an implicit grid graph."
+      },
+      {
+        "zh": "一次连通遍历的成本是 O(V + E)，四邻接让每个顶点最多只有四条边。不过这不等于整个结构任务只有这点开销：当前代码还会清空标签、扫描 N 个网格位置，并给可下落的分量排序。合起来要看 O(N + V + E + Σ kᵢ log kᵢ)，其中 kᵢ 是各个待移动分量的大小。",
+        "en": "Connectivity traversal costs O(V + E), with degree at most four. The complete task also clears labels, scans N grid positions and sorts movable components. Its bound includes O(N + V + E + Σ kᵢ log kᵢ), where kᵢ is each movable component size."
+      },
+      {
+        "zh": "这里选 BFS，主要因为烧穿和爆破会不断删除连接，重新找分量比较直接。普通并查集擅长把两组合并；连接删掉以后怎样拆开，还要补其他处理。当前地图规模下，先保留这套容易核对的遍历，再根据碎片数量与检测耗时决定是否值得换方案。",
+        "en": "BFS makes it straightforward to rebuild components after burning or explosions delete connections. Ordinary union-find handles merges well, but splitting after deletion needs additional machinery. At this scale, profiling fragment counts and traversal time can guide whether a more complex approach is justified."
+      }
+    ],
+    "code": {
+      "label": {
+        "zh": "源码节选",
+        "en": "Source excerpt"
+      },
+      "value": "if(Labels[start]!=0||!IsWood(Cells[start]))continue;\nid++;int count=1,head=0;Queue[0]=start;Labels[start]=id;bool anchored=false;\nwhile(head<count)\n{\n    int i=Queue[head++],x=i%W,y=i/W;\n    if(y<=3||x<=3||x>=W-4)anchored=true;\n    for(int n=0;n<4;n++)\n    {\n        int xx=x+(n==0?-1:n==1?1:0),yy=y+(n==2?-1:n==3?1:0);\n        if(xx<0||xx>=W||yy<0||yy>=H)continue;\n        int j=xx+yy*W;\n        // Stone contacts anchor the structure; fluids never count as supports.\n        if((Cells[j]&255)==1)anchored=true;\n        if(Labels[j]==0&&IsWood(Cells[j])){Labels[j]=id;Queue[count++]=j;}\n    }\n}",
+      "source": {
+        "file": "Assets/SandLab/WoodStructureJob.cs",
+        "line": 27
+      }
+    },
+    "image": {
+      "src": "/ideas/noita/graph-bfs.png",
+      "width": 1000,
+      "height": 1120,
+      "caption": {
+        "zh": "示例从 A 开始、再从 F 开始；实际起点由网格扫描决定。Labels 在入队时写入，anchored 在遍历中累计。",
+        "en": "The example starts at A and then F; actual starts follow the grid scan. Labels are set on enqueue and anchoring is accumulated during traversal."
+      }
+    }
   },
   {
     "id": "wood-collapse",
