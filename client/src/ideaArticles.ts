@@ -1,5 +1,6 @@
 import type { IdeaLocale } from "./ideaData";
 import { sproutArticle } from "./sproutArticle";
+import { noitaArticle } from "./noitaArticle";
 
 type Copy = Record<IdeaLocale, string>;
 const copy = (zh: string, en: string): Copy => ({ zh, en });
@@ -42,6 +43,7 @@ export interface IdeaArticleSection {
 }
 
 export const ideaArticles: Record<string, IdeaArticleSection[]> = {
+  "noita-simulator": noitaArticle,
   "sprout-squad": sproutArticle,
   "echo-unity-ai": [
     {

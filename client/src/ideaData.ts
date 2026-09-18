@@ -31,6 +31,52 @@ const media = "/ideas/level-select";
 
 export const ideaProjects: IdeaProject[] = [
   {
+    slug: "noita-simulator",
+    number: "06",
+    kind: "technical",
+    category: "graphics",
+    readingMinutes: 14,
+    publishedAt: "2026-09-18",
+    title: { zh: "Noita 的底层复刻", en: "Recreating Noita-style material simulation" },
+    subtitle: {
+      zh: "用 Unity 做像素材料模拟：元胞自动机、活跃区块、Burst 与连锁交互",
+      en: "A Unity material sandbox: cellular automata, active chunks, Burst and chain reactions",
+    },
+    summary: {
+      zh: "沙子怎么堆起来，水为什么能停下来，烧断的木桥又该怎样下落？从一格材料的状态出发，记录规则、更新顺序、休眠唤醒与优化验证。",
+      en: "How does sand pile up, water settle and a burnt bridge fall? Notes on cell state, update order, sleep/wake and checking optimization correctness.",
+    },
+    description: {
+      zh: "这是我用 Unity 做的像素材料沙盒。沙、水、油、火、酸液和冰放在同一张网格里，法杖、导火线与木结构再把它们串成连锁交互。下面的视频结合实机录制、原理示意和源码，展示这些效果怎样从一格格状态变化中产生。",
+      en: "My Unity pixel-material sandbox puts sand, water, oil, fire, acid and ice on one grid. Wands, fuses and wooden structures connect them into chain reactions. The video combines a fresh player recording, diagrams and source excerpts.",
+    },
+    technicalPoints: [
+      { zh: "打包材料状态，控制扫描顺序和密度交换", en: "Packed cell state, explicit scan order and density swaps" },
+      { zh: "活跃区块休眠，处理液体远处出口的唤醒", en: "Sleeping chunks and wake propagation for distant liquid outlets" },
+      { zh: "连通分量处理坍塌，逐步对照验证优化结果", en: "Connected components for collapse and per-step differential validation" },
+    ],
+    tags: {
+      zh: ["Unity / C#", "元胞自动机", "Jobs / Burst", "连通分量", "差分验证"],
+      en: ["Unity / C#", "Cellular automata", "Jobs / Burst", "Connected components", "Differential validation"],
+    },
+    poster: "/ideas/noita/poster.webp",
+    video: "/ideas/noita/demo.mp4",
+    duration: "03:36",
+    background: "/ideas/level-select/background.webp",
+    chapters: [
+      { time: 0, title: { zh: "实机交互", en: "Interactions" } },
+      { time: 10, title: { zh: "元胞与状态", en: "Cells & state" } },
+      { time: 36, title: { zh: "扫描顺序", en: "Update order" } },
+      { time: 62, title: { zh: "休眠与唤醒", en: "Sleep & wake" } },
+      { time: 92, title: { zh: "Burst 与绘制", en: "Burst & rendering" } },
+      { time: 116, title: { zh: "材料反应", en: "Reactions" } },
+      { time: 142, title: { zh: "结构坍塌", en: "Collapse" } },
+      { time: 170, title: { zh: "弹丸与搬运", en: "Projectiles & transfer" } },
+      { time: 192, title: { zh: "优化验证", en: "Validation" } },
+    ],
+    gallery: [],
+  },
+  {
     slug: "sprout-squad",
     number: "05",
     kind: "technical",
