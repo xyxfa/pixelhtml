@@ -451,8 +451,8 @@ export const noitaArticle: IdeaArticleSection[] = [
         "en": "Timing excludes warmup and comparison, and alternates measurement order. Validation code also checks conservation, sleep/wake, collapse and thin-wall collisions. The delivered 2,206 count is cumulative assertions, not distinct test cases; this edit did not rerun the full Unity Editor suite."
       },
       {
-        "zh": "本页视频结合两份独立程序录屏：本次 i9-13980HX / RTX 4060 Laptop 的有效片段，以及交付包中 i7-9700 / RTX 2060 的原始演示。画面标注对应录制设备，保留程序实时面板，原速剪成 1080p60。输出帧率与游戏运行帧率分开看，也不把两台设备的读数混成一次性能测试。",
-        "en": "The video combines valid clips from a fresh i9-13980HX / RTX 4060 Laptop capture and the delivered i7-9700 / RTX 2060 recording. Each scene identifies its capture machine and keeps the live HUD at original speed. Output is 1080p60; output rate and application frame rate are separate, and the two machines are not presented as one benchmark."
+        "zh": "本页视频使用交付包中 i7-9700 / RTX 2060 的完整独立程序录屏，保留 1440×900、60 帧、3 分 30 秒的原始画面和顺序，只添加技术解说。画面中的实时面板用于观察运行状态；视频帧率不等于游戏全程稳定帧率。",
+        "en": "The video uses the complete delivered i7-9700 / RTX 2060 player recording: 1440×900, 60 fps and 3 minutes 30 seconds. Original footage and sequence are preserved, with technical narration added. The live HUD shows runtime behavior; the recording frame rate is not a claim of constant game performance."
       }
     ],
     "code": {
