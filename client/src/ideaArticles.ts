@@ -38,6 +38,7 @@ export interface IdeaArticleSection {
   flow?: Copy[];
   code?: { label: Copy; value: string; source?: SourceReference };
   image?: { src: string; width: number; height: number; caption: Copy };
+  diagram?: "components" | "bfs" | "wake";
   sources?: string[];
   references?: SourceReference[];
 }

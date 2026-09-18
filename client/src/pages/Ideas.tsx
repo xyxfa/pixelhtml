@@ -8,6 +8,7 @@ import { ideaArticles } from "@/ideaArticles";
 import RecruitingShowcase, { RecruitingCover } from "./RecruitingShowcase";
 import ThemedMotion, { type MotionTheme } from "@/components/ThemedMotion";
 import "./Ideas.css";
+import NoitaDiagram from "@/components/NoitaDiagram";
 
 const categories: { id: "all" | IdeaCategory; zh: string; en: string }[] = [
   { id: "all", zh: "全部", en: "All" },
@@ -94,6 +95,7 @@ function ArticleBody({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }
       {idea.video ? <IdeaVideo key={idea.slug} idea={idea} locale={locale} /> : idea.slug === "ai-recruiting" ? <RecruitingCover locale={locale} /> : null}
       {sections.map((section, index) => <section id={section.id} className="idea-prose-section" key={section.id}>
         <div className="idea-section-number">{String(index + 1).padStart(2, "0")}</div><h2>{section.title[locale]}</h2>
+        {section.diagram && <NoitaDiagram kind={section.diagram} locale={locale} />}
         {section.paragraphs.map((paragraph, i) => <p key={i}>{paragraph[locale]}</p>)}
         {section.flow && <ol className="idea-flow">{section.flow.map((step, i) => <li key={i}><span>{String(i + 1).padStart(2, "0")}</span>{step[locale]}{i < section.flow!.length - 1 && <ArrowUpRight aria-hidden="true" />}</li>)}</ol>}
         {section.points && <ul className="idea-points">{section.points.map((point, i) => <li key={i}>{point[locale]}</li>)}</ul>}

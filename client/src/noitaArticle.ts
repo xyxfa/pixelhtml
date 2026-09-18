@@ -200,15 +200,7 @@ export const noitaArticle: IdeaArticleSection[] = [
         "line": 72
       }
     ],
-    "image": {
-      "src": "/ideas/noita/graph-wake.png",
-      "width": 1000,
-      "height": 1040,
-      "caption": {
-        "zh": "蓝色箭头表示读取依赖，红色箭头表示变化后的唤醒方向；底部展示代码实际使用的保守范围。",
-        "en": "Blue shows a read dependency; red shows invalidation flowing back to the reader. The bottom grid shows the conservative wake range used in code."
-      }
-    }
+    "diagram": "wake"
   },
   {
     "id": "jobs-rendering",
@@ -291,7 +283,7 @@ export const noitaArticle: IdeaArticleSection[] = [
         "en": "Treat each wood cell as a vertex V and connect orthogonally adjacent wood cells with undirected edges E. Mutually reachable vertices form a connected component of G = (V, E). Diagonal contact does not connect two pieces."
       },
       {
-        "zh": "下图里 A 接触石头，整个分量都能通过木格连到这个支撑。烧掉 X，相当于删除一个顶点和它相连的边，结构分成两组。X 在这个例子中是割点，因为删除它增加了连通分量数；项目没有专门求割点，而是在拓扑改变后重新遍历。",
+        "zh": "场景里 A 接触石头，整个分量都能通过木格连到这个支撑。烧掉 X，相当于删除一个顶点和它相连的边，结构分成两组。X 在这个例子中是割点，因为删除它增加了连通分量数；项目没有专门求割点，而是在拓扑改变后重新遍历。",
         "en": "A touches stone, so its whole component is anchored. Removing X deletes a vertex and its incident edges, splitting the structure. X is an articulation point in this example. The project does not run an articulation-point algorithm; it traverses components again after topology changes."
       },
       {
@@ -299,21 +291,13 @@ export const noitaArticle: IdeaArticleSection[] = [
         "en": "Anchoring is a property accumulated across a component: any wood cell touching stone, the floor or a boundary anchors the group. Losing that connection leads to a separate downward obstruction check. Sand or other wood can still block motion."
       }
     ],
-    "image": {
-      "src": "/ideas/noita/graph-components.png",
-      "width": 1000,
-      "height": 1080,
-      "caption": {
-        "zh": "删除 X 后，{A, B, C} 保持固定；{D, E, F} 需要检查下方空间。示意图中的节点位置经过简化。",
-        "en": "After deleting X, {A, B, C} stays anchored; {D, E, F} needs a downward obstruction check. Node spacing is schematic."
-      }
-    },
     "references": [
       {
         "file": "Assets/SandLab/WoodStructureJob.cs",
         "line": 20
       }
-    ]
+    ],
+    "diagram": "components"
   },
   {
     "id": "wood-bfs",
@@ -350,15 +334,7 @@ export const noitaArticle: IdeaArticleSection[] = [
         "line": 27
       }
     },
-    "image": {
-      "src": "/ideas/noita/graph-bfs.png",
-      "width": 1000,
-      "height": 1120,
-      "caption": {
-        "zh": "示例从 A 开始、再从 F 开始；实际起点由网格扫描决定。Labels 在入队时写入，anchored 在遍历中累计。",
-        "en": "The example starts at A and then F; actual starts follow the grid scan. Labels are set on enqueue and anchoring is accumulated during traversal."
-      }
-    }
+    "diagram": "bfs"
   },
   {
     "id": "wood-collapse",
