@@ -37,7 +37,7 @@ function IdeaVideo({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }) 
   return <section id="demo" className="idea-demo" aria-label={zh ? "项目演示" : "Project demo"}>
     <div className="idea-video">
       {playing && idea.bilibiliId ? (
-        <iframe src={`https://player.bilibili.com/player.html?bvid=${idea.bilibiliId}&page=1&autoplay=1&muted=0&danmaku=0`}
+        <iframe key={pendingTime.current} src={`https://player.bilibili.com/player.html?bvid=${idea.bilibiliId}&page=1&autoplay=1&muted=0&danmaku=0&t=${pendingTime.current}`}
           title={`${idea.title[locale]} | Bilibili`} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen
           referrerPolicy="strict-origin-when-cross-origin" className="idea-bilibili-player" />
       ) : playing ? (

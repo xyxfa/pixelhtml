@@ -130,7 +130,9 @@ export const ideaProjects: IdeaProject[] = [
       ],
     },
     poster: "/ideas/sprout/poster.webp",
-    video: "/ideas/sprout/demo.mp4",
+    video: "https://www.bilibili.com/video/BV15ier6bEuN/",
+    bilibiliId: "BV15ier6bEuN",
+    externalUrl: "https://www.bilibili.com/video/BV15ier6bEuN/",
     duration: "03:20",
     background: "/ideas/level-select/background.webp",
     chapters: [
@@ -193,8 +195,10 @@ export const ideaProjects: IdeaProject[] = [
       en: ["Unity / C#", "Multi-agent", "Behavior trees", "Python", "RAG"],
     },
     poster: "/ideas/echo/poster.webp",
-    video: "/ideas/echo/demo.mp4",
-    duration: "04:35",
+    video: "https://www.bilibili.com/video/BV1Vier6bEe9/",
+    bilibiliId: "BV1Vier6bEe9",
+    externalUrl: "https://www.bilibili.com/video/BV1Vier6bEe9/",
+    duration: "04:36",
     background: "/ideas/level-select/background.webp",
     chapters: [
       { time: 0, title: { zh: "项目概览", en: "Overview" } },
