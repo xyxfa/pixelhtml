@@ -37,7 +37,7 @@ function IdeaVideo({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }) 
   return <section id="demo" className="idea-demo" aria-label={zh ? "项目演示" : "Project demo"}>
     <div className="idea-video">
       {playing && idea.bilibiliId ? (
-        <iframe key={pendingTime.current} src={`https://player.bilibili.com/player.html?bvid=${idea.bilibiliId}&page=1&autoplay=1&muted=0&danmaku=0&t=${pendingTime.current}`}
+        <iframe key={pendingTime.current} src={`https://player.bilibili.com/player.html?bvid=${idea.bilibiliId}&page=1&autoplay=1&muted=0&danmaku=0&high_quality=1&t=${pendingTime.current}`}
           title={`${idea.title[locale]} | Bilibili`} allow="autoplay; fullscreen; picture-in-picture" allowFullScreen
           referrerPolicy="strict-origin-when-cross-origin" className="idea-bilibili-player" />
       ) : playing ? (
@@ -62,7 +62,7 @@ function IdeaVideo({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }) 
         <span>{timestamp(chapter.time)}</span>{chapter.title[locale]}
       </button>)}
     </div>}
-    {idea.externalUrl && <div className="idea-external-watch"><a href={idea.externalUrl} target="_blank" rel="noopener noreferrer"><Film aria-hidden="true" />{zh ? "在 Bilibili 观看" : "Watch on Bilibili"}<ArrowUpRight aria-hidden="true" /></a></div>}
+    {idea.externalUrl && <div className="idea-external-watch"><span>{zh ? "画面不清晰？可前往 B 站登录后选择画质。" : "Blurry video? Sign in on Bilibili to choose a higher quality."}</span><a href={idea.externalUrl} target="_blank" rel="noopener noreferrer"><Film aria-hidden="true" />{zh ? "去 B 站选择画质" : "Choose quality on Bilibili"}<ArrowUpRight aria-hidden="true" /></a></div>}
   </section>;
 }
 

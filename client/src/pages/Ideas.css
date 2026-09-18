@@ -110,7 +110,8 @@
 .idea-chapters button { display: flex; align-items: baseline; gap: 7px; min-height: 36px; font-size: 11px; color: #587467; cursor: pointer; padding: 5px 0; border-bottom: 2px solid transparent; }
 .idea-chapters button span { font-family: monospace; font-size: 10px; color: #729583; }
 .idea-chapters button[aria-pressed="true"] { color: #205e48; border-color: #44886c; }
-.idea-external-watch { display: flex; justify-content: flex-end; margin-top: 14px; }
+.idea-external-watch { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 4px 16px; margin-top: 14px; }
+.idea-external-watch > span { font-size: 12px; line-height: 1.7; color: #536c60; }
 .idea-external-watch a { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; color: #41705d; padding: 8px 0; }
 .idea-external-watch svg { width: 16px; height: 16px; }
 .idea-video-error { font-size: 13px; padding: 14px 0; color: #904c3e; }
