@@ -46,6 +46,7 @@ function IdeaVideo({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }) 
           onLoadedMetadata={() => { if (video.current) video.current.currentTime = pendingTime.current; }}
           onTimeUpdate={() => setCurrentTime(video.current?.currentTime ?? 0)}>
           <source src={idea.video} type="video/mp4" />
+          {idea.subtitles && <track kind="subtitles" src={idea.subtitles} srcLang="zh" label="中文字幕" default />}
           <a href={idea.video}>{zh ? "打开视频" : "Open video"}</a>
         </video>
       ) : (

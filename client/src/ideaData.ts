@@ -19,6 +19,7 @@ export interface IdeaProject {
   tags: Record<IdeaLocale, string[]>;
   poster: string;
   video?: string;
+  subtitles?: string;
   bilibiliId?: string;
   externalUrl?: string;
   duration?: string;
@@ -61,6 +62,7 @@ export const ideaProjects: IdeaProject[] = [
     },
     poster: "/ideas/noita/poster.webp",
     video: "/ideas/noita/demo.mp4?v=original-voice",
+    subtitles: "/ideas/noita/narration.zh.vtt",
     duration: "03:30",
     background: "/ideas/level-select/background.webp",
     chapters: [

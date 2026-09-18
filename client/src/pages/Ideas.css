@@ -101,6 +101,7 @@
 .idea-video { aspect-ratio: 16 / 9; background: #101b1b; overflow: hidden; border: 1px solid #91a59b; border-radius: 4px; }
 .idea-video video, .idea-video-launch, .idea-video-launch > img, .idea-bilibili-player { width: 100%; height: 100%; display: block; object-fit: contain; }
 .idea-bilibili-player { border: 0; }
+.idea-video video::cue { color: #fff; background-color: #101b1be6; font-family: "Microsoft YaHei", "PingFang SC", sans-serif; font-size: clamp(14px, 1.6vw, 24px); text-shadow: 0 1px 2px #000; }
 .idea-video-launch { position: relative; cursor: pointer; padding: 0; border: 0; }
 .idea-video-play { position: absolute; display: flex; align-items: center; gap: 10px; left: 18px; bottom: 18px; padding: 12px 16px; background: #f6faf7f5; color: #244f40; border: 1px solid #8cac9a; border-radius: 4px; box-shadow: 2px 2px 0 #23443455; }
 .idea-video-play > svg { width: 18px; height: 18px; }
