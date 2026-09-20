@@ -1,12 +1,29 @@
-import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 
-const MotionContext = createContext({ paused: false, reduced: false, running: true, toggle: () => {} });
+const MotionContext = createContext({
+  paused: false,
+  reduced: false,
+  running: true,
+  toggle: () => {},
+});
 
 export function MotionProvider({ children }: { children: ReactNode }) {
   const [paused, setPaused] = useState(() => {
-    try { return localStorage.getItem("pixel-motion-paused") === "true"; } catch { return false; }
+    try {
+      return localStorage.getItem("pixel-motion-paused") === "true";
+    } catch {
+      return false;
+    }
   });
-  const [reduced, setReduced] = useState(() => window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  const [reduced, setReduced] = useState(
+    () => window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const [visible, setVisible] = useState(() => !document.hidden);
 
   useEffect(() => {
@@ -21,12 +38,28 @@ export function MotionProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const toggle = () => setPaused(value => {
-    try { localStorage.setItem("pixel-motion-paused", String(!value)); } catch { /* Storage is optional. */ }
-    return !value;
-  });
+  const toggle = () =>
+    setPaused(value => {
+      try {
+        localStorage.setItem("pixel-motion-paused", String(!value));
+      } catch {
+        /* Storage is optional. */
+      }
+      return !value;
+    });
 
-  return <MotionContext.Provider value={{ paused, reduced, running: !paused && !reduced && visible, toggle }}>{children}</MotionContext.Provider>;
+  return (
+    <MotionContext.Provider
+      value={{
+        paused,
+        reduced,
+        running: !paused && !reduced && visible,
+        toggle,
+      }}
+    >
+      {children}
+    </MotionContext.Provider>
+  );
 }
 
 export const useMotionPreference = () => useContext(MotionContext);

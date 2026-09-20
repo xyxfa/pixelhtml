@@ -9,6 +9,7 @@ import TechNotes from "./pages/TechNotes";
 import Ideas from "./pages/Ideas";
 import { MotionProvider } from "./contexts/MotionContext";
 import PixelCompanions from "./components/PixelCompanions";
+import { Analytics } from "@vercel/analytics/react";
 
 function Router() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Toaster />
             <Router />
             <PixelCompanions />
+            <Analytics />
           </MotionProvider>
         </TooltipProvider>
       </ThemeProvider>

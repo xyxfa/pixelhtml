@@ -4,31 +4,59 @@ import { useTranslation } from "react-i18next";
 import ThemedMotion from "./ThemedMotion";
 
 const contactLinks = [
-  { id: 'email', icon: Mail, label: "Email", value: "2996477751@qq.com", href: "mailto:2996477751@qq.com", color: "coral" },
-  { id: 'github', icon: Github, label: "GitHub", value: "github.com/xyxfa", href: "https://github.com/xyxfa", color: "leaf" },
-  { id: 'wechat', icon: MessageSquare, label: "WeChat", value: "点击扫码 (Click to Scan)", href: "#wechat", color: "sky" },
-  { id: 'qq', icon: Smartphone, label: "QQ", value: "点击扫码 (Click to Scan)", href: "#qq", color: "lavender" },
+  {
+    id: "email",
+    icon: Mail,
+    label: "Email",
+    value: "2996477751@qq.com",
+    href: "mailto:2996477751@qq.com",
+    color: "coral",
+  },
+  {
+    id: "github",
+    icon: Github,
+    label: "GitHub",
+    value: "github.com/xyxfa",
+    href: "https://github.com/xyxfa",
+    color: "leaf",
+  },
+  {
+    id: "wechat",
+    icon: MessageSquare,
+    label: "WeChat",
+    value: "点击扫码 (Click to Scan)",
+    href: "#wechat",
+    color: "sky",
+  },
+  {
+    id: "qq",
+    icon: Smartphone,
+    label: "QQ",
+    value: "点击扫码 (Click to Scan)",
+    href: "#qq",
+    color: "lavender",
+  },
 ];
 
-type ModalType = 'wechat' | 'qq' | null;
+type ModalType = "wechat" | "qq" | null;
 
 export default function ContactSection() {
   const { t } = useTranslation();
   const [activeModal, setActiveModal] = useState<ModalType>(null);
 
   const getModalContent = () => {
-    if (activeModal === 'wechat') {
+    if (activeModal === "wechat") {
       return {
         title: "扫码加我微信",
         imgSrc: "/vx-qr.png",
-        note: "请在验证消息中备注 “来自作品集” (Please mention \"From Portfolio\")"
+        note: '请在验证消息中备注 “来自作品集” (Please mention "From Portfolio")',
       };
     }
-    if (activeModal === 'qq') {
+    if (activeModal === "qq") {
       return {
         title: "扫码加我 QQ",
         imgSrc: "/qq-qr.png",
-        note: "请在验证消息中备注 “来自作品集” (Please mention \"From Portfolio\")"
+        note: '请在验证消息中备注 “来自作品集” (Please mention "From Portfolio")',
       };
     }
     return null;
@@ -45,18 +73,22 @@ export default function ContactSection() {
           <h2 className="font-pixel text-base sm:text-lg text-wood inline-block">
             {t("contact.title")}
           </h2>
-          <p className="font-body text-sm text-wood-light mt-2">{t("contact.subtitle")}</p>
+          <p className="font-body text-sm text-wood-light mt-2">
+            {t("contact.subtitle")}
+          </p>
         </div>
 
         {/* Contact Cards */}
         <div className="max-w-2xl mx-auto space-y-4">
-          {contactLinks.map((link) => {
+          {contactLinks.map(link => {
             const Icon = link.icon;
-            const isModal = link.id === 'wechat' || link.id === 'qq';
+            const isModal = link.id === "wechat" || link.id === "qq";
 
             const content = (
               <>
-                <div className={`w-10 h-10 flex items-center justify-center border-2 border-${link.color} bg-${link.color}/10 text-${link.color}`}>
+                <div
+                  className={`w-10 h-10 flex items-center justify-center border-2 border-${link.color} bg-${link.color}/10 text-${link.color}`}
+                >
                   <Icon className="w-5 h-5" />
                 </div>
                 <div className="flex-1">
@@ -120,9 +152,7 @@ export default function ContactSection() {
             onClick={() => setActiveModal(null)}
           />
 
-          <div
-            className="relative w-full max-w-xs animate-in zoom-in-95 fade-in duration-300 pointer-events-auto"
-          >
+          <div className="relative w-full max-w-xs animate-in zoom-in-95 fade-in duration-300 pointer-events-auto">
             <div className="wood-panel p-6 bg-white flex flex-col items-center">
               <button
                 onClick={() => setActiveModal(null)}
@@ -132,7 +162,9 @@ export default function ContactSection() {
               </button>
 
               <div className="mb-4 text-center">
-                <h3 className="font-pixel text-xs text-wood mb-2">{modalData.title}</h3>
+                <h3 className="font-pixel text-xs text-wood mb-2">
+                  {modalData.title}
+                </h3>
                 <div className="h-px w-12 bg-wood/20 mx-auto" />
               </div>
 

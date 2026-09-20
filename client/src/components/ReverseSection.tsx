@@ -37,15 +37,11 @@ export default function ReverseSection() {
   const renderRichDescription = (text: string) => {
     const sentences = text
       .split(/(?<=[。！？!?.])\s*/)
-      .map((s) => s.trim())
+      .map(s => s.trim())
       .filter(Boolean);
 
     if (sentences.length === 0) {
-      return (
-        <p className="typo-game-desc text-wood-dark">
-          {text}
-        </p>
-      );
+      return <p className="typo-game-desc text-wood-dark">{text}</p>;
     }
 
     const [lead, second, ...rest] = sentences;
@@ -119,7 +115,7 @@ export default function ReverseSection() {
                 {renderRichDescription(project.description)}
 
                 <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
+                  {project.tags.map(tag => (
                     <span key={tag} className="pixel-tag">
                       #{tag}
                     </span>
@@ -133,35 +129,35 @@ export default function ReverseSection() {
                     </span>
                   )}
                   {Array.isArray(project.award)
-                    ? project.award.map((award) => (
-                      <span
-                        key={award}
-                        className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
-                        style={{
-                          fontSize: '13px',
-                          padding: '6px 12px',
-                          borderWidth: '3px',
-                          boxShadow: '3px 3px 0 0 rgba(0,0,0,0.3)',
-                          fontWeight: '600',
-                        }}
-                      >
-                        {award}
-                      </span>
-                    ))
+                    ? project.award.map(award => (
+                        <span
+                          key={award}
+                          className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
+                          style={{
+                            fontSize: "13px",
+                            padding: "6px 12px",
+                            borderWidth: "3px",
+                            boxShadow: "3px 3px 0 0 rgba(0,0,0,0.3)",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {award}
+                        </span>
+                      ))
                     : project.award && (
-                      <span
-                        className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
-                        style={{
-                          fontSize: '13px',
-                          padding: '6px 12px',
-                          borderWidth: '3px',
-                          boxShadow: '3px 3px 0 0 rgba(0,0,0,0.3)',
-                          fontWeight: '600',
-                        }}
-                      >
-                        {project.award}
-                      </span>
-                    )}
+                        <span
+                          className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
+                          style={{
+                            fontSize: "13px",
+                            padding: "6px 12px",
+                            borderWidth: "3px",
+                            boxShadow: "3px 3px 0 0 rgba(0,0,0,0.3)",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {project.award}
+                        </span>
+                      )}
                 </div>
               </div>
             </FadeInView>

@@ -22,9 +22,13 @@ export default function Footer() {
 
           {/* Center */}
           <div className="flex items-center gap-2 text-wood-light">
-            <span className="font-pixel text-[7px]">{t("footer.made_with")}</span>
+            <span className="font-pixel text-[7px]">
+              {t("footer.made_with")}
+            </span>
             <Heart className="w-3 h-3 text-coral fill-coral" />
-            <span className="font-pixel text-[7px]">{t("footer.and_pixels")}</span>
+            <span className="font-pixel text-[7px]">
+              {t("footer.and_pixels")}
+            </span>
           </div>
 
           {/* Right */}
@@ -42,12 +46,12 @@ export default function Footer() {
               style={{
                 backgroundColor:
                   i % 4 === 0
-                    ? "oklch(0.58 0.14 140)"  // leaf green
+                    ? "oklch(0.58 0.14 140)" // leaf green
                     : i % 4 === 1
-                      ? "oklch(0.68 0.16 35)"   // coral
+                      ? "oklch(0.68 0.16 35)" // coral
                       : i % 4 === 2
-                        ? "oklch(0.78 0.15 85)"   // gold
-                        : "oklch(0.72 0.1 230)",  // sky blue
+                        ? "oklch(0.78 0.15 85)" // gold
+                        : "oklch(0.72 0.1 230)", // sky blue
                 opacity: 0.3 + (i % 3) * 0.15,
               }}
             />

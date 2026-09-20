@@ -1,4 +1,11 @@
-import { Calendar, Image as ImageIcon, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import {
+  Calendar,
+  Image as ImageIcon,
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import FadeInView from "./FadeInView";
@@ -9,501 +16,620 @@ import { GameGalleryMotion } from "./GameMotionScene";
 import type { GameConfig } from "../gameData";
 
 interface GameProject {
-    id?: string;
-    title: string;
-    description: string;
-    tags: string[];
-    year: string;
-    category: string;
-    award?: string;
-    image?: string;
-    link?: string;
-    badge?: string;
+  id?: string;
+  title: string;
+  description: string;
+  tags: string[];
+  year: string;
+  category: string;
+  award?: string;
+  image?: string;
+  link?: string;
+  badge?: string;
 }
 
 interface GameSectionProps {
-    project: GameProject;
-    config: GameConfig;
-    index: number;
-    compact?: boolean;
-    galleryLabels?: string[];
-    galleryTitle?: string;
+  project: GameProject;
+  config: GameConfig;
+  index: number;
+  compact?: boolean;
+  galleryLabels?: string[];
+  galleryTitle?: string;
 }
 
-export default function GameSection({ project, config, index, compact = false, galleryLabels, galleryTitle = "Gallery" }: GameSectionProps) {
-    const { t } = useTranslation();
-    const isVideoProject = !!config.videoUrl;
-    const bgRef = useRef<HTMLDivElement>(null);
+export default function GameSection({
+  project,
+  config,
+  index,
+  compact = false,
+  galleryLabels,
+  galleryTitle = "Gallery",
+}: GameSectionProps) {
+  const { t } = useTranslation();
+  const isVideoProject = !!config.videoUrl;
+  const bgRef = useRef<HTMLDivElement>(null);
 
-    // 优化后的滚动背景效果：使用直接 DOM 操作 + requestAnimationFrame 提升性能
-    useEffect(() => {
-        if (isVideoProject || !config.bgImage) return;
+  // 优化后的滚动背景效果：使用直接 DOM 操作 + requestAnimationFrame 提升性能
+  useEffect(() => {
+    if (isVideoProject || !config.bgImage) return;
 
-        let ticking = false;
-        const handleScroll = () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const bg = bgRef.current;
-                    if (bg) {
-                        const y = window.scrollY || window.pageYOffset || 0;
-                        // 极大降低移动系数 (0.55 -> 0.1)，让背景移动更优雅、更顺滑
-                        const bgOffset = y * 0.1;
-                        bg.style.backgroundPosition = `center ${-bgOffset - 80}px`;
-                    }
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        };
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const bg = bgRef.current;
+          if (bg) {
+            const y = window.scrollY || window.pageYOffset || 0;
+            // 极大降低移动系数 (0.55 -> 0.1)，让背景移动更优雅、更顺滑
+            const bgOffset = y * 0.1;
+            bg.style.backgroundPosition = `center ${-bgOffset - 80}px`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
 
-        window.addEventListener("scroll", handleScroll, { passive: true });
-        handleScroll(); // 初始位置修正
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // 初始位置修正
 
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, [isVideoProject, config.bgImage]);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [isVideoProject, config.bgImage]);
 
-    // Render description with:
-    // - emphasized words (in quotes) larger
-    // - optional multi-line layout via '\n' to get a "rhythm" like the flagship sections
-    const renderRichDescription = (text: string) => {
-        const quotePattern = /(「[^」]+」|"[^"]+"|'[^']+')/g;
+  // Render description with:
+  // - emphasized words (in quotes) larger
+  // - optional multi-line layout via '\n' to get a "rhythm" like the flagship sections
+  const renderRichDescription = (text: string) => {
+    const quotePattern = /(「[^」]+」|"[^"]+"|'[^']+')/g;
 
-        const renderQuoteEmphasis = (line: string) => {
-            // Reset since we're using a global RegExp (`/g`) and calling it repeatedly.
-            quotePattern.lastIndex = 0;
+    const renderQuoteEmphasis = (line: string) => {
+      // Reset since we're using a global RegExp (`/g`) and calling it repeatedly.
+      quotePattern.lastIndex = 0;
 
-            const parts: Array<{ text: string; isEmphasized: boolean }> = [];
-            let lastIndex = 0;
+      const parts: Array<{ text: string; isEmphasized: boolean }> = [];
+      let lastIndex = 0;
 
-            let match: RegExpExecArray | null;
-            while ((match = quotePattern.exec(line)) !== null) {
-                if (match.index > lastIndex) {
-                    parts.push({ text: line.slice(lastIndex, match.index), isEmphasized: false });
-                }
-                const quotedText = match[1].slice(1, -1);
-                parts.push({ text: quotedText, isEmphasized: true });
-                lastIndex = match.index + match[0].length;
-            }
-
-            if (lastIndex < line.length) {
-                parts.push({ text: line.slice(lastIndex), isEmphasized: false });
-            }
-
-            if (parts.length === 0) return line;
-
-            return parts.map((part, index) => (
-                <span
-                    key={index}
-                    className={part.isEmphasized ? "text-[1.15em] md:text-[1.2em] font-semibold" : ""}
-                >
-                    {part.isEmphasized ? `「${part.text}」` : part.text}
-                </span>
-            ));
-        };
-
-        const lines = text
-            .split(/\r?\n+/)
-            .map((s) => s.trim())
-            .filter(Boolean);
-
-        // Multi-line mode: each line uses a different scale for a "size variation" feel
-        if (lines.length >= 2) {
-            return (
-                <div className="space-y-2">
-                    {lines.map((line, i) => {
-                        const className =
-                            i === 0
-                                ? "typo-game-desc text-[1.02rem] md:text-lg font-semibold tracking-[0.08em] text-white/95"
-                                : i === 1
-                                    ? "typo-game-desc text-sm md:text-base opacity-90 text-white/90"
-                                    : "typo-game-desc text-xs md:text-sm opacity-80 leading-relaxed text-white/90";
-
-                        return (
-                            <p key={`${i}-${line}`} className={className}>
-                                {renderQuoteEmphasis(line)}
-                            </p>
-                        );
-                    })}
-                </div>
-            );
+      let match: RegExpExecArray | null;
+      while ((match = quotePattern.exec(line)) !== null) {
+        if (match.index > lastIndex) {
+          parts.push({
+            text: line.slice(lastIndex, match.index),
+            isEmphasized: false,
+          });
         }
+        const quotedText = match[1].slice(1, -1);
+        parts.push({ text: quotedText, isEmphasized: true });
+        lastIndex = match.index + match[0].length;
+      }
 
-        // Single-line mode (default): quote emphasis only
-        return (
-            <p className="typo-game-desc text-white/90">
-                {renderQuoteEmphasis(text)}
-            </p>
-        );
+      if (lastIndex < line.length) {
+        parts.push({ text: line.slice(lastIndex), isEmphasized: false });
+      }
+
+      if (parts.length === 0) return line;
+
+      return parts.map((part, index) => (
+        <span
+          key={index}
+          className={
+            part.isEmphasized
+              ? "text-[1.15em] md:text-[1.2em] font-semibold"
+              : ""
+          }
+        >
+          {part.isEmphasized ? `「${part.text}」` : part.text}
+        </span>
+      ));
     };
 
-    // Per-project Stardew-style subtle pixel patterns (different for each index)
-    const accentHex = config.accentColor.replace('#', '');
-    const bgPatterns = [
-        // Soft diagonal checks
-        `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' fill='%23f5e3c3'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='%23${accentHex}' stroke-width='1' stroke-opacity='0.22' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
-        // Pixel dots
-        `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' fill='%23f5e3c3'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23${accentHex}' fill-opacity='0.35' shape-rendering='crispEdges'/%3E%3Crect x='14' y='10' width='2' height='2' fill='%23${accentHex}' fill-opacity='0.2' shape-rendering='crispEdges'/%3E%3Crect x='6' y='18' width='2' height='2' fill='%23${accentHex}' fill-opacity='0.25' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
-        // Tiny plus tiles
-        `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' fill='%23f5e3c3'/%3E%3Cpath d='M15 7h2v4h4v2h-4v4h-2v-4h-4v-2h4z' fill='%23${accentHex}' fill-opacity='0.18' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
-        // Horizontal paper grain
-        `url("data:image/svg+xml,%3Csvg width='160' height='80' viewBox='0 0 160 80' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='160' height='80' fill='%23f5e3c3'/%3E%3Cpath d='M0 10h160M0 30h160M0 50h160M0 70h160' stroke='%23${accentHex}' stroke-width='1' stroke-opacity='0.18' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
-    ];
-    const bgPattern = bgPatterns[index % bgPatterns.length];
+    const lines = text
+      .split(/\r?\n+/)
+      .map(s => s.trim())
+      .filter(Boolean);
 
-    // Video Control Logic removed since we are using Bilibili iframe
+    // Multi-line mode: each line uses a different scale for a "size variation" feel
+    if (lines.length >= 2) {
+      return (
+        <div className="space-y-2">
+          {lines.map((line, i) => {
+            const className =
+              i === 0
+                ? "typo-game-desc text-[1.02rem] md:text-lg font-semibold tracking-[0.08em] text-white/95"
+                : i === 1
+                  ? "typo-game-desc text-sm md:text-base opacity-90 text-white/90"
+                  : "typo-game-desc text-xs md:text-sm opacity-80 leading-relaxed text-white/90";
 
-    // Reusable Header Component - 移除 FadeInView，确保内容始终可见（与 VR 区一致）
-    const HeaderSection = ({ align = "center" }: { align?: "left" | "center" }) => {
-        const hasCustomBadge = !!project.badge;
-        const badgeText = project.badge || project.category;
+            return (
+              <p key={`${i}-${line}`} className={className}>
+                {renderQuoteEmphasis(line)}
+              </p>
+            );
+          })}
+        </div>
+      );
+    }
 
-        return (
-            <div className={`w-full max-w-3xl ${align === "center" ? "mx-auto text-center" : "text-left"} mb-8 relative z-20`}>
-                <div className={`inline-flex items-center gap-3 mb-4 px-4 py-1.5 bg-black/40 border border-white/10 rounded-full backdrop-blur-md ${align === "center" ? "" : "mr-auto"}`}>
-                    <span
-                        className="w-2.5 h-2.5 rounded-full"
-                        style={{ backgroundColor: config.accentColor }}
-                    />
-                    <span className="typo-game-meta text-white/80">
-                        {badgeText}
-                    </span>
-                    {!hasCustomBadge && (
-                        <>
-                            <span className="text-white/20">|</span>
-                            <span className="text-xs font-pixel text-white/60">
-                                {project.year}
-                            </span>
-                        </>
-                    )}
-                </div>
+    // Single-line mode (default): quote emphasis only
+    return (
+      <p className="typo-game-desc text-white/90">
+        {renderQuoteEmphasis(text)}
+      </p>
+    );
+  };
 
-                <div className="w-full flex justify-center mb-10">
-                    <h2>
-                        <div className="relative inline-block group cursor-default">
-                            {/* Whimsical Pixel Decorations - Left Side - Hidden on mobile */}
-                            <div className="hidden md:flex absolute -left-12 top-1/2 -translate-y-1/2 flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300">
-                                <div className="w-4 h-4 bg-white animate-bounce shadow-[2px_2px_0_rgba(0,0,0,0.5)]" style={{ animationDelay: '0ms' }} />
-                                <div className="w-3 h-3 ml-2" style={{ backgroundColor: config.accentColor }} />
-                            </div>
+  // Per-project Stardew-style subtle pixel patterns (different for each index)
+  const accentHex = config.accentColor.replace("#", "");
+  const bgPatterns = [
+    // Soft diagonal checks
+    `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='40' height='40' fill='%23f5e3c3'/%3E%3Cpath d='M0 20h40M20 0v40' stroke='%23${accentHex}' stroke-width='1' stroke-opacity='0.22' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
+    // Pixel dots
+    `url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='24' height='24' fill='%23f5e3c3'/%3E%3Crect x='2' y='2' width='2' height='2' fill='%23${accentHex}' fill-opacity='0.35' shape-rendering='crispEdges'/%3E%3Crect x='14' y='10' width='2' height='2' fill='%23${accentHex}' fill-opacity='0.2' shape-rendering='crispEdges'/%3E%3Crect x='6' y='18' width='2' height='2' fill='%23${accentHex}' fill-opacity='0.25' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
+    // Tiny plus tiles
+    `url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='32' height='32' fill='%23f5e3c3'/%3E%3Cpath d='M15 7h2v4h4v2h-4v4h-2v-4h-4v-2h4z' fill='%23${accentHex}' fill-opacity='0.18' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
+    // Horizontal paper grain
+    `url("data:image/svg+xml,%3Csvg width='160' height='80' viewBox='0 0 160 80' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='160' height='80' fill='%23f5e3c3'/%3E%3Cpath d='M0 10h160M0 30h160M0 50h160M0 70h160' stroke='%23${accentHex}' stroke-width='1' stroke-opacity='0.18' shape-rendering='crispEdges'/%3E%3C/svg%3E")`,
+  ];
+  const bgPattern = bgPatterns[index % bgPatterns.length];
 
-                            {/* Main Title Container - "Cream Sticker" style */}
-                            <div
-                                className={`bg-cream border-[6px] ${compact ? "px-4 sm:px-10 py-4" : "px-10 py-5"} shadow-[10px_10px_0_rgba(0,0,0,0.15)] relative overflow-hidden transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-[1.02]`}
-                                style={{
-                                    borderColor: config.accentColor,
-                                }}
-                            >
-                                {/* Decorative Corner Tab */}
-                                <div
-                                    className="absolute top-0 right-0 w-8 h-8 -mr-4 -mt-4 rotate-45 z-20"
-                                    style={{ backgroundColor: config.accentColor }}
-                                />
+  // Video Control Logic removed since we are using Bilibili iframe
 
-                                <span
-                                    className={`${compact ? "font-pixel text-lg sm:text-2xl md:text-3xl font-black leading-relaxed" : "typo-game-title"} text-wood-dark tracking-[0.2em] relative z-10 block`}
-                                    style={{
-                                        textShadow: `2px 2px 0px rgba(255,255,255,0.8)`,
-                                    }}
-                                >
-                                    {project.title}
-                                </span>
-
-                                {/* Cute "Pixel Sprinkles" */}
-                                <div className="absolute top-2 left-4 w-2 h-2 opacity-30" style={{ backgroundColor: config.accentColor }} />
-                                <div className="absolute bottom-2 right-6 w-1.5 h-1.5 opacity-30" style={{ backgroundColor: config.accentColor }} />
-                            </div>
-
-                            {/* Whimsical Pixel Decorations - Right Side - Hidden on mobile */}
-                            <div className="hidden md:flex absolute -right-12 top-1/2 -translate-y-1/2 flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
-                                <div className="w-4 h-4 bg-white animate-bounce shadow-[2px_2px_0_rgba(0,0,0,0.5)]" style={{ animationDelay: '150ms' }} />
-                                <div className="w-3 h-3 mr-2 self-end" style={{ backgroundColor: config.accentColor }} />
-                            </div>
-                        </div>
-                    </h2>
-                </div>
-
-                <div className={`relative p-5 md:p-8 bg-black/40 border border-white/10 backdrop-blur-sm rounded-sm ${align === "center" ? "mx-auto w-full" : "text-left"}`}>
-                    {renderRichDescription(project.description)}
-                    <div className={`flex flex-wrap ${align === "center" ? "justify-center" : "justify-start"} gap-2 mt-4`}>
-                        {project.tags.map(tag => (
-                            <span
-                                key={tag}
-                                className="px-2 py-1 text-[10px] font-pixel text-white/60 border border-white/20 hover:bg-white/10 hover:text-white transition-colors"
-                            >
-                                #{tag}
-                            </span>
-                        ))}
-                    </div>
-                </div>
-
-                {align === "left" && (
-                    <div className="flex gap-4 mt-8 flex-wrap justify-start items-stretch">
-                        <StoreBadge platform="taptap" link={project.link} accentColor={config.accentColor} />
-                        {(project.award || project.badge) && (
-                            <>
-                                <div className="w-1 bg-yellow-400/80 self-stretch" />
-                                <AwardBadge
-                                    accentColor={config.accentColor}
-                                    label={project.award ? "AWARD WINNER" : "FEATURED"}
-                                    value={project.award || project.badge || ""}
-                                />
-                            </>
-                        )}
-                    </div>
-                )}
-            </div>
-        );
-    };
+  // Reusable Header Component - 移除 FadeInView，确保内容始终可见（与 VR 区一致）
+  const HeaderSection = ({
+    align = "center",
+  }: {
+    align?: "left" | "center";
+  }) => {
+    const hasCustomBadge = !!project.badge;
+    const badgeText = project.badge || project.category;
 
     return (
-        <section
-            className={`relative overflow-hidden border-b-4 border-wood-dark ${compact ? 'bg-[#233d34] py-16 md:py-20' : isVideoProject ? 'min-h-screen flex items-center py-16' : 'py-24 md:py-32'}`}
+      <div
+        className={`w-full max-w-3xl ${align === "center" ? "mx-auto text-center" : "text-left"} mb-8 relative z-20`}
+      >
+        <div
+          className={`inline-flex items-center gap-3 mb-4 px-4 py-1.5 bg-black/40 border border-white/10 rounded-full backdrop-blur-md ${align === "center" ? "" : "mr-auto"}`}
         >
-            {config.motionTheme && <ThemedMotion theme={config.motionTheme} />}
-            {/* 滚动背景层：对于有 bgImage 的非视频项目，实现与 VR 游戏一致的滚动视差效果 */}
-            {!isVideoProject && (config.bgImage || project.image) && (
+          <span
+            className="w-2.5 h-2.5 rounded-full"
+            style={{ backgroundColor: config.accentColor }}
+          />
+          <span className="typo-game-meta text-white/80">{badgeText}</span>
+          {!hasCustomBadge && (
+            <>
+              <span className="text-white/20">|</span>
+              <span className="text-xs font-pixel text-white/60">
+                {project.year}
+              </span>
+            </>
+          )}
+        </div>
+
+        <div className="w-full flex justify-center mb-10">
+          <h2>
+            <div className="relative inline-block group cursor-default">
+              {/* Whimsical Pixel Decorations - Left Side - Hidden on mobile */}
+              <div className="hidden md:flex absolute -left-12 top-1/2 -translate-y-1/2 flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:-translate-x-2 transition-all duration-300">
                 <div
-                    ref={bgRef}
-                    className="pointer-events-none absolute inset-0"
-                    style={{
-                        backgroundImage: `url(${config.bgImage || project.image})`,
-                        // 使用平铺，但整体向上轻微偏移，避免拼接缝落在可视区域
-                        backgroundRepeat: "repeat",
-                        // 保持原图尺寸，保证像素感
-                        backgroundSize: "auto",
-                        // 确保像素边缘清晰，不模糊
-                        imageRendering: "pixelated",
-                        // 开启核心 GPU 加速，让位置变换更平滑
-                        willChange: "background-position",
-                        backgroundPosition: `center -80px`,
-                    }}
+                  className="w-4 h-4 bg-white animate-bounce shadow-[2px_2px_0_rgba(0,0,0,0.5)]"
+                  style={{ animationDelay: "0ms" }}
                 />
-            )}
-            {/* Top Border Pattern - keep for standard game sections only (remove for video to avoid flicker feeling) */}
-            {!isVideoProject && (
                 <div
-                    className="absolute top-0 left-0 right-0 h-4 z-10"
-                    style={{
-                        backgroundImage: `repeating-linear-gradient(90deg, ${config.accentColor}, ${config.accentColor} 12px, transparent 12px, transparent 24px)`,
-                        opacity: 0.45
-                    }}
+                  className="w-3 h-3 ml-2"
+                  style={{ backgroundColor: config.accentColor }}
                 />
-            )}
-            {/* Background texture: keep it only for standard games without bgImage. 
-                For VR/video sections use a clean, flat background to avoid any perceived "loading / flicker" while scrolling. */}
-            {!isVideoProject && !config.bgImage && (
-                <>
-                    <div className={`absolute inset-0 ${compact ? "opacity-[0.08]" : "opacity-80"} pointer-events-none`} style={{ backgroundImage: bgPattern }} />
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent_0%,rgba(0,0,0,0.22)_100%)] pointer-events-none" />
-                </>
-            )}
-            {/* Cream + pixel overlay for Stardew-style pixel mood - 用于有滚动背景的项目 */}
-            {!isVideoProject && config.bgImage && (
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-cream/50 to-cream/60 pointer-events-none z-[2]" />
-            )}
-            {/* VR / Video projects: apply a soft cream + accent overlay over the background image for readability */}
-            {isVideoProject && (
+              </div>
+
+              {/* Main Title Container - "Cream Sticker" style */}
+              <div
+                className={`bg-cream border-[6px] ${compact ? "px-4 sm:px-10 py-4" : "px-10 py-5"} shadow-[10px_10px_0_rgba(0,0,0,0.15)] relative overflow-hidden transition-all duration-300 group-hover:-translate-y-2 group-hover:scale-[1.02]`}
+                style={{
+                  borderColor: config.accentColor,
+                }}
+              >
+                {/* Decorative Corner Tab */}
                 <div
-                    className="absolute inset-0 pointer-events-none"
-                    style={{
-                        background:
-                            "linear-gradient(to bottom, rgba(248, 240, 223, 0.55) 0%, rgba(248, 240, 223, 0.35) 40%, rgba(0, 0, 0, 0.6) 100%)",
-                        mixBlendMode: "multiply",
-                    }}
+                  className="absolute top-0 right-0 w-8 h-8 -mr-4 -mt-4 rotate-45 z-20"
+                  style={{ backgroundColor: config.accentColor }}
                 />
-            )}
 
-            <div className="container mx-auto px-6 relative z-20">
+                <span
+                  className={`${compact ? "font-pixel text-lg sm:text-2xl md:text-3xl font-black leading-relaxed" : "typo-game-title"} text-wood-dark tracking-[0.2em] relative z-10 block`}
+                  style={{
+                    textShadow: `2px 2px 0px rgba(255,255,255,0.8)`,
+                  }}
+                >
+                  {project.title}
+                </span>
 
-                {/* --- VR VIDEO LAYOUT (Side-by-Side) --- */}
-                {isVideoProject ? (
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                        {/* Left Column: Text Content (no scroll-triggered animation to avoid flicker) */}
-                        <div>
-                            <div className="max-w-3xl text-left mb-8 relative z-20">
-                                <div className="inline-flex items-center gap-3 mb-4 px-4 py-1.5 bg-black/60 border border-white/20 rounded-sm mr-auto backdrop-blur-md shadow-[4px_4px_0_rgba(0,0,0,0.8)]">
-                                    <span
-                                        className="w-2.5 h-2.5 rounded-full"
-                                        style={{ backgroundColor: config.accentColor }}
-                                    />
-                                    <span className="typo-game-meta text-[10px] text-white/90">
-                                        {project.category}
-                                    </span>
-                                    <span className="text-white/20">|</span>
-                                    <span className="text-[10px] font-pixel text-white/70 tracking-[0.18em]">
-                                        {project.year}
-                                    </span>
-                                </div>
+                {/* Cute "Pixel Sprinkles" */}
+                <div
+                  className="absolute top-2 left-4 w-2 h-2 opacity-30"
+                  style={{ backgroundColor: config.accentColor }}
+                />
+                <div
+                  className="absolute bottom-2 right-6 w-1.5 h-1.5 opacity-30"
+                  style={{ backgroundColor: config.accentColor }}
+                />
+              </div>
 
-                                <div className="w-full flex justify-center mb-6">
-                                    <h2>
-                                        <span
-                                            className="inline-block px-6 py-4 bg-black/85 border-[3px] border-white/90 shadow-[4px_4px_0_rgba(0,0,0,0.9)]"
-                                        >
-                                            <span
-                                                className="typo-vr-title font-pixel text-white tracking-[0.26em]"
-                                                style={{
-                                                    textShadow: `0 0 22px ${config.accentColor}aa`,
-                                                }}
-                                            >
-                                                {project.title}
-                                            </span>
-                                        </span>
-                                    </h2>
-                                </div>
-
-                                <div className="relative p-6 bg-black/75 border-2 border-white/15 backdrop-blur-sm rounded-sm text-left shadow-[4px_4px_0_rgba(0,0,0,0.85)]">
-                                    {renderRichDescription(project.description)}
-                                    <div className="flex flex-wrap justify-start gap-2 mt-4">
-                                        {project.tags.map(tag => (
-                                            <span
-                                                key={tag}
-                                                className="px-2 py-1 text-[10px] font-pixel text-white/60 border border-white/20 hover:bg-white/10 hover:text-white transition-colors"
-                                            >
-                                                #{tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-4 mt-8 flex-wrap justify-start items-stretch">
-                                    <StoreBadge platform="taptap" link={project.link} accentColor={config.accentColor} />
-                                    {(project.award || project.badge) && (
-                                        <>
-                                            <div className="w-1 bg-yellow-400/80 self-stretch" />
-                                            <AwardBadge
-                                                accentColor={config.accentColor}
-                                                label={project.award ? "AWARD WINNER" : "FEATURED"}
-                                                value={project.award || project.badge || ""}
-                                            />
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right Column: Video Player */}
-                        <FadeInView className="w-full relative group">
-                            <div
-                                className="relative w-full border-4 border-white/20 bg-black shadow-2xl rounded-sm flex flex-col"
-                                style={{
-                                    boxShadow: `0 20px 80px -20px ${config.accentColor}40`,
-                                    borderColor: config.accentBorder
-                                }}
-                            >
-                                {/* Video Screen Area - Bilibili Iframe */}
-                                <div className="relative aspect-video w-full overflow-hidden bg-black">
-                                    <iframe
-                                        src={config.videoUrl}
-                                        className="w-full h-full border-0 absolute inset-0"
-                                        allowFullScreen
-                                        allow="autoplay; fullscreen"
-                                        sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
-                                    />
-                                </div>
-                            </div>
-                        </FadeInView>
-                    </div>
-                ) : (
-                    /* --- STANDARD IMAGE LAYOUT (Image -> Title -> Gallery) --- */
-                    <div className="flex flex-col items-center">
-                        <FadeInView className={`w-full ${compact ? "max-w-3xl mb-8" : "max-w-4xl mb-12"} relative group`}>
-                            <div
-                                className="relative aspect-video w-full overflow-hidden border-4 border-white/20 bg-black/50 shadow-2xl"
-                                style={{
-                                    boxShadow: `0 20px 50px -10px ${config.accentColor}30`,
-                                    borderColor: config.accentBorder
-                                }}
-                            >
-                                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-[2] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20" />
-                                <img
-                                    src={config.mainImage || config.bgImage || project.image}
-                                    alt={project.title}
-                                    loading={compact ? "lazy" : undefined}
-                                    decoding={compact ? "async" : undefined}
-                                    width={compact ? 1600 : undefined}
-                                    height={compact ? 900 : undefined}
-                                    className={`w-full h-full object-cover ${compact ? "" : "transition-transform duration-700 group-hover:scale-105"}`}
-                                />
-                                {!compact && <>
-                                    <div className="absolute top-4 left-4 w-16 h-16 border-t-4 border-l-4 border-white/80 z-20" />
-                                    <div className="absolute bottom-4 right-4 w-16 h-16 border-b-4 border-r-4 border-white/80 z-20" />
-                                </>}
-                            </div>
-                        </FadeInView>
-
-                        <HeaderSection />
-
-                        {/* Gallery (Only for Non-Video) */}
-                        <FadeInView delay={500} className="game-gallery w-full max-w-4xl mt-4">
-                            <div className="flex items-center gap-4 mb-6">
-                                <ImageIcon className="w-5 h-5 text-white/50" />
-                                <span className="text-sm uppercase tracking-widest text-white/50 font-bold">{galleryTitle}</span>
-                                <div className="h-px flex-1 bg-white/10" />
-                                {config.motionTheme && <GameGalleryMotion theme={config.motionTheme} />}
-                            </div>
-
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {(config.galleryImages || Array(4).fill(config.bgImage || project.image)).map((imgSrc, i) => (
-                                    <div
-                                        key={i}
-                                        className="aspect-video bg-black/50 border border-white/10 overflow-hidden relative hover:border-white/50 transition-colors"
-                                    >
-                                        <img
-                                            src={imgSrc}
-                                            className="w-full h-full object-cover"
-                                            alt={galleryLabels?.[i] || `Gallery visual ${i + 1}`}
-                                            loading="lazy"
-                                            decoding="async"
-                                            width={960}
-                                            height={540}
-                                        />
-                                        {galleryLabels?.[i] && <span className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2 pt-6 text-xs text-white">{galleryLabels[i]}</span>}
-                                    </div>
-                                ))}
-                            </div>
-                        </FadeInView>
-
-                        {project.id === "autumn-must" && (
-                            <FadeInView delay={550} className="flex justify-center mt-6">
-                                <a
-                                    href="https://www.bilibili.com/video/BV1QtY76XEZJ/?spm_id_from=333.1387.homepage.video_card.click&vd_source=a6793399ab1f708224386a1ea26cd748"
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="group inline-flex items-center gap-3 justify-center px-5 py-2.5 rounded-lg border border-pink-200/45 bg-black/35 text-white/90 font-pixel text-[11px] tracking-[0.12em] shadow-lg backdrop-blur-[2px] hover:bg-pink-400/15 hover:border-pink-200/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-200 transition-colors"
-                                >
-                                    <svg aria-hidden="true" viewBox="0 0 40 40" fill="none" className="h-9 w-9 shrink-0 motion-safe:transition-transform motion-safe:group-hover:-rotate-6 motion-safe:group-hover:-translate-y-0.5">
-                                        <path d="m12 5 6 6m10-6-6 6" stroke="#a5e7f5" strokeWidth="2.5" strokeLinecap="round" />
-                                        <rect x="5" y="11" width="30" height="23" rx="6" fill="#f6a9c5" />
-                                        <rect x="8" y="14" width="24" height="16" rx="3" fill="#263640" />
-                                        <path d="m12 20 4-2m8 0 4 2" stroke="#b9eff8" strokeWidth="2.5" strokeLinecap="round" />
-                                        <path d="m17 24 3 2 3-2" stroke="#fff1f6" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-                                        <path d="M11 25h2m14 0h2" stroke="#f6a9c5" strokeWidth="2" strokeLinecap="round" />
-                                        <path d="M12 34v2m16-2v2" stroke="#f6a9c5" strokeWidth="3" strokeLinecap="round" />
-                                    </svg>
-                                    {t("gamejam.videoButton")}
-                                </a>
-                            </FadeInView>
-                        )}
-
-                        {/* Common: Action Widgets (For non-video, keep centered) */}
-                        <FadeInView delay={400} className="flex gap-4 mt-8 flex-wrap justify-center items-stretch">
-                            <StoreBadge platform="taptap" link={project.link} accentColor={config.accentColor} />
-                            {(project.award || project.badge) && (
-                                <>
-                                    <div className="w-1 bg-yellow-400/80 self-stretch" />
-                                    <AwardBadge
-                                        accentColor={config.accentColor}
-                                        label={project.award ? "AWARD WINNER" : "FEATURED"}
-                                        value={project.award || project.badge || ""}
-                                    />
-                                </>
-                            )}
-                        </FadeInView>
-                    </div>
-                )}
-
+              {/* Whimsical Pixel Decorations - Right Side - Hidden on mobile */}
+              <div className="hidden md:flex absolute -right-12 top-1/2 -translate-y-1/2 flex-col gap-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+                <div
+                  className="w-4 h-4 bg-white animate-bounce shadow-[2px_2px_0_rgba(0,0,0,0.5)]"
+                  style={{ animationDelay: "150ms" }}
+                />
+                <div
+                  className="w-3 h-3 mr-2 self-end"
+                  style={{ backgroundColor: config.accentColor }}
+                />
+              </div>
             </div>
-        </section>
+          </h2>
+        </div>
+
+        <div
+          className={`relative p-5 md:p-8 bg-black/40 border border-white/10 backdrop-blur-sm rounded-sm ${align === "center" ? "mx-auto w-full" : "text-left"}`}
+        >
+          {renderRichDescription(project.description)}
+          <div
+            className={`flex flex-wrap ${align === "center" ? "justify-center" : "justify-start"} gap-2 mt-4`}
+          >
+            {project.tags.map(tag => (
+              <span
+                key={tag}
+                className="px-2 py-1 text-[10px] font-pixel text-white/60 border border-white/20 hover:bg-white/10 hover:text-white transition-colors"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {align === "left" && (
+          <div className="flex gap-4 mt-8 flex-wrap justify-start items-stretch">
+            <StoreBadge
+              platform="taptap"
+              link={project.link}
+              accentColor={config.accentColor}
+            />
+            {(project.award || project.badge) && (
+              <>
+                <div className="w-1 bg-yellow-400/80 self-stretch" />
+                <AwardBadge
+                  accentColor={config.accentColor}
+                  label={project.award ? "AWARD WINNER" : "FEATURED"}
+                  value={project.award || project.badge || ""}
+                />
+              </>
+            )}
+          </div>
+        )}
+      </div>
     );
+  };
+
+  return (
+    <section
+      className={`relative overflow-hidden border-b-4 border-wood-dark ${compact ? "bg-[#233d34] py-16 md:py-20" : isVideoProject ? "min-h-screen flex items-center py-16" : "py-24 md:py-32"}`}
+    >
+      {config.motionTheme && <ThemedMotion theme={config.motionTheme} />}
+      {/* 滚动背景层：对于有 bgImage 的非视频项目，实现与 VR 游戏一致的滚动视差效果 */}
+      {!isVideoProject && (config.bgImage || project.image) && (
+        <div
+          ref={bgRef}
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage: `url(${config.bgImage || project.image})`,
+            // 使用平铺，但整体向上轻微偏移，避免拼接缝落在可视区域
+            backgroundRepeat: "repeat",
+            // 保持原图尺寸，保证像素感
+            backgroundSize: "auto",
+            // 确保像素边缘清晰，不模糊
+            imageRendering: "pixelated",
+            // 开启核心 GPU 加速，让位置变换更平滑
+            willChange: "background-position",
+            backgroundPosition: `center -80px`,
+          }}
+        />
+      )}
+      {/* Top Border Pattern - keep for standard game sections only (remove for video to avoid flicker feeling) */}
+      {!isVideoProject && (
+        <div
+          className="absolute top-0 left-0 right-0 h-4 z-10"
+          style={{
+            backgroundImage: `repeating-linear-gradient(90deg, ${config.accentColor}, ${config.accentColor} 12px, transparent 12px, transparent 24px)`,
+            opacity: 0.45,
+          }}
+        />
+      )}
+      {/* Background texture: keep it only for standard games without bgImage. 
+                For VR/video sections use a clean, flat background to avoid any perceived "loading / flicker" while scrolling. */}
+      {!isVideoProject && !config.bgImage && (
+        <>
+          <div
+            className={`absolute inset-0 ${compact ? "opacity-[0.08]" : "opacity-80"} pointer-events-none`}
+            style={{ backgroundImage: bgPattern }}
+          />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,transparent_0%,rgba(0,0,0,0.22)_100%)] pointer-events-none" />
+        </>
+      )}
+      {/* Cream + pixel overlay for Stardew-style pixel mood - 用于有滚动背景的项目 */}
+      {!isVideoProject && config.bgImage && (
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-cream/50 to-cream/60 pointer-events-none z-[2]" />
+      )}
+      {/* VR / Video projects: apply a soft cream + accent overlay over the background image for readability */}
+      {isVideoProject && (
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(248, 240, 223, 0.55) 0%, rgba(248, 240, 223, 0.35) 40%, rgba(0, 0, 0, 0.6) 100%)",
+            mixBlendMode: "multiply",
+          }}
+        />
+      )}
+
+      <div className="container mx-auto px-6 relative z-20">
+        {/* --- VR VIDEO LAYOUT (Side-by-Side) --- */}
+        {isVideoProject ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Column: Text Content (no scroll-triggered animation to avoid flicker) */}
+            <div>
+              <div className="max-w-3xl text-left mb-8 relative z-20">
+                <div className="inline-flex items-center gap-3 mb-4 px-4 py-1.5 bg-black/60 border border-white/20 rounded-sm mr-auto backdrop-blur-md shadow-[4px_4px_0_rgba(0,0,0,0.8)]">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: config.accentColor }}
+                  />
+                  <span className="typo-game-meta text-[10px] text-white/90">
+                    {project.category}
+                  </span>
+                  <span className="text-white/20">|</span>
+                  <span className="text-[10px] font-pixel text-white/70 tracking-[0.18em]">
+                    {project.year}
+                  </span>
+                </div>
+
+                <div className="w-full flex justify-center mb-6">
+                  <h2>
+                    <span className="inline-block px-6 py-4 bg-black/85 border-[3px] border-white/90 shadow-[4px_4px_0_rgba(0,0,0,0.9)]">
+                      <span
+                        className="typo-vr-title font-pixel text-white tracking-[0.26em]"
+                        style={{
+                          textShadow: `0 0 22px ${config.accentColor}aa`,
+                        }}
+                      >
+                        {project.title}
+                      </span>
+                    </span>
+                  </h2>
+                </div>
+
+                <div className="relative p-6 bg-black/75 border-2 border-white/15 backdrop-blur-sm rounded-sm text-left shadow-[4px_4px_0_rgba(0,0,0,0.85)]">
+                  {renderRichDescription(project.description)}
+                  <div className="flex flex-wrap justify-start gap-2 mt-4">
+                    {project.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className="px-2 py-1 text-[10px] font-pixel text-white/60 border border-white/20 hover:bg-white/10 hover:text-white transition-colors"
+                      >
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex gap-4 mt-8 flex-wrap justify-start items-stretch">
+                  <StoreBadge
+                    platform="taptap"
+                    link={project.link}
+                    accentColor={config.accentColor}
+                  />
+                  {(project.award || project.badge) && (
+                    <>
+                      <div className="w-1 bg-yellow-400/80 self-stretch" />
+                      <AwardBadge
+                        accentColor={config.accentColor}
+                        label={project.award ? "AWARD WINNER" : "FEATURED"}
+                        value={project.award || project.badge || ""}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Video Player */}
+            <FadeInView className="w-full relative group">
+              <div
+                className="relative w-full border-4 border-white/20 bg-black shadow-2xl rounded-sm flex flex-col"
+                style={{
+                  boxShadow: `0 20px 80px -20px ${config.accentColor}40`,
+                  borderColor: config.accentBorder,
+                }}
+              >
+                {/* Video Screen Area - Bilibili Iframe */}
+                <div className="relative aspect-video w-full overflow-hidden bg-black">
+                  <iframe
+                    src={config.videoUrl}
+                    className="w-full h-full border-0 absolute inset-0"
+                    allowFullScreen
+                    allow="autoplay; fullscreen"
+                    sandbox="allow-top-navigation allow-same-origin allow-forms allow-scripts"
+                  />
+                </div>
+              </div>
+            </FadeInView>
+          </div>
+        ) : (
+          /* --- STANDARD IMAGE LAYOUT (Image -> Title -> Gallery) --- */
+          <div className="flex flex-col items-center">
+            <FadeInView
+              className={`w-full ${compact ? "max-w-3xl mb-8" : "max-w-4xl mb-12"} relative group`}
+            >
+              <div
+                className="relative aspect-video w-full overflow-hidden border-4 border-white/20 bg-black/50 shadow-2xl"
+                style={{
+                  boxShadow: `0 20px 50px -10px ${config.accentColor}30`,
+                  borderColor: config.accentBorder,
+                }}
+              >
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-[2] bg-[length:100%_2px,3px_100%] pointer-events-none opacity-20" />
+                <img
+                  src={config.mainImage || config.bgImage || project.image}
+                  alt={project.title}
+                  loading={compact ? "lazy" : undefined}
+                  decoding={compact ? "async" : undefined}
+                  width={compact ? 1600 : undefined}
+                  height={compact ? 900 : undefined}
+                  className={`w-full h-full object-cover ${compact ? "" : "transition-transform duration-700 group-hover:scale-105"}`}
+                />
+                {!compact && (
+                  <>
+                    <div className="absolute top-4 left-4 w-16 h-16 border-t-4 border-l-4 border-white/80 z-20" />
+                    <div className="absolute bottom-4 right-4 w-16 h-16 border-b-4 border-r-4 border-white/80 z-20" />
+                  </>
+                )}
+              </div>
+            </FadeInView>
+
+            <HeaderSection />
+
+            {/* Gallery (Only for Non-Video) */}
+            <FadeInView
+              delay={500}
+              className="game-gallery w-full max-w-4xl mt-4"
+            >
+              <div className="flex items-center gap-4 mb-6">
+                <ImageIcon className="w-5 h-5 text-white/50" />
+                <span className="text-sm uppercase tracking-widest text-white/50 font-bold">
+                  {galleryTitle}
+                </span>
+                <div className="h-px flex-1 bg-white/10" />
+                {config.motionTheme && (
+                  <GameGalleryMotion theme={config.motionTheme} />
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {(
+                  config.galleryImages ||
+                  Array(4).fill(config.bgImage || project.image)
+                ).map((imgSrc, i) => (
+                  <div
+                    key={i}
+                    className="aspect-video bg-black/50 border border-white/10 overflow-hidden relative hover:border-white/50 transition-colors"
+                  >
+                    <img
+                      src={imgSrc}
+                      className="w-full h-full object-cover"
+                      alt={galleryLabels?.[i] || `Gallery visual ${i + 1}`}
+                      loading="lazy"
+                      decoding="async"
+                      width={960}
+                      height={540}
+                    />
+                    {galleryLabels?.[i] && (
+                      <span className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent px-3 pb-2 pt-6 text-xs text-white">
+                        {galleryLabels[i]}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </FadeInView>
+
+            {project.id === "autumn-must" && (
+              <FadeInView delay={550} className="flex justify-center mt-6">
+                <a
+                  href="https://www.bilibili.com/video/BV1QtY76XEZJ/?spm_id_from=333.1387.homepage.video_card.click&vd_source=a6793399ab1f708224386a1ea26cd748"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="group inline-flex items-center gap-3 justify-center px-5 py-2.5 rounded-lg border border-pink-200/45 bg-black/35 text-white/90 font-pixel text-[11px] tracking-[0.12em] shadow-lg backdrop-blur-[2px] hover:bg-pink-400/15 hover:border-pink-200/80 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-200 transition-colors"
+                >
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 40 40"
+                    fill="none"
+                    className="h-9 w-9 shrink-0 motion-safe:transition-transform motion-safe:group-hover:-rotate-6 motion-safe:group-hover:-translate-y-0.5"
+                  >
+                    <path
+                      d="m12 5 6 6m10-6-6 6"
+                      stroke="#a5e7f5"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <rect
+                      x="5"
+                      y="11"
+                      width="30"
+                      height="23"
+                      rx="6"
+                      fill="#f6a9c5"
+                    />
+                    <rect
+                      x="8"
+                      y="14"
+                      width="24"
+                      height="16"
+                      rx="3"
+                      fill="#263640"
+                    />
+                    <path
+                      d="m12 20 4-2m8 0 4 2"
+                      stroke="#b9eff8"
+                      strokeWidth="2.5"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="m17 24 3 2 3-2"
+                      stroke="#fff1f6"
+                      strokeWidth="1.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M11 25h2m14 0h2"
+                      stroke="#f6a9c5"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                    <path
+                      d="M12 34v2m16-2v2"
+                      stroke="#f6a9c5"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  {t("gamejam.videoButton")}
+                </a>
+              </FadeInView>
+            )}
+
+            {/* Common: Action Widgets (For non-video, keep centered) */}
+            <FadeInView
+              delay={400}
+              className="flex gap-4 mt-8 flex-wrap justify-center items-stretch"
+            >
+              <StoreBadge
+                platform="taptap"
+                link={project.link}
+                accentColor={config.accentColor}
+              />
+              {(project.award || project.badge) && (
+                <>
+                  <div className="w-1 bg-yellow-400/80 self-stretch" />
+                  <AwardBadge
+                    accentColor={config.accentColor}
+                    label={project.award ? "AWARD WINNER" : "FEATURED"}
+                    value={project.award || project.badge || ""}
+                  />
+                </>
+              )}
+            </FadeInView>
+          </div>
+        )}
+      </div>
+    </section>
+  );
 }

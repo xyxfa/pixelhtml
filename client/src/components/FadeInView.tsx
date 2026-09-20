@@ -24,19 +24,21 @@ export default function FadeInView({
 
     const checkVisibility = () => {
       if (!ref.current || hasBeenVisible.current) return;
-      
+
       const rect = ref.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight || document.documentElement.clientHeight;
-      const windowWidth = window.innerWidth || document.documentElement.clientWidth;
-      
+      const windowHeight =
+        window.innerHeight || document.documentElement.clientHeight;
+      const windowWidth =
+        window.innerWidth || document.documentElement.clientWidth;
+
       // 检查元素是否在视口内（使用更宽松的条件，包括部分可见）
       // 扩大检测范围，提前200px触发，避免快速滚动时错过
-      const isInViewport = 
-        rect.top < windowHeight + 200 && 
-        rect.bottom > -200 && 
+      const isInViewport =
+        rect.top < windowHeight + 200 &&
+        rect.bottom > -200 &&
         rect.left < windowWidth + 100 &&
         rect.right > -100;
-      
+
       if (isInViewport) {
         hasBeenVisible.current = true;
         setIsVisible(true);
@@ -56,8 +58,8 @@ export default function FadeInView({
     // 如果还没显示，设置 IntersectionObserver
     if (!hasBeenVisible.current && ref.current) {
       observerRef.current = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
+        entries => {
+          entries.forEach(entry => {
             if (entry.isIntersecting && !hasBeenVisible.current) {
               hasBeenVisible.current = true;
               setIsVisible(true);
@@ -69,12 +71,12 @@ export default function FadeInView({
             }
           });
         },
-        { 
+        {
           threshold: 0.01, // 降低阈值，只要有一点可见就触发
-          rootMargin: '100px' // 提前100px触发，避免滚动太快时错过
+          rootMargin: "100px", // 提前100px触发，避免滚动太快时错过
         }
       );
-      
+
       observerRef.current.observe(ref.current);
     }
 
@@ -84,16 +86,16 @@ export default function FadeInView({
         checkVisibility();
       }
     };
-    
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-    
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
     };
   }, []);
 
@@ -130,7 +132,7 @@ export default function FadeInView({
         transform: isVisible ? "none" : transforms[direction],
         transition: `opacity 0.8s ease ${delay}ms, transform 0.8s ease ${delay}ms`,
         // 使用 pointer-events 而不是 visibility，确保元素始终占据空间
-        pointerEvents: isVisible ? 'auto' : 'none',
+        pointerEvents: isVisible ? "auto" : "none",
       }}
     >
       {children}

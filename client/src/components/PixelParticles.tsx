@@ -16,10 +16,10 @@ interface Particle {
 }
 
 const COLORS = [
-  "oklch(0.78 0.15 85 / 0.25)",   // gold
-  "oklch(0.72 0.12 142 / 0.2)",   // leaf light
-  "oklch(0.68 0.16 35 / 0.15)",   // coral
-  "oklch(0.85 0.06 230 / 0.15)",  // sky light
+  "oklch(0.78 0.15 85 / 0.25)", // gold
+  "oklch(0.72 0.12 142 / 0.2)", // leaf light
+  "oklch(0.68 0.16 35 / 0.15)", // coral
+  "oklch(0.85 0.06 230 / 0.15)", // sky light
 ];
 
 export default function PixelParticles() {
@@ -42,7 +42,7 @@ export default function PixelParticles() {
   if (reduced) return null;
   return (
     <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {particles.map((p) => (
+      {particles.map(p => (
         <div
           key={p.id}
           className="absolute rounded-full animate-float"

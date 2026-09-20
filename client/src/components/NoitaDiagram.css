@@ -1,67 +1,317 @@
-.noita-diagram { margin: 24px 0 30px; border: 1px solid #bacfc5; border-radius: 6px; overflow: hidden; background: #fbfdfb; color: #294b40; }
-.nd-heading { padding: 22px 24px 16px; position: relative; }
-.nd-kicker { font: 11px/1.5 Consolas, monospace; color: #578272; }
-.nd-heading h3 { font-size: 22px; font-weight: 700; line-height: 1.5; margin: 6px 0 0; }
-.nd-schematic { display: block; font-size: 11px; color: #778a80; margin-top: 6px; }
-.nd-modes { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0; border-block: 1px solid #cbdad3; }
-.nd-modes button { min-height: 48px; padding: 10px 8px; font-size: 13px; cursor: pointer; color: #65796d; border-bottom: 3px solid transparent; }
-.nd-modes button span { font: 10px Consolas, monospace; margin-right: 8px; opacity: .7; }
-.nd-modes button[aria-pressed=true] { color: #205e49; background: #e8f2ec; border-bottom-color: #39876c; font-weight: 700; }
-.nd-stage { background: #edf4f3; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #d5e2db; }
-.nd-scene { display: block; width: 100%; height: auto; }
-.nd-wood-scene { width: min(100%, 400px); aspect-ratio: 288/252; }
-.nd-water-scene { aspect-ratio: 540/252; }
-.nd-pixel .nd-face { stroke: #ffffff60; stroke-width: 1; }
-.nd-wood .nd-face { fill: #dfb56b; }
-.nd-wood .nd-light { stroke: #f9de9e; }
-.nd-grain { stroke: #ab773f; opacity: .65; }
-.nd-stone .nd-face { fill: #798d8c; }
-.nd-stone .nd-light { stroke: #aebfba; }
-.nd-water .nd-face { fill: #65bad0; }
-.nd-water .nd-light { stroke: #98deea; }
-.nd-anchored .nd-face,.nd-visited .nd-face { fill: #8bbd9e; }
-.nd-detached .nd-face { fill: #d7a2b1; }
-.nd-current .nd-face { fill: #eebf5a; stroke: #975721; stroke-width: 3; }
-.nd-queued .nd-face { fill: #b8a6da; stroke: #776098; stroke-width: 2; }
-.nd-legend { display: flex; flex-wrap: wrap; gap: 12px 22px; padding: 13px 24px; border-bottom: 1px solid #dce6df; }
-.nd-legend span { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; color: #637c6d; }
-.nd-legend i { width: 10px; height: 10px; display: inline-block; border: 1px solid #00000014; }
-.nd-swatch-wood,.nd-swatch-current { background: #dfb56b; }
-.nd-swatch-stone { background: #798d8c; }
-.nd-swatch-water { background: #65bad0; }
-.nd-swatch-detached { background: #d7a2b1; }
-.nd-swatch-queued { background: #b8a6da; }
-.nd-swatch-visited { background: #8bbd9e; }
-.nd-controls { display: flex; gap: 8px; align-items: center; padding: 16px 24px 8px; }
-.nd-controls button { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 34px; border: 1px solid #c4d5ca; border-radius: 3px; cursor: pointer; }
-.nd-controls button:hover:not(:disabled) { background: #e5efe8; }
-.nd-controls button:disabled { opacity: .3; cursor: default; }
-.noita-diagram button:focus-visible,.noita-diagram input:focus-visible { outline: 2px solid #368467; outline-offset: 3px; }
-.nd-controls input { flex: 1; min-width: 24px; accent-color: #43896f; }
-.nd-controls output { width: 28px; font: 11px Consolas,monospace; }
-.nd-queue { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 10px 24px; min-height: 58px; }
-.nd-queue > span { font-size: 12px; color: #6a8074; }
-.nd-queue > div { width: 55px; min-height: 32px; display: flex; align-items: center; }
-.nd-queue b { display: grid; place-items: center; width: 32px; height: 32px; background: #e6def2; color: #65517f; border: 1px solid #b7a3ca; font: 700 16px Consolas,monospace; }
-.nd-queue em { font-size: 12px; color: #8a998e; font-style: normal; }
-.nd-queue small { font-size: 12px; color: #698172; }
-.noita-diagram figcaption { padding: 15px 24px 20px; min-height: 76px; font-size: 14px; line-height: 1.85; color: #3d5e4e; background: #f4f8f3; border-top: 1px solid #dce6df; }
-.nd-chunk-strip { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: center; padding: 18px 24px; border-top: 1px solid #dce6df; }
-.nd-chunk-grid { display: grid; grid-template-columns: repeat(12,1fr); gap: 3px; }
-.nd-chunk-grid i { aspect-ratio: 1.4; background: #dce5e2; }
-.nd-chunk-grid .awake { background: #8abca4; }
-.nd-chunk-grid .changed { background: #cf7b80; }
-.nd-chunk-strip > span { font-size: 12px; line-height: 1.8; color: #637c6d; }
-@media(max-width:600px) {
-  .nd-heading { padding: 18px 16px 14px; }
-  .nd-heading h3 { font-size: 19px; }
-  .nd-modes button { font-size: 12px; padding-inline: 3px; }
-  .nd-modes button span { display: none; }
-  .nd-legend { padding: 12px 16px; gap: 10px 14px; }
-  .nd-controls { padding-inline: 12px; gap: 5px; }
-  .nd-controls button { width: 32px; height: 34px; flex-basis: 32px; }
-  .nd-queue { padding-inline: 16px; gap: 8px; }
-  .nd-queue small { flex-basis: 100%; }
-  .noita-diagram figcaption { padding: 14px 16px; min-height: 105px; }
-  .nd-chunk-strip { grid-template-columns: 1fr; padding: 16px; gap: 12px; }
+.noita-diagram {
+  margin: 24px 0 30px;
+  border: 1px solid #bacfc5;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #fbfdfb;
+  color: #294b40;
+}
+.nd-heading {
+  padding: 22px 24px 16px;
+  position: relative;
+}
+.nd-kicker {
+  font:
+    11px/1.5 Consolas,
+    monospace;
+  color: #578272;
+}
+.nd-heading h3 {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 6px 0 0;
+}
+.nd-schematic {
+  display: block;
+  font-size: 11px;
+  color: #778a80;
+  margin-top: 6px;
+}
+.nd-modes {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  border-block: 1px solid #cbdad3;
+}
+.nd-modes button {
+  min-height: 48px;
+  padding: 10px 8px;
+  font-size: 13px;
+  cursor: pointer;
+  color: #65796d;
+  border-bottom: 3px solid transparent;
+}
+.nd-modes button span {
+  font:
+    10px Consolas,
+    monospace;
+  margin-right: 8px;
+  opacity: 0.7;
+}
+.nd-modes button[aria-pressed="true"] {
+  color: #205e49;
+  background: #e8f2ec;
+  border-bottom-color: #39876c;
+  font-weight: 700;
+}
+.nd-stage {
+  background: #edf4f3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #d5e2db;
+}
+.nd-scene {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.nd-wood-scene {
+  width: min(100%, 400px);
+  aspect-ratio: 288/252;
+}
+.nd-water-scene {
+  aspect-ratio: 540/252;
+}
+.nd-pixel .nd-face {
+  stroke: #ffffff60;
+  stroke-width: 1;
+}
+.nd-wood .nd-face {
+  fill: #dfb56b;
+}
+.nd-wood .nd-light {
+  stroke: #f9de9e;
+}
+.nd-grain {
+  stroke: #ab773f;
+  opacity: 0.65;
+}
+.nd-stone .nd-face {
+  fill: #798d8c;
+}
+.nd-stone .nd-light {
+  stroke: #aebfba;
+}
+.nd-water .nd-face {
+  fill: #65bad0;
+}
+.nd-water .nd-light {
+  stroke: #98deea;
+}
+.nd-anchored .nd-face,
+.nd-visited .nd-face {
+  fill: #8bbd9e;
+}
+.nd-detached .nd-face {
+  fill: #d7a2b1;
+}
+.nd-current .nd-face {
+  fill: #eebf5a;
+  stroke: #975721;
+  stroke-width: 3;
+}
+.nd-queued .nd-face {
+  fill: #b8a6da;
+  stroke: #776098;
+  stroke-width: 2;
+}
+.nd-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  padding: 13px 24px;
+  border-bottom: 1px solid #dce6df;
+}
+.nd-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: #637c6d;
+}
+.nd-legend i {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  border: 1px solid #00000014;
+}
+.nd-swatch-wood,
+.nd-swatch-current {
+  background: #dfb56b;
+}
+.nd-swatch-stone {
+  background: #798d8c;
+}
+.nd-swatch-water {
+  background: #65bad0;
+}
+.nd-swatch-detached {
+  background: #d7a2b1;
+}
+.nd-swatch-queued {
+  background: #b8a6da;
+}
+.nd-swatch-visited {
+  background: #8bbd9e;
+}
+.nd-controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 16px 24px 8px;
+}
+.nd-controls button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border: 1px solid #c4d5ca;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.nd-controls button:hover:not(:disabled) {
+  background: #e5efe8;
+}
+.nd-controls button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.noita-diagram button:focus-visible,
+.noita-diagram input:focus-visible {
+  outline: 2px solid #368467;
+  outline-offset: 3px;
+}
+.nd-controls input {
+  flex: 1;
+  min-width: 24px;
+  accent-color: #43896f;
+}
+.nd-controls output {
+  width: 28px;
+  font:
+    11px Consolas,
+    monospace;
+}
+.nd-queue {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 24px;
+  min-height: 58px;
+}
+.nd-queue > span {
+  font-size: 12px;
+  color: #6a8074;
+}
+.nd-queue > div {
+  width: 55px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+.nd-queue b {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  background: #e6def2;
+  color: #65517f;
+  border: 1px solid #b7a3ca;
+  font:
+    700 16px Consolas,
+    monospace;
+}
+.nd-queue em {
+  font-size: 12px;
+  color: #8a998e;
+  font-style: normal;
+}
+.nd-queue small {
+  font-size: 12px;
+  color: #698172;
+}
+.noita-diagram figcaption {
+  padding: 15px 24px 20px;
+  min-height: 76px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: #3d5e4e;
+  background: #f4f8f3;
+  border-top: 1px solid #dce6df;
+}
+.nd-chunk-strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: center;
+  padding: 18px 24px;
+  border-top: 1px solid #dce6df;
+}
+.nd-chunk-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 3px;
+}
+.nd-chunk-grid i {
+  aspect-ratio: 1.4;
+  background: #dce5e2;
+}
+.nd-chunk-grid .awake {
+  background: #8abca4;
+}
+.nd-chunk-grid .changed {
+  background: #cf7b80;
+}
+.nd-chunk-strip > span {
+  font-size: 12px;
+  line-height: 1.8;
+  color: #637c6d;
+}
+@media (max-width: 600px) {
+  .nd-heading {
+    padding: 18px 16px 14px;
+  }
+  .nd-heading h3 {
+    font-size: 19px;
+  }
+  .nd-modes button {
+    font-size: 12px;
+    padding-inline: 3px;
+  }
+  .nd-modes button span {
+    display: none;
+  }
+  .nd-legend {
+    padding: 12px 16px;
+    gap: 10px 14px;
+  }
+  .nd-controls {
+    padding-inline: 12px;
+    gap: 5px;
+  }
+  .nd-controls button {
+    width: 32px;
+    height: 34px;
+    flex-basis: 32px;
+  }
+  .nd-queue {
+    padding-inline: 16px;
+    gap: 8px;
+  }
+  .nd-queue small {
+    flex-basis: 100%;
+  }
+  .noita-diagram figcaption {
+    padding: 14px 16px;
+    min-height: 105px;
+  }
+  .nd-chunk-strip {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 12px;
+  }
 }

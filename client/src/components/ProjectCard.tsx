@@ -20,9 +20,10 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, index }: ProjectCardProps) {
-  const c = project.category === "VR"
-    ? { bg: "bg-sky/20", text: "text-sky", border: "border-sky" }
-    : { bg: "bg-coral/20", text: "text-coral", border: "border-coral" };
+  const c =
+    project.category === "VR"
+      ? { bg: "bg-sky/20", text: "text-sky", border: "border-sky" }
+      : { bg: "bg-coral/20", text: "text-coral", border: "border-coral" };
 
   return (
     <div
@@ -37,7 +38,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
         />
         <div className="absolute top-3 left-3 flex gap-2">
-          <span className={`font-pixel text-[7px] px-2 py-1 ${c.bg} ${c.text} border-2 ${c.border}`}>
+          <span
+            className={`font-pixel text-[7px] px-2 py-1 ${c.bg} ${c.text} border-2 ${c.border}`}
+          >
             {project.category}
           </span>
         </div>
@@ -64,8 +67,10 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {project.description}
         </p>
         <div className="flex flex-wrap gap-1.5">
-          {project.tags.map((tag) => (
-            <span key={tag} className="pixel-tag">{tag}</span>
+          {project.tags.map(tag => (
+            <span key={tag} className="pixel-tag">
+              {tag}
+            </span>
           ))}
         </div>
       </div>
