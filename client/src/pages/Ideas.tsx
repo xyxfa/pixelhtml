@@ -98,6 +98,7 @@ function ArticleBody({ idea, locale }: { idea: IdeaProject; locale: IdeaLocale }
         <div className="idea-section-number">{String(index + 1).padStart(2, "0")}</div><h2>{section.title[locale]}</h2>
         {section.diagram && <NoitaDiagram kind={section.diagram} locale={locale} />}
         {section.paragraphs.map((paragraph, i) => <p key={i}>{paragraph[locale]}</p>)}
+        {section.links && <ul className="idea-points">{section.links.map(link => <li key={link.url}><a href={link.url} target="_blank" rel="noopener noreferrer">{link.label[locale]} ↗</a></li>)}</ul>}
         {section.flow && <ol className="idea-flow">{section.flow.map((step, i) => <li key={i}><span>{String(i + 1).padStart(2, "0")}</span>{step[locale]}{i < section.flow!.length - 1 && <ArrowUpRight aria-hidden="true" />}</li>)}</ol>}
         {section.points && <ul className="idea-points">{section.points.map((point, i) => <li key={i}>{point[locale]}</li>)}</ul>}
         {section.code && <figure className="idea-code"><figcaption><span><Code2 aria-hidden="true" />{section.code.label[locale]}</span>{section.code.source && (section.code.source.url ? <a href={section.code.source.url} target="_blank" rel="noopener noreferrer">{section.code.source.file}:{section.code.source.line}<ArrowUpRight aria-hidden="true" /></a> : <code>{section.code.source.file}:{section.code.source.line}</code>)}</figcaption><pre tabIndex={0}><code>{section.code.value}</code></pre></figure>}

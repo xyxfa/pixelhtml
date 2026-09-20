@@ -31,6 +31,63 @@ export interface IdeaProject {
 const media = "/ideas/level-select";
 
 export const ideaProjects: IdeaProject[] = [
+{
+  "slug": "jev-game-decisions",
+  "number": "07",
+  "kind": "technical",
+  "category": "ai",
+  "readingMinutes": 6,
+  "publishedAt": "2026-09-20",
+  "title": {
+    "zh": "Jev：让即时决策成为游戏的新玩法",
+    "en": "Jev: turning real-time decisions into new ways to play"
+  },
+  "subtitle": {
+    "zh": "为什么选择 Jev：从低延迟的结构化决策，到由玩家塑造行为的新玩法",
+    "en": "Why Jev: from low-latency structured decisions to player-shaped behavior"
+  },
+  "summary": {
+    "zh": "选择 Jev，首先因为它快。让 AI 在局势变化时及时选择行动，才有机会把“和角色聊天”推进到“和角色一起玩”。从实战实验出发，讨论它与聊天模型、行为树的区别，以及未来的游戏形式。",
+    "en": "Speed is the first reason I chose Jev. Timely decisions could move AI beyond conversation into play. A game experiment explores differences from chat models and behavior trees, and possible new formats."
+  },
+  "description": {
+    "zh": "我把 Jev 接进了一个植物大战僵尸社区实现，验证模型能否根据局面持续选择行动。这个项目更想探索的是：当智能决策足够快，玩家能否通过目标、原则与性格来塑造角色，而不必逐条指定操作？这里展示已有实验，并把未来玩法设想单独展开。",
+    "en": "I integrated Jev into a community Plants vs. Zombies implementation to explore repeated decisions from game state. The broader question: if decisions are fast enough, can players shape characters through goals, principles and personality? This page separates the existing experiment from future ideas."
+  },
+  "technicalPoints": [
+    {
+      "zh": "选择它的核心原因：低延迟，让决策更接近游戏的变化节奏",
+      "en": "Core selection reason: low latency keeps decisions closer to changing game state"
+    },
+    {
+      "zh": "输入局面与候选项，返回程序可执行的选择和概率",
+      "en": "State and candidates in; typed choices and probabilities out"
+    },
+    {
+      "zh": "从操作单位，走向设计角色的决策方式",
+      "en": "From controlling units to shaping how characters decide"
+    }
+  ],
+  "tags": {
+    "zh": [
+      "Jev",
+      "低延迟决策",
+      "游戏 AI",
+      "新玩法实验"
+    ],
+    "en": [
+      "Jev",
+      "Low-latency decisions",
+      "Game AI",
+      "Gameplay experiments"
+    ]
+  },
+  "poster": "/ideas/jev/poster.webp",
+  "video": "/ideas/jev/demo.mp4",
+  "duration": "约 02:03 · 2×",
+  "background": "/ideas/level-select/background.webp",
+  "gallery": []
+},
   {
     slug: "noita-simulator",
     number: "06",

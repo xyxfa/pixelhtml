@@ -1,3 +1,4 @@
+import { jevArticle } from "./jevArticle";
 import type { IdeaLocale } from "./ideaData";
 import { sproutArticle } from "./sproutArticle";
 import { noitaArticle } from "./noitaArticle";
@@ -40,10 +41,12 @@ export interface IdeaArticleSection {
   image?: { src: string; width: number; height: number; caption: Copy };
   diagram?: "components" | "bfs" | "wake";
   sources?: string[];
+  links?: { label: Copy; url: string }[];
   references?: SourceReference[];
 }
 
 export const ideaArticles: Record<string, IdeaArticleSection[]> = {
+  "jev-game-decisions": jevArticle,
   "noita-simulator": noitaArticle,
   "sprout-squad": sproutArticle,
   "echo-unity-ai": [
