@@ -1,176 +1,171 @@
 {
-    "site": {
-        "brand": "INDEPENDENT GAME / CREATIVE DEVELOPER"
-    },
-    "nav": {
-        "home": "Farm",
-        "about": "About",
-        "notes": "Journal",
-        "ideas": "Ideas",
-        "vr": "VR Workshop",
-        "gamejam": "GameJam",
-        "contact": "Mailbox"
-    },
-    "ideas": {
-        "description": "Spontaneous ideas and little experiments in progress.",
-        "empty": "Collecting ideas. More to come."
-    },
-    "hero": {
-        "badge": "XYXYA'S DEV FARM",
-        "title": "Ideas made playable.",
-        "subtitle": "Exploring games and interactions. Notes on the journey from an idea to something you can play.",
-        "cta_notes": "Dev notes",
-        "cta_games": "Selected work",
-        "cta_vr": "VR Works",
-        "cta_gamejam": "GameJam"
-    },
-    "autumnMust": {
-        "galleryTitle": "Gameplay",
-        "gallery": ["Vehicle assembly", "Mechanical wiring", "Thruster-powered flight", "Robot combat"]
-    },
-    "about": {
-        "title": "About Me",
-        "description": "Hi! I'm a developer passionate about creating immersive experiences. Whether it's the boundless possibilities of VR or the creative constraints of GameJams, I love turning ideas into playable reality.",
-        "skills": "Skills"
-    },
-    "vr": {
-        "title": "VR Projects",
-        "subtitle": "Explorations in virtual reality.",
-        "flagship_badge": "VR · FLAGSHIP · {{year}}",
-        "projects": [
-            {
-                "title": "Xuanji Shulu",
-                "description": "Xuanji Shulu is a VR interactive experience built around ancient Chinese astronomy. You step into four scenes inspired by the Taichu calendar, solar terms, and star maps, operating ancient instruments and watching the sky change. With a virtual young assistant guiding you, abstract calendar knowledge becomes easier to see and understand, and you quietly feel the patience and curiosity behind traditional science.",
-                "tags": [
-                    "VR",
-                    "Culture",
-                    "Astronomy"
-                ],
-                "year": "2025",
-                "category": "VR Experience",
-                "award": [
-                    "National 3D Digital Design Competition · Provincial Special Prize",
-                    "China Computer Design Competition · Provincial First Prize"
-                ]
-            },
-            {
-                "title": "Reverse Scripture",
-                "description": "Reverse Scripture is a VR action-adventure about a society ruled for centuries by a holy book that controls all magic. You play as an awakened mage exploring ancient ruins, uncovering sealed arcane powers and freely combining sword techniques with spells in combat. As the truth behind the scripture surfaces and the world tilts into crisis, you must decide whether to destroy the book or leave behind a new version of the truth for those who come after.",
-                "tags": [
-                    "VR",
-                    "Puzzle",
-                    "Adventure"
-                ],
-                "year": "2025",
-                "category": "VR Game",
-                "award": "CMIT National Digital Media Competition · Provincial First Prize"
-            }
+  "site": {
+    "brand": "INDEPENDENT GAME / CREATIVE DEVELOPER"
+  },
+  "nav": {
+    "home": "Farm",
+    "about": "About",
+    "notes": "Journal",
+    "ideas": "Ideas",
+    "vr": "VR Workshop",
+    "gamejam": "GameJam",
+    "contact": "Mailbox"
+  },
+  "ideas": {
+    "description": "Spontaneous ideas and little experiments in progress.",
+    "empty": "Collecting ideas. More to come."
+  },
+  "hero": {
+    "badge": "XYXYA'S DEV FARM",
+    "title": "Ideas made playable.",
+    "subtitle": "Exploring games and interactions. Notes on the journey from an idea to something you can play.",
+    "cta_notes": "Dev notes",
+    "cta_games": "Selected work",
+    "cta_vr": "VR Works",
+    "cta_gamejam": "GameJam"
+  },
+  "autumnMust": {
+    "galleryTitle": "Gameplay",
+    "gallery": [
+      "Vehicle assembly",
+      "Mechanical wiring",
+      "Thruster-powered flight",
+      "Robot combat"
+    ]
+  },
+  "about": {
+    "title": "About Me",
+    "description": "Hi! I'm a developer passionate about creating immersive experiences. Whether it's the boundless possibilities of VR or the creative constraints of GameJams, I love turning ideas into playable reality.",
+    "skills": "Skills"
+  },
+  "vr": {
+    "title": "VR Projects",
+    "subtitle": "Explorations in virtual reality.",
+    "flagship_badge": "VR · FLAGSHIP · {{year}}",
+    "projects": [
+      {
+        "title": "Xuanji Shulu",
+        "description": "Xuanji Shulu is a VR interactive experience built around ancient Chinese astronomy. You step into four scenes inspired by the Taichu calendar, solar terms, and star maps, operating ancient instruments and watching the sky change. With a virtual young assistant guiding you, abstract calendar knowledge becomes easier to see and understand, and you quietly feel the patience and curiosity behind traditional science.",
+        "tags": ["VR", "Culture", "Astronomy"],
+        "year": "2025",
+        "category": "VR Experience",
+        "award": [
+          "National 3D Digital Design Competition · Provincial Special Prize",
+          "China Computer Design Competition · Provincial First Prize"
+        ]
+      },
+      {
+        "title": "Reverse Scripture",
+        "description": "Reverse Scripture is a VR action-adventure about a society ruled for centuries by a holy book that controls all magic. You play as an awakened mage exploring ancient ruins, uncovering sealed arcane powers and freely combining sword techniques with spells in combat. As the truth behind the scripture surfaces and the world tilts into crisis, you must decide whether to destroy the book or leave behind a new version of the truth for those who come after.",
+        "tags": ["VR", "Puzzle", "Adventure"],
+        "year": "2025",
+        "category": "VR Game",
+        "award": "CMIT National Digital Media Competition · Provincial First Prize"
+      }
+    ],
+    "banner_text": "Magic Workshop"
+  },
+  "gamejam": {
+    "videoButton": "Watch full video on Bilibili",
+    "galleryTitle": "Gameplay",
+    "title": "GameJam Entries",
+    "subtitle": "Games created under 48 hours.",
+    "projects": [
+      {
+        "id": "autumn-must",
+        "title": "Autumn Must",
+        "description": "A sandbox game built around the freedom to build, create machines and fight.\nCombine blocks, parts and mechanical devices into ground vehicles, flying machines and inventions of your own. Bring them to life with wiring and control systems that turn your ideas into working creations.\nExplore the world in vehicles you built yourself, take up arms against robots, and find your own way to play through experimentation, modifications and adventure.",
+        "tags": [
+          "3D",
+          "Sandbox Building",
+          "Vehicle Assembly",
+          "Mechanical Wiring",
+          "Exploration & Combat"
         ],
-        "banner_text": "Magic Workshop"
-    },
-    "gamejam": {
-        "videoButton": "Watch full video on Bilibili",
-        "galleryTitle": "Gameplay",
-        "title": "GameJam Entries",
-        "subtitle": "Games created under 48 hours.",
-        "projects": [
-            {
-                "id": "autumn-must",
-                "title": "Autumn Must",
-                "description": "A sandbox game built around the freedom to build, create machines and fight.\nCombine blocks, parts and mechanical devices into ground vehicles, flying machines and inventions of your own. Bring them to life with wiring and control systems that turn your ideas into working creations.\nExplore the world in vehicles you built yourself, take up arms against robots, and find your own way to play through experimentation, modifications and adventure.",
-                "tags": [
-                    "3D",
-                    "Sandbox Building",
-                    "Vehicle Assembly",
-                    "Mechanical Wiring",
-                    "Exploration & Combat"
-                ],
-                "year": "2026",
-                "category": "GameJam · Sandbox Builder"
-            },
-            {
-                "title": "Fake Office Worker",
-                "galleryLabels": ["Joining the Company", "Survival Guide", "Keeping Your Balance", "Facing the Boss"],
-                "description": "You play as a small panda who infiltrates a human company to earn money. Wearing an oversized suit and standing on the shoulders of two other small animals, you disguise yourself as an ordinary office worker. Within a workday, you need to control the character by clicking or using the keyboard to maintain \"physical balance\" while working. The longer you work, the greater the challenge—the boss's suspicion will gradually accumulate. Pay attention to the shaking warning icon; it indicates when the boss will appear. Respond to randomly appearing pop-up events and boss questions; your choices will affect the suspicion value. The character's expressions will also reflect their status in real-time, making each response more vivid. Balance operations, seize opportunities, respond cleverly—let's see how long you can last!",
-                "tags": [
-                    "Unity",
-                    "2D",
-                    "Balance",
-                    "Stealth",
-                    "48h"
-                ],
-                "year": "2026",
-                "category": "GameJam",
-                "award": "Global GameJam Chengdu Station · Excellent Work"
-            },
-            {
-                "title": "Undefined Behavior",
-                "galleryLabels": ["Finding an Opponent", "Head-to-Head Battle", "Platform Combat", "Victory"],
-                "description": "A chaotic, random multiplayer platform fighter.\nEnter a digital colosseum where reality collapses and rules keep rewriting.\nSurvival isn’t just about execution — it’s about adapting to sudden \"glitches\".\nIn crumbling stages, use limited weapons and outplay your opponents.\n\"Be the last one standing.\"",
-                "tags": [
-                    "Unity",
-                    "PVP",
-                    "Multiplayer",
-                    "Platform Fighter",
-                    "Chaos"
-                ],
-                "year": "2026",
-                "category": "GameJam",
-                "link": "https://www.taptap.cn/app/797010?os=pc"
-            },
-            {
-                "title": "Eat is Rule",
-                "galleryLabels": ["Rule Puzzles", "Level Challenges", "Maze Exploration", "Pause Menu"],
-                "description": "The Creator once defined everything with golden ink — and then left.\nThe ink dried, rules fractured, and the world collapsed into scattered word-shards.\nYou are Xiao Bai, a blank born at a break in logic: no name, no form, no attributes — a loophole.\nBecause you are nothing, you can devour the fallen attribute words and gain their powers.\nPush and recombine the world's logic. Rewrite reality's source code.\nWhen you gather enough truths and reach the Creator's desk, you pick up the pen — now you will write the new rules.",
-                "tags": [
-                    "Unity",
-                    "2D",
-                    "Puzzle"
-                ],
-                "year": "2024",
-                "category": "Perfect World · Sanjiao Cup GameJam"
-            },
-            {
-                "title": "Glitch",
-                "galleryLabels": ["Story Dialogue", "Movement Guide", "World Interaction", "Rhythm Challenge"],
-                "description": "In a digital world dominated by code and logic, you are a tiny bug—an existence forgotten by the system.\nThis world was meant to run perfectly, but every corner hides vulnerabilities.\nThose flaws ignored by programmers, those cracks that shouldn't exist, become your only way to survive.",
-                "tags": [
-                    "Unity",
-                    "2D",
-                    "Bug",
-                    "Glitch",
-                    "21 Days Work"
-                ],
-                "year": "2025",
-                "category": "TapTap Spotlight",
-                "link": "https://www.taptap.cn/app/779272?os=pc"
-            },
-            {
-                "title": "Synesthesia",
-                "galleryLabels": ["Story Menu", "Character Dialogue", "A Shared Journey", "Cooperative Challenges"],
-                "description": "When the boundaries between hearing and vision are broken, when darkness and silence become each other's guides...\nHow will the hearing-impaired and the visually-impaired use the magic of Synesthesia to complete this impossible collaboration?\nSynesthesia, a wondrous psychological phenomenon where one sensory stimulus spontaneously triggers another—like seeing colors when hearing sounds. In 'Synesthesia', the two protagonists will use their missing senses to pave a wide path for each other.",
-                "tags": [
-                    "Unity",
-                    "Synesthesia",
-                    "Puzzle",
-                    "Narrative"
-                ],
-                "year": "2025",
-                "category": "G4GJ Chengdu Entry",
-                "link": "https://www.taptap.cn/app/797018?os=pc"
-            }
+        "year": "2026",
+        "category": "GameJam · Sandbox Builder"
+      },
+      {
+        "title": "Fake Office Worker",
+        "galleryLabels": [
+          "Joining the Company",
+          "Survival Guide",
+          "Keeping Your Balance",
+          "Facing the Boss"
         ],
-        "banner_text": "Autumn Festival"
-    },
-    "contact": {
-        "title": "Contact Me",
-        "subtitle": "Looking for a teammate?",
-        "message_1": "Open to collaboration, networking, or joining a GameJam!",
-        "message_2": "Feel free to reach out via the links above :)"
-    },
-    "footer": {
-        "made_with": "MADE WITH",
-        "and_pixels": "AND PIXELS",
-        "copyright": "© 2025 ALL RIGHTS RESERVED"
-    }
+        "description": "You play as a small panda who infiltrates a human company to earn money. Wearing an oversized suit and standing on the shoulders of two other small animals, you disguise yourself as an ordinary office worker. Within a workday, you need to control the character by clicking or using the keyboard to maintain \"physical balance\" while working. The longer you work, the greater the challenge—the boss's suspicion will gradually accumulate. Pay attention to the shaking warning icon; it indicates when the boss will appear. Respond to randomly appearing pop-up events and boss questions; your choices will affect the suspicion value. The character's expressions will also reflect their status in real-time, making each response more vivid. Balance operations, seize opportunities, respond cleverly—let's see how long you can last!",
+        "tags": ["Unity", "2D", "Balance", "Stealth", "48h"],
+        "year": "2026",
+        "category": "GameJam",
+        "award": "Global GameJam Chengdu Station · Excellent Work"
+      },
+      {
+        "title": "Undefined Behavior",
+        "galleryLabels": [
+          "Finding an Opponent",
+          "Head-to-Head Battle",
+          "Platform Combat",
+          "Victory"
+        ],
+        "description": "A chaotic, random multiplayer platform fighter.\nEnter a digital colosseum where reality collapses and rules keep rewriting.\nSurvival isn’t just about execution — it’s about adapting to sudden \"glitches\".\nIn crumbling stages, use limited weapons and outplay your opponents.\n\"Be the last one standing.\"",
+        "tags": ["Unity", "PVP", "Multiplayer", "Platform Fighter", "Chaos"],
+        "year": "2026",
+        "category": "GameJam",
+        "link": "https://www.taptap.cn/app/797010?os=pc"
+      },
+      {
+        "title": "Eat is Rule",
+        "galleryLabels": [
+          "Rule Puzzles",
+          "Level Challenges",
+          "Maze Exploration",
+          "Pause Menu"
+        ],
+        "description": "The Creator once defined everything with golden ink — and then left.\nThe ink dried, rules fractured, and the world collapsed into scattered word-shards.\nYou are Xiao Bai, a blank born at a break in logic: no name, no form, no attributes — a loophole.\nBecause you are nothing, you can devour the fallen attribute words and gain their powers.\nPush and recombine the world's logic. Rewrite reality's source code.\nWhen you gather enough truths and reach the Creator's desk, you pick up the pen — now you will write the new rules.",
+        "tags": ["Unity", "2D", "Puzzle"],
+        "year": "2024",
+        "category": "Perfect World · Sanjiao Cup GameJam"
+      },
+      {
+        "title": "Glitch",
+        "galleryLabels": [
+          "Story Dialogue",
+          "Movement Guide",
+          "World Interaction",
+          "Rhythm Challenge"
+        ],
+        "description": "In a digital world dominated by code and logic, you are a tiny bug—an existence forgotten by the system.\nThis world was meant to run perfectly, but every corner hides vulnerabilities.\nThose flaws ignored by programmers, those cracks that shouldn't exist, become your only way to survive.",
+        "tags": ["Unity", "2D", "Bug", "Glitch", "21 Days Work"],
+        "year": "2025",
+        "category": "TapTap Spotlight",
+        "link": "https://www.taptap.cn/app/779272?os=pc"
+      },
+      {
+        "title": "Synesthesia",
+        "galleryLabels": [
+          "Story Menu",
+          "Character Dialogue",
+          "A Shared Journey",
+          "Cooperative Challenges"
+        ],
+        "description": "When the boundaries between hearing and vision are broken, when darkness and silence become each other's guides...\nHow will the hearing-impaired and the visually-impaired use the magic of Synesthesia to complete this impossible collaboration?\nSynesthesia, a wondrous psychological phenomenon where one sensory stimulus spontaneously triggers another—like seeing colors when hearing sounds. In 'Synesthesia', the two protagonists will use their missing senses to pave a wide path for each other.",
+        "tags": ["Unity", "Synesthesia", "Puzzle", "Narrative"],
+        "year": "2025",
+        "category": "G4GJ Chengdu Entry",
+        "link": "https://www.taptap.cn/app/797018?os=pc"
+      }
+    ],
+    "banner_text": "Autumn Festival"
+  },
+  "contact": {
+    "title": "Contact Me",
+    "subtitle": "Looking for a teammate?",
+    "message_1": "Open to collaboration, networking, or joining a GameJam!",
+    "message_2": "Feel free to reach out via the links above :)"
+  },
+  "footer": {
+    "made_with": "MADE WITH",
+    "and_pixels": "AND PIXELS",
+    "copyright": "© 2025 ALL RIGHTS RESERVED"
+  }
 }

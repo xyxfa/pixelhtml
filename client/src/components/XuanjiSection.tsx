@@ -22,14 +22,16 @@ export default function XuanjiSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const flagship = (t("vr.projects", { returnObjects: true }) as Array<{
-    title: string;
-    description: string;
-    tags: string[];
-    year: string;
-    category: string;
-    award?: string | string[];
-  }>)[0];
+  const flagship = (
+    t("vr.projects", { returnObjects: true }) as Array<{
+      title: string;
+      description: string;
+      tags: string[];
+      year: string;
+      category: string;
+      award?: string | string[];
+    }>
+  )[0];
 
   const config = vrGameConfigs[0];
   const bgOffset = scrollY * 0.55;
@@ -37,15 +39,11 @@ export default function XuanjiSection() {
   const renderRichDescription = (text: string) => {
     const sentences = text
       .split(/(?<=[。！？!?.])\s*/)
-      .map((s) => s.trim())
+      .map(s => s.trim())
       .filter(Boolean);
 
     if (sentences.length === 0) {
-      return (
-        <p className="typo-game-desc text-wood-dark">
-          {text}
-        </p>
-      );
+      return <p className="typo-game-desc text-wood-dark">{text}</p>;
     }
 
     const [lead, second, ...rest] = sentences;
@@ -119,7 +117,7 @@ export default function XuanjiSection() {
                 {renderRichDescription(flagship.description)}
 
                 <div className="flex flex-wrap gap-2">
-                  {flagship.tags.map((tag) => (
+                  {flagship.tags.map(tag => (
                     <span key={tag} className="pixel-tag">
                       #{tag}
                     </span>
@@ -133,35 +131,35 @@ export default function XuanjiSection() {
                     </span>
                   )}
                   {Array.isArray(flagship.award)
-                    ? flagship.award.map((award) => (
-                      <span
-                        key={award}
-                        className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
-                        style={{
-                          fontSize: '13px',
-                          padding: '6px 12px',
-                          borderWidth: '3px',
-                          boxShadow: '3px 3px 0 0 rgba(0,0,0,0.3)',
-                          fontWeight: '600',
-                        }}
-                      >
-                        {award}
-                      </span>
-                    ))
+                    ? flagship.award.map(award => (
+                        <span
+                          key={award}
+                          className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
+                          style={{
+                            fontSize: "13px",
+                            padding: "6px 12px",
+                            borderWidth: "3px",
+                            boxShadow: "3px 3px 0 0 rgba(0,0,0,0.3)",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {award}
+                        </span>
+                      ))
                     : flagship.award && (
-                      <span
-                        className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
-                        style={{
-                          fontSize: '13px',
-                          padding: '6px 12px',
-                          borderWidth: '3px',
-                          boxShadow: '3px 3px 0 0 rgba(0,0,0,0.3)',
-                          fontWeight: '600',
-                        }}
-                      >
-                        {flagship.award}
-                      </span>
-                    )}
+                        <span
+                          className="pixel-tag bg-gold/20 border-gold-dark text-wood-dark"
+                          style={{
+                            fontSize: "13px",
+                            padding: "6px 12px",
+                            borderWidth: "3px",
+                            boxShadow: "3px 3px 0 0 rgba(0,0,0,0.3)",
+                            fontWeight: "600",
+                          }}
+                        >
+                          {flagship.award}
+                        </span>
+                      )}
                 </div>
               </div>
             </FadeInView>
@@ -203,4 +201,3 @@ export default function XuanjiSection() {
     </section>
   );
 }
-

@@ -6,134 +6,136 @@
 import type { MotionTheme } from "./components/ThemedMotion";
 
 export interface GameConfig {
-    motionTheme?: MotionTheme;
-    bgImage: string;
-    accentColor: string;
-    accentBg: string;
-    accentBorder: string;
-    videoUrl?: string;
-    galleryImages?: string[];
-    mainImage?: string; // 主展示图片，如果未设置则使用 bgImage 或 project.image
+  motionTheme?: MotionTheme;
+  bgImage: string;
+  accentColor: string;
+  accentBg: string;
+  accentBorder: string;
+  videoUrl?: string;
+  galleryImages?: string[];
+  mainImage?: string; // 主展示图片，如果未设置则使用 bgImage 或 project.image
 }
 
 const autumnMustConfig: GameConfig = {
-    motionTheme: "forge",
-    bgImage: "/games/autumn-must/autumn-must-seamless.webp",
-    mainImage: "/games/autumn-must/hero.webp",
-    accentColor: "#fb923c",
-    accentBg: "rgba(251, 146, 60, 0.15)",
-    accentBorder: "rgba(251, 146, 60, 0.5)",
-    galleryImages: [
-        "/games/autumn-must/gallery-1.webp",
-        "/games/autumn-must/gallery-2.webp",
-        "/games/autumn-must/gallery-3.webp",
-        "/games/autumn-must/gallery-4.webp",
-    ],
+  motionTheme: "forge",
+  bgImage: "/games/autumn-must/autumn-must-seamless.webp",
+  mainImage: "/games/autumn-must/hero.webp",
+  accentColor: "#fb923c",
+  accentBg: "rgba(251, 146, 60, 0.15)",
+  accentBorder: "rgba(251, 146, 60, 0.5)",
+  galleryImages: [
+    "/games/autumn-must/gallery-1.webp",
+    "/games/autumn-must/gallery-2.webp",
+    "/games/autumn-must/gallery-3.webp",
+    "/games/autumn-must/gallery-4.webp",
+  ],
 };
 
 // VR Projects backgrounds (Video Based)
 export const vrGameConfigs: GameConfig[] = [
-    {
-        // 璇玑蜀律 (Xuanji Shulü)
-        // 使用像素农场平铺背景
-        bgImage: "/bg/xuanji-background-optimized.webp",
-        accentColor: "#4ade80", // Leaf Green
-        accentBg: "rgba(74, 222, 128, 0.15)",
-        accentBorder: "rgba(74, 222, 128, 0.4)",
-        videoUrl: "https://player.bilibili.com/player.html?bvid=BV1RPPTzqErj&autoplay=1&muted=1&high_quality=1",
-    },
-    {
-        // 逆序圣典 (Reverse Order Scripture)
-        // 使用逆序盛典像素图案背景，配色保持与「璇玑蜀律」一致，仅视频资源保持 reverse 视频
-        bgImage: "/bg/reverse-background-optimized.webp",
-        accentColor: "#4ade80", // Leaf Green
-        accentBg: "rgba(74, 222, 128, 0.15)",
-        accentBorder: "rgba(74, 222, 128, 0.4)",
-        videoUrl: "https://player.bilibili.com/player.html?bvid=BV1FRPKzyEVB&autoplay=1&muted=1&high_quality=1",
-    },
+  {
+    // 璇玑蜀律 (Xuanji Shulü)
+    // 使用像素农场平铺背景
+    bgImage: "/bg/xuanji-background-optimized.webp",
+    accentColor: "#4ade80", // Leaf Green
+    accentBg: "rgba(74, 222, 128, 0.15)",
+    accentBorder: "rgba(74, 222, 128, 0.4)",
+    videoUrl:
+      "https://player.bilibili.com/player.html?bvid=BV1RPPTzqErj&autoplay=1&muted=1&high_quality=1",
+  },
+  {
+    // 逆序圣典 (Reverse Order Scripture)
+    // 使用逆序盛典像素图案背景，配色保持与「璇玑蜀律」一致，仅视频资源保持 reverse 视频
+    bgImage: "/bg/reverse-background-optimized.webp",
+    accentColor: "#4ade80", // Leaf Green
+    accentBg: "rgba(74, 222, 128, 0.15)",
+    accentBorder: "rgba(74, 222, 128, 0.4)",
+    videoUrl:
+      "https://player.bilibili.com/player.html?bvid=BV1FRPKzyEVB&autoplay=1&muted=1&high_quality=1",
+  },
 ];
 
 // GameJam Projects backgrounds
 export const gamejamGameConfigs: GameConfig[] = [
-    autumnMustConfig,
-    {
-        // 冒牌上班族 (Fake Office Worker) - 2026 GameJam 作品
-        // 职场主题像素图案，与其他 GameJam 背景统一疏密和间距
-        motionTheme: "office",
-        bgImage: "/GameJam/Office-Worker/background-optimized.webp",
-        mainImage: "/GameJam/Office-Worker/hero.webp", // 主展示图片
-        accentColor: "#fb923c", // 临时配色，待根据实际图片调整
-        accentBg: "rgba(251, 146, 60, 0.2)",
-        accentBorder: "rgba(251, 146, 60, 0.6)",
-        galleryImages: [
-            "/GameJam/Office-Worker/Snipaste_2026-02-10_12-18-06.webp",
-            "/GameJam/Office-Worker/Snipaste_2026-02-10_12-18-19.webp",
-            "/GameJam/Office-Worker/Snipaste_2026-02-10_12-18-34.webp",
-            "/GameJam/Office-Worker/Snipaste_2026-02-10_12-19-07.webp",
-        ],
-    },
-    {
-        // 未定义行为 (The Undefined) - GameJam 作品
-        // 双人PVP像素风格游戏，使用橙色主题（橙色猫角色为主）
-        // 使用统一排版的无缝像素背景
-        motionTheme: "duel",
-        bgImage: "/GameJam/Undefined-Behavior/background-optimized.webp",
-        mainImage: "/GameJam/Undefined-Behavior/hero.webp", // 主展示图片仍然使用标题图
-        accentColor: "#fb923c", // 橙色 (orange-400)，与游戏主角色颜色一致
-        accentBg: "rgba(251, 146, 60, 0.2)",
-        accentBorder: "rgba(251, 146, 60, 0.6)",
-        galleryImages: [
-            "/GameJam/Undefined-Behavior/0825660fffb5f856ee7ab39e10a9a537.webp",
-            "/GameJam/Undefined-Behavior/4ef03bbbe5c87bed764c31cae3bcefd9.webp",
-            "/GameJam/Undefined-Behavior/4d4fca805079b03de93f21788df84895.webp",
-            "/GameJam/Undefined-Behavior/Attached_image.webp",
-        ],
-    },
-    {
-        // Eat is Rule - GameJam 作品
-        // 使用主页面大图作为主展示，同时给出四张小图（最后一张是 UI 图）
-        motionTheme: "food",
-        bgImage: "/GameJam/Eat-is-Rule/background-optimized.webp",
-        mainImage: "/GameJam/Eat-is-Rule/hero.webp",
-        accentColor: "#fbbf24", // Amber / Gold（与画面偏暖的主色一致）
-        accentBg: "rgba(251, 191, 36, 0.15)",
-        accentBorder: "rgba(251, 191, 36, 0.45)",
-        galleryImages: [
-            "/GameJam/Eat-is-Rule/gallery-1.webp",
-            "/GameJam/Eat-is-Rule/gallery-2.webp",
-            "/GameJam/Eat-is-Rule/gallery-3.webp",
-            "/GameJam/Eat-is-Rule/gallery-4.webp",
-        ],
-    },
-    {
-        // Glitch - TapTap 聚光灯 21 天作品
-        // 数字世界 & 漏洞主题
-        motionTheme: "glitch",
-        bgImage: "/GameJam/Glitch/background-optimized.webp",
-        mainImage: "/GameJam/Glitch/613fd85cf523e71ed931a0c0e565a19a.webp",
-        accentColor: "#a855f7", // Purple (Glitch/Digital vibe)
-        accentBg: "rgba(168, 85, 247, 0.15)",
-        accentBorder: "rgba(168, 85, 247, 0.45)",
-        galleryImages: [
-            "/GameJam/Glitch/1c2dd83029f6e3a9e22c037de5a63c8f.webp",
-            "/GameJam/Glitch/6a816a05a1d9571efe0f4c54bb038db0.webp",
-            "/GameJam/Glitch/ef791b13c7a47c43a3eccfe613f9930b.webp",
-            "/GameJam/Glitch/fdba0eb4c79fbe11878fd78b3794377c.webp",
-        ],
-    },
-    {
-        // Synesthesia - 感官交织
-        motionTheme: "music",
-        bgImage: "/GameJam/Synesthesia/background-optimized.webp",
-        mainImage: "/GameJam/Synesthesia/hero.webp",
-        accentColor: "#38bdf8", // Sky blue / Cyan
-        accentBg: "rgba(56, 189, 248, 0.15)",
-        accentBorder: "rgba(56, 189, 248, 0.4)",
-        galleryImages: [
-            "/GameJam/Synesthesia/Snipaste_2026-02-10_20-22-41.webp",
-            "/GameJam/Synesthesia/Snipaste_2026-02-10_20-23-36.webp",
-            "/GameJam/Synesthesia/Snipaste_2026-02-10_20-24-27.webp",
-            "/GameJam/Synesthesia/Snipaste_2026-02-10_20-25-10.webp",
-        ],
-    },
+  autumnMustConfig,
+  {
+    // 冒牌上班族 (Fake Office Worker) - 2026 GameJam 作品
+    // 职场主题像素图案，与其他 GameJam 背景统一疏密和间距
+    motionTheme: "office",
+    bgImage: "/GameJam/Office-Worker/background-optimized.webp",
+    mainImage: "/GameJam/Office-Worker/hero.webp", // 主展示图片
+    accentColor: "#fb923c", // 临时配色，待根据实际图片调整
+    accentBg: "rgba(251, 146, 60, 0.2)",
+    accentBorder: "rgba(251, 146, 60, 0.6)",
+    galleryImages: [
+      "/GameJam/Office-Worker/Snipaste_2026-02-10_12-18-06.webp",
+      "/GameJam/Office-Worker/Snipaste_2026-02-10_12-18-19.webp",
+      "/GameJam/Office-Worker/Snipaste_2026-02-10_12-18-34.webp",
+      "/GameJam/Office-Worker/Snipaste_2026-02-10_12-19-07.webp",
+    ],
+  },
+  {
+    // 未定义行为 (The Undefined) - GameJam 作品
+    // 双人PVP像素风格游戏，使用橙色主题（橙色猫角色为主）
+    // 使用统一排版的无缝像素背景
+    motionTheme: "duel",
+    bgImage: "/GameJam/Undefined-Behavior/background-optimized.webp",
+    mainImage: "/GameJam/Undefined-Behavior/hero.webp", // 主展示图片仍然使用标题图
+    accentColor: "#fb923c", // 橙色 (orange-400)，与游戏主角色颜色一致
+    accentBg: "rgba(251, 146, 60, 0.2)",
+    accentBorder: "rgba(251, 146, 60, 0.6)",
+    galleryImages: [
+      "/GameJam/Undefined-Behavior/0825660fffb5f856ee7ab39e10a9a537.webp",
+      "/GameJam/Undefined-Behavior/4ef03bbbe5c87bed764c31cae3bcefd9.webp",
+      "/GameJam/Undefined-Behavior/4d4fca805079b03de93f21788df84895.webp",
+      "/GameJam/Undefined-Behavior/Attached_image.webp",
+    ],
+  },
+  {
+    // Eat is Rule - GameJam 作品
+    // 使用主页面大图作为主展示，同时给出四张小图（最后一张是 UI 图）
+    motionTheme: "food",
+    bgImage: "/GameJam/Eat-is-Rule/background-optimized.webp",
+    mainImage: "/GameJam/Eat-is-Rule/hero.webp",
+    accentColor: "#fbbf24", // Amber / Gold（与画面偏暖的主色一致）
+    accentBg: "rgba(251, 191, 36, 0.15)",
+    accentBorder: "rgba(251, 191, 36, 0.45)",
+    galleryImages: [
+      "/GameJam/Eat-is-Rule/gallery-1.webp",
+      "/GameJam/Eat-is-Rule/gallery-2.webp",
+      "/GameJam/Eat-is-Rule/gallery-3.webp",
+      "/GameJam/Eat-is-Rule/gallery-4.webp",
+    ],
+  },
+  {
+    // Glitch - TapTap 聚光灯 21 天作品
+    // 数字世界 & 漏洞主题
+    motionTheme: "glitch",
+    bgImage: "/GameJam/Glitch/background-optimized.webp",
+    mainImage: "/GameJam/Glitch/613fd85cf523e71ed931a0c0e565a19a.webp",
+    accentColor: "#a855f7", // Purple (Glitch/Digital vibe)
+    accentBg: "rgba(168, 85, 247, 0.15)",
+    accentBorder: "rgba(168, 85, 247, 0.45)",
+    galleryImages: [
+      "/GameJam/Glitch/1c2dd83029f6e3a9e22c037de5a63c8f.webp",
+      "/GameJam/Glitch/6a816a05a1d9571efe0f4c54bb038db0.webp",
+      "/GameJam/Glitch/ef791b13c7a47c43a3eccfe613f9930b.webp",
+      "/GameJam/Glitch/fdba0eb4c79fbe11878fd78b3794377c.webp",
+    ],
+  },
+  {
+    // Synesthesia - 感官交织
+    motionTheme: "music",
+    bgImage: "/GameJam/Synesthesia/background-optimized.webp",
+    mainImage: "/GameJam/Synesthesia/hero.webp",
+    accentColor: "#38bdf8", // Sky blue / Cyan
+    accentBg: "rgba(56, 189, 248, 0.15)",
+    accentBorder: "rgba(56, 189, 248, 0.4)",
+    galleryImages: [
+      "/GameJam/Synesthesia/Snipaste_2026-02-10_20-22-41.webp",
+      "/GameJam/Synesthesia/Snipaste_2026-02-10_20-23-36.webp",
+      "/GameJam/Synesthesia/Snipaste_2026-02-10_20-24-27.webp",
+      "/GameJam/Synesthesia/Snipaste_2026-02-10_20-25-10.webp",
+    ],
+  },
 ];

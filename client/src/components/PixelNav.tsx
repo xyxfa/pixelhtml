@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { BookOpen, Gamepad2, Globe, Home, Lightbulb, Mail, Menu, Sprout, X } from "lucide-react";
+import {
+  BookOpen,
+  Gamepad2,
+  Globe,
+  Home,
+  Lightbulb,
+  Mail,
+  Menu,
+  Sprout,
+  X,
+} from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
 
@@ -35,13 +45,21 @@ export default function PixelNav() {
     }
     document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
   };
-  const toggleLanguage = () => i18n.changeLanguage(i18n.language === "en" ? "zh" : "en");
+  const toggleLanguage = () =>
+    i18n.changeLanguage(i18n.language === "en" ? "zh" : "en");
 
   return (
     <nav className={`farm-nav ${scrolled ? "is-scrolled" : ""}`}>
       <div className="container farm-nav-inner">
-        <button type="button" onClick={() => handleClick("#hero")} className="farm-brand">
-          <span><Sprout aria-hidden="true" /></span><strong>{t("site.brand")}</strong>
+        <button
+          type="button"
+          onClick={() => handleClick("#hero")}
+          className="farm-brand"
+        >
+          <span>
+            <Sprout aria-hidden="true" />
+          </span>
+          <strong>{t("site.brand")}</strong>
         </button>
         <div className="farm-nav-menu">
           {navItems.map(({ label, href, icon: Icon }) => (
@@ -49,19 +67,50 @@ export default function PixelNav() {
               key={href}
               type="button"
               onClick={() => handleClick(href)}
-              aria-current={(href.startsWith("/") && (location === href || location.startsWith(`${href}/`))) || (href === "#hero" && location === "/") ? "page" : undefined}
-            ><Icon aria-hidden="true" /><span>{label}</span></button>
+              aria-current={
+                (href.startsWith("/") &&
+                  (location === href || location.startsWith(`${href}/`))) ||
+                (href === "#hero" && location === "/")
+                  ? "page"
+                  : undefined
+              }
+            >
+              <Icon aria-hidden="true" />
+              <span>{label}</span>
+            </button>
           ))}
-          <button type="button" onClick={toggleLanguage} className="farm-language"><Globe aria-hidden="true" /> {i18n.language === "en" ? "中" : "EN"}</button>
+          <button
+            type="button"
+            onClick={toggleLanguage}
+            className="farm-language"
+          >
+            <Globe aria-hidden="true" /> {i18n.language === "en" ? "中" : "EN"}
+          </button>
         </div>
         <div className="farm-mobile-actions">
-          <button type="button" onClick={toggleLanguage} aria-label="切换语言"><Globe aria-hidden="true" /></button>
-          <button type="button" onClick={() => setMobileOpen((value) => !value)} aria-label="打开导航菜单">{mobileOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}</button>
+          <button type="button" onClick={toggleLanguage} aria-label="切换语言">
+            <Globe aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => setMobileOpen(value => !value)}
+            aria-label="打开导航菜单"
+          >
+            {mobileOpen ? (
+              <X aria-hidden="true" />
+            ) : (
+              <Menu aria-hidden="true" />
+            )}
+          </button>
         </div>
       </div>
       {mobileOpen && (
         <div className="farm-mobile-menu">
-          {navItems.map(({ label, href, icon: Icon }) => <button key={href} type="button" onClick={() => handleClick(href)}><Icon aria-hidden="true" /> {label}</button>)}
+          {navItems.map(({ label, href, icon: Icon }) => (
+            <button key={href} type="button" onClick={() => handleClick(href)}>
+              <Icon aria-hidden="true" /> {label}
+            </button>
+          ))}
         </div>
       )}
     </nav>

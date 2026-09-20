@@ -7,11 +7,25 @@ interface PixelDividerProps {
   variant?: "flowers" | "leaves" | "stars";
 }
 
-export default function PixelDivider({ variant = "flowers" }: PixelDividerProps) {
+export default function PixelDivider({
+  variant = "flowers",
+}: PixelDividerProps) {
   const colorSets = {
-    flowers: ["oklch(0.68 0.16 35)", "oklch(0.58 0.14 140)", "oklch(0.78 0.15 85)"],
-    leaves: ["oklch(0.58 0.14 140)", "oklch(0.72 0.12 142)", "oklch(0.65 0.08 140)"],
-    stars: ["oklch(0.78 0.15 85)", "oklch(0.68 0.16 35)", "oklch(0.72 0.1 230)"],
+    flowers: [
+      "oklch(0.68 0.16 35)",
+      "oklch(0.58 0.14 140)",
+      "oklch(0.78 0.15 85)",
+    ],
+    leaves: [
+      "oklch(0.58 0.14 140)",
+      "oklch(0.72 0.12 142)",
+      "oklch(0.65 0.08 140)",
+    ],
+    stars: [
+      "oklch(0.78 0.15 85)",
+      "oklch(0.68 0.16 35)",
+      "oklch(0.72 0.1 230)",
+    ],
   };
 
   const colors = colorSets[variant];
@@ -20,7 +34,7 @@ export default function PixelDivider({ variant = "flowers" }: PixelDividerProps)
     <div className="flex items-center justify-center py-6">
       <div className="flex items-center gap-1.5">
         {/* Left pattern */}
-        {[3, 2, 1].map((size) => (
+        {[3, 2, 1].map(size => (
           <div
             key={`l-${size}`}
             style={{
@@ -39,7 +53,7 @@ export default function PixelDivider({ variant = "flowers" }: PixelDividerProps)
         />
 
         {/* Right pattern */}
-        {[1, 2, 3].map((size) => (
+        {[1, 2, 3].map(size => (
           <div
             key={`r-${size}`}
             style={{

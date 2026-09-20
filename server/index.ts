@@ -36,7 +36,7 @@ async function startServer() {
       const formattedRows = rows.map(r => ({
         ...r,
         id: String(r.id),
-        date: new Date(r.date).toLocaleDateString()
+        date: new Date(r.date).toLocaleDateString(),
       }));
       res.json(formattedRows);
     } catch (error) {
@@ -63,7 +63,7 @@ async function startServer() {
       res.status(201).json({
         ...newMsg,
         id: String(newMsg.id),
-        date: new Date(newMsg.date).toLocaleDateString()
+        date: new Date(newMsg.date).toLocaleDateString(),
       });
     } catch (error) {
       console.error("Database error:", error);

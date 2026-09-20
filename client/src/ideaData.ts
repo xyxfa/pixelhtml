@@ -38,7 +38,10 @@ export const ideaProjects: IdeaProject[] = [
     category: "graphics",
     readingMinutes: 14,
     publishedAt: "2026-09-18",
-    title: { zh: "Noita 的底层复刻", en: "Recreating Noita-style material simulation" },
+    title: {
+      zh: "Noita 的底层复刻",
+      en: "Recreating Noita-style material simulation",
+    },
     subtitle: {
       zh: "用 Unity 做像素材料模拟：元胞自动机、活跃区块、Burst 与连锁交互",
       en: "A Unity material sandbox: cellular automata, active chunks, Burst and chain reactions",
@@ -52,13 +55,28 @@ export const ideaProjects: IdeaProject[] = [
       en: "My Unity pixel-material sandbox puts sand, water, oil, fire, acid and ice on one grid. Wands, fuses and wooden structures connect them into chain reactions. The complete original recording is accompanied by narration explaining the implementation.",
     },
     technicalPoints: [
-      { zh: "打包材料状态，控制扫描顺序和密度交换", en: "Packed cell state, explicit scan order and density swaps" },
-      { zh: "活跃区块休眠，处理液体远处出口的唤醒", en: "Sleeping chunks and wake propagation for distant liquid outlets" },
-      { zh: "连通分量处理坍塌，逐步对照验证优化结果", en: "Connected components for collapse and per-step differential validation" },
+      {
+        zh: "打包材料状态，控制扫描顺序和密度交换",
+        en: "Packed cell state, explicit scan order and density swaps",
+      },
+      {
+        zh: "活跃区块休眠，处理液体远处出口的唤醒",
+        en: "Sleeping chunks and wake propagation for distant liquid outlets",
+      },
+      {
+        zh: "连通分量处理坍塌，逐步对照验证优化结果",
+        en: "Connected components for collapse and per-step differential validation",
+      },
     ],
     tags: {
       zh: ["Unity / C#", "元胞自动机", "Jobs / Burst", "连通分量", "差分验证"],
-      en: ["Unity / C#", "Cellular automata", "Jobs / Burst", "Connected components", "Differential validation"],
+      en: [
+        "Unity / C#",
+        "Cellular automata",
+        "Jobs / Burst",
+        "Connected components",
+        "Differential validation",
+      ],
     },
     poster: "/ideas/noita/poster.webp",
     video: "/ideas/noita/demo.mp4?v=original-voice",
@@ -67,10 +85,16 @@ export const ideaProjects: IdeaProject[] = [
     background: "/ideas/level-select/background.webp",
     chapters: [
       { time: 0, title: { zh: "沙水开闸", en: "Sand & water" } },
-      { time: 25, title: { zh: "火球与灭火", en: "Fireballs & extinguishing" } },
+      {
+        time: 25,
+        title: { zh: "火球与灭火", en: "Fireballs & extinguishing" },
+      },
       { time: 55, title: { zh: "导火线与水", en: "Fuses & water" } },
       { time: 80, title: { zh: "木结构坍塌", en: "Wood collapse" } },
-      { time: 105, title: { zh: "酸液与冻融", en: "Acid, freezing & melting" } },
+      {
+        time: 105,
+        title: { zh: "酸液与冻融", en: "Acid, freezing & melting" },
+      },
       { time: 130, title: { zh: "吸水与搬运", en: "Material transfer" } },
       { time: 155, title: { zh: "投料与沉降", en: "Spawning & settling" } },
       { time: 185, title: { zh: "自由组合", en: "Combined interactions" } },

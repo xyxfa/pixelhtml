@@ -2,7 +2,11 @@ import type { CSSProperties } from "react";
 
 // Stable samples keep decorations in place during scroll and resize re-renders.
 export function motionSample(seed: number, index: number, channel: number) {
-  let value = (seed + Math.imul(index + 1, 374761393) + Math.imul(channel + 1, 668265263)) | 0;
+  let value =
+    (seed +
+      Math.imul(index + 1, 374761393) +
+      Math.imul(channel + 1, 668265263)) |
+    0;
   value = Math.imul(value ^ (value >>> 13), 1274126177);
   return ((value ^ (value >>> 16)) >>> 0) / 4294967296;
 }
