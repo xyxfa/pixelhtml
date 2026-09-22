@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Gamepad2, Globe, Home, Lightbulb, Mail, Menu, Sprout, X } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useLocation } from "wouter";
+import IdeasCompanion from "./IdeasCompanion";
 
 export default function PixelNav() {
   const { t, i18n } = useTranslation();
@@ -45,6 +46,7 @@ export default function PixelNav() {
         </button>
         <div className="farm-nav-menu">
           {navItems.map(({ label, href, icon: Icon }) => (
+            href === "/ideas" && location === "/" ? <IdeasCompanion key={href} label={label} onClick={() => handleClick(href)} /> :
             <button
               key={href}
               type="button"
@@ -61,7 +63,7 @@ export default function PixelNav() {
       </div>
       {mobileOpen && (
         <div className="farm-mobile-menu">
-          {navItems.map(({ label, href, icon: Icon }) => <button key={href} type="button" onClick={() => handleClick(href)}><Icon aria-hidden="true" /> {label}</button>)}
+          {navItems.map(({ label, href, icon: Icon }) => href === "/ideas" && location === "/" ? <IdeasCompanion key={href} label={label} onClick={() => handleClick(href)} /> : <button key={href} type="button" onClick={() => handleClick(href)}><Icon aria-hidden="true" /> {label}</button>)}
         </div>
       )}
     </nav>

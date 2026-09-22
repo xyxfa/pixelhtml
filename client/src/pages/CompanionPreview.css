@@ -1,0 +1,47 @@
+.companion-lab { min-height: 100vh; padding: 38px 24px 48px; color: #443d48; background: #f5f1e9; font-family: var(--font-body), sans-serif; }
+.companion-lab-shell { max-width: 1056px; margin: auto; }
+.companion-lab-header { margin-bottom: 24px; }
+.companion-lab-eyebrow { display: flex; align-items: center; gap: 7px; color: #7c8674; font-size: 11px; letter-spacing: .12em; }
+.companion-lab-header h1 { margin: 12px 0 9px; font-size: clamp(24px, 3.3vw, 34px); font-weight: 800; letter-spacing: -.03em; }
+.companion-lab-header p { color: #888071; font-size: 12px; line-height: 1.8; }
+.companion-lab-stage { position: relative; height: 218px; overflow: hidden; isolation: isolate; border: 1px solid #c4bce3; border-radius: 9px; background: #b8b0ef; }
+.companion-lab-landscape { position: absolute; z-index: -1; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 2%; image-rendering: pixelated; opacity: .73; }
+.companion-lab .companion-lab-nav { position: relative; inset: auto; display: flex; align-items: center; justify-content: space-between; padding: 24px; border-bottom: 1px solid #ffffff25; }
+.companion-lab-brand { font-family: var(--font-pixel), monospace; font-size: 11px; color: #2a4339; }
+.companion-lab .farm-nav-menu { display: flex; }
+.companion-lab .farm-nav-menu > button[aria-disabled="true"] { cursor: default; }
+.companion-lab-stage-caption { position: absolute; left: 24px; bottom: 20px; display: flex; flex-direction: column; gap: 3px; color: #3f4d54; }
+.companion-lab-stage-caption > span { font-size: 10px; letter-spacing: .1em; opacity: .7; }
+.companion-lab-stage-caption > strong { font-size: 19px; font-weight: 800; }
+.companion-lab-stage-caption > small { font-size: 10px; opacity: .7; }
+.companion-lab-stage-actions { position: absolute; right: 22px; bottom: 22px; display: flex; gap: 8px; }
+.companion-lab-stage-actions > * { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; padding: 8px 12px; border: 1px solid #ffffff70; border-radius: 5px; background: #fffcf2c9; color: #49564d; font-size: 11px; cursor: pointer; }
+.companion-lab-stage-actions > a { color: #fffaf0; background: #516751; border-color: #516751; }
+.companion-lab-section-label { display: flex; justify-content: space-between; gap: 16px; margin: 28px 0 14px; font-size: 12px; font-weight: 700; }
+.companion-lab-section-label small { font-size: 10px; color: #979084; font-weight: 400; }
+.companion-lab-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.companion-lab-card { position: relative; display: flex; flex-direction: column; align-items: center; padding: 16px 12px 17px; border: 1px solid #ded7cb; border-radius: 7px; background: #fffcf6; color: #514752; cursor: pointer; text-align: center; transition: border-color .15s, background .15s; }
+.companion-lab-card:hover { border-color: #a7aa8e; background: #fffef9; }
+.companion-lab-card[aria-pressed="true"] { border: 2px solid #71816a; padding: 15px 11px 16px; background: #f7f8ed; box-shadow: 0 0 0 2px #71816a0c; }
+.companion-lab-card-number { position: absolute; left: 12px; top: 10px; color: #aaa195; font: 10px/1.5 monospace; }
+.companion-lab-card-check { position: absolute; right: 9px; top: 9px; width: 19px; height: 19px; border-radius: 50%; display: grid; place-items: center; }
+.companion-lab-card[aria-pressed="true"] .companion-lab-card-check { background: #71816a; color: #fffdf1; }
+.companion-lab-sprite { display: grid; place-items: center; width: 104px; height: 90px; margin: 10px 0 8px; background: radial-gradient(ellipse at center, var(--swatch), transparent 70%); }
+.companion-lab-sprite img { width: 80px; height: 80px; image-rendering: pixelated; }
+.companion-lab-card > strong { font-size: 14px; font-weight: 700; }
+.companion-lab-mood { margin-top: 5px; color: #9a8c83; font-size: 10px; letter-spacing: .06em; }
+.companion-lab-footnote { margin-top: 22px; color: #a0988a; font-size: 11px; text-align: center; }
+.companion-lab button:focus-visible, .companion-lab a:focus-visible { outline: 2px solid #586e54; outline-offset: 3px; }
+@media (max-width: 600px) {
+  .companion-lab { padding: 24px 16px 40px; }
+  .companion-lab-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .companion-lab .companion-lab-nav { padding: 24px 12px; }
+  .companion-lab-brand { display: none; }
+  .companion-lab .farm-nav-menu { width: 100%; justify-content: space-between; }
+  .companion-lab-stage-caption { left: 14px; bottom: 64px; }
+  .companion-lab-stage-actions { left: 14px; right: 14px; bottom: 14px; }
+  .companion-lab-stage-actions > * { flex: 1; }
+  .companion-lab-section-label { flex-wrap: wrap; gap: 4px; }
+}
+
+body:has(.companion-lab) .pixel-world-overlay { display: none; }

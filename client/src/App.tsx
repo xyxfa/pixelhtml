@@ -9,10 +9,14 @@ import TechNotes from "./pages/TechNotes";
 import Ideas from "./pages/Ideas";
 import { MotionProvider } from "./contexts/MotionContext";
 import PixelCompanions from "./components/PixelCompanions";
+import { lazy, Suspense } from "react";
+
+const CompanionPreview = import.meta.env.DEV ? lazy(() => import("./pages/CompanionPreview")) : null;
 
 function Router() {
   return (
     <Switch>
+      {CompanionPreview && <Route path="/companion-preview"><Suspense fallback={null}><CompanionPreview /></Suspense></Route>}
       <Route path={"/"} component={Home} />
       <Route path={"/notes/:slug"} component={TechNotes} />
       <Route path={"/notes"} component={TechNotes} />
